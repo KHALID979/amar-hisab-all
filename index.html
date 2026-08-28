@@ -278,6 +278,19 @@ label{
   color:#4b5563;
 }
 
+.personBox{
+  background:#fafafa;
+  border:1px solid #eee;
+  padding:10px;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+.personTitle{
+  font-weight:800;
+  margin-bottom:6px;
+}
+
 @media(max-width:760px){
   .grid4{
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -353,10 +366,7 @@ label{
     🆕 নতুন অ্যাকাউন্ট তৈরি
   </button>
 
-  <div
-    id="loginMsg"
-    class="message"
-  ></div>
+  <div id="loginMsg" class="message"></div>
 
 </section>
 
@@ -366,8 +376,6 @@ label{
 ===================================================== -->
 
 <section id="dashboard" class="hidden">
-
-  <!-- NAVIGATION -->
 
   <div class="tabs">
 
@@ -439,42 +447,22 @@ label{
 
       <div class="card kpi">
         <div class="muted">মোট আয়</div>
-        <div
-          id="dashIncome"
-          class="money"
-        >
-          ৳0
-        </div>
+        <div id="dashIncome" class="money">৳0</div>
       </div>
 
       <div class="card kpi">
         <div class="muted">মোট ব্যয়</div>
-        <div
-          id="dashExpense"
-          class="money"
-        >
-          ৳0
-        </div>
+        <div id="dashExpense" class="money">৳0</div>
       </div>
 
       <div class="card kpi">
         <div class="muted">লাভ / লস</div>
-        <div
-          id="dashProfit"
-          class="money"
-        >
-          ৳0
-        </div>
+        <div id="dashProfit" class="money">৳0</div>
       </div>
 
       <div class="card kpi">
         <div class="muted">Deposit</div>
-        <div
-          id="dashDeposit"
-          class="money"
-        >
-          ৳0
-        </div>
+        <div id="dashDeposit" class="money">৳0</div>
       </div>
 
     </div>
@@ -508,6 +496,7 @@ label{
       </div>
 
       <div style="margin-top:10px">
+
         <div class="small muted">
           আয়ের তুলনায় খরচ
         </div>
@@ -518,6 +507,7 @@ label{
             style="width:0%"
           ></div>
         </div>
+
       </div>
 
     </div>
@@ -525,7 +515,22 @@ label{
 
     <div class="card">
 
-      <h3>🧠 হিসাবের অবস্থা</h3>
+      <h3>
+        👥 ব্যক্তিভিত্তিক পাওনা/ধার
+      </h3>
+
+      <div
+        id="personSummary"
+      ></div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>
+        🧠 হিসাবের অবস্থা
+      </h3>
 
       <div id="adviceBox"></div>
 
@@ -534,7 +539,14 @@ label{
 
     <div class="card">
 
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:8px
+        "
+      >
 
         <h3>
           🕘 সাম্প্রতিক হিসাব
@@ -573,7 +585,7 @@ label{
       </h3>
 
       <div class="sectionNote">
-        আয়, ব্যয়, Deposit, পাওনা ও ধার—সবকিছু Cloud Database-এ আপনার account-এর সঙ্গে সংরক্ষণ হবে।
+        ধার বা পাওনার ক্ষেত্রে ব্যক্তির নাম দিন। নামটি Cloud Database-এ সংরক্ষিত হবে।
       </div>
 
 
@@ -640,13 +652,24 @@ label{
 
 
       <label>
-        বিবরণ / Category / ব্যক্তির নাম
+        ব্যক্তির নাম
+      </label>
+
+      <input
+        id="personName"
+        type="text"
+        placeholder="যেমন রহিম / করিম / জামাল"
+      >
+
+
+      <label>
+        বিবরণ / Category
       </label>
 
       <input
         id="txCategory"
         type="text"
-        placeholder="যেমন বেতন, বাজার, রহিম"
+        placeholder="যেমন বেতন, বাজার, ব্যবসা"
       >
 
 
@@ -756,7 +779,7 @@ label{
 
 
   <!-- ===================================================
-       REPORTS
+       REPORT
   ==================================================== -->
 
   <section
@@ -804,14 +827,14 @@ label{
 
         </div>
 
-        <div style="display:flex;align-items:end">
+        <div>
 
           <button
             id="refreshReportBtn"
             class="primary"
             type="button"
           >
-            রিপোর্ট দেখুন
+            📊 রিপোর্ট দেখুন
           </button>
 
         </div>
@@ -821,9 +844,7 @@ label{
     </div>
 
 
-    <div
-      id="reportContent"
-    ></div>
+    <div id="reportContent"></div>
 
 
     <div class="card">
@@ -833,6 +854,17 @@ label{
       </h3>
 
       <div id="categoryReport"></div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>
+        👥 ব্যক্তিভিত্তিক হিসাব
+      </h3>
+
+      <div id="reportPersonSummary"></div>
 
     </div>
 
@@ -851,7 +883,7 @@ label{
 
 
   <!-- ===================================================
-       ALL TRANSACTIONS
+       ALL
   ==================================================== -->
 
   <section
@@ -862,7 +894,12 @@ label{
     <div class="card">
 
       <div
-        style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"
+        style="
+          display:flex;
+          justify-content:space-between;
+          gap:10px;
+          align-items:flex-start
+        "
       >
 
         <div>
@@ -872,7 +909,7 @@ label{
           </h3>
 
           <div class="muted small">
-            এখানে হিসাব Search, Filter, Edit ও Delete করতে পারবে।
+            Search, Filter, Edit ও Delete করা যাবে।
           </div>
 
         </div>
@@ -985,7 +1022,7 @@ label{
           class="primary"
           type="button"
         >
-          ☁️ Cloud থেকে আবার Load
+          ☁️ Cloud থেকে Load
         </button>
 
         <button
@@ -1109,6 +1146,9 @@ label{
   const adviceBox =
     document.getElementById("adviceBox");
 
+  const personSummary =
+    document.getElementById("personSummary");
+
   const recentList =
     document.getElementById("recentList");
 
@@ -1124,6 +1164,9 @@ label{
 
   const txAmount =
     document.getElementById("txAmount");
+
+  const personName =
+    document.getElementById("personName");
 
   const txCategory =
     document.getElementById("txCategory");
@@ -1158,6 +1201,9 @@ label{
 
   const categoryReport =
     document.getElementById("categoryReport");
+
+  const reportPersonSummary =
+    document.getElementById("reportPersonSummary");
 
   const monthlyReport =
     document.getElementById("monthlyReport");
@@ -1208,15 +1254,14 @@ label{
 
   function todayString(){
 
-    const d =
-      new Date();
+    const d = new Date();
 
     const year =
       d.getFullYear();
 
     const month =
       String(
-        d.getMonth()+1
+        d.getMonth() + 1
       ).padStart(2,"0");
 
     const day =
@@ -1325,8 +1370,7 @@ label{
 
   function clearMessage(element){
 
-    element.textContent =
-      "";
+    element.textContent = "";
 
     element.className =
       "message";
@@ -1402,75 +1446,40 @@ label{
 
   function showSection(name){
 
-    dashboardSection.classList.add(
-      "hidden"
-    );
+    dashboardSection.classList.add("hidden");
+    addSection.classList.add("hidden");
+    reportsSection.classList.add("hidden");
+    allSection.classList.add("hidden");
 
-    addSection.classList.add(
-      "hidden"
-    );
-
-    reportsSection.classList.add(
-      "hidden"
-    );
-
-    allSection.classList.add(
-      "hidden"
-    );
-
-
-    navDashboard.classList.remove(
-      "primary"
-    );
-
-    navAdd.classList.remove(
-      "primary"
-    );
-
-    navReports.classList.remove(
-      "primary"
-    );
-
-    navAll.classList.remove(
-      "primary"
-    );
+    navDashboard.classList.remove("primary");
+    navAdd.classList.remove("primary");
+    navReports.classList.remove("primary");
+    navAll.classList.remove("primary");
 
 
     if(name === "dashboard"){
 
-      dashboardSection.classList.remove(
-        "hidden"
-      );
+      dashboardSection.classList.remove("hidden");
 
-      navDashboard.classList.add(
-        "primary"
-      );
+      navDashboard.classList.add("primary");
 
     }
 
 
     if(name === "add"){
 
-      addSection.classList.remove(
-        "hidden"
-      );
+      addSection.classList.remove("hidden");
 
-      navAdd.classList.add(
-        "primary"
-      );
+      navAdd.classList.add("primary");
 
     }
 
 
     if(name === "reports"){
 
-      reportsSection.classList.remove(
-        "hidden"
-      );
+      reportsSection.classList.remove("hidden");
 
-      navReports.classList.add(
-        "primary"
-      );
+      navReports.classList.add("primary");
 
       renderReports();
 
@@ -1479,13 +1488,9 @@ label{
 
     if(name === "all"){
 
-      allSection.classList.remove(
-        "hidden"
-      );
+      allSection.classList.remove("hidden");
 
-      navAll.classList.add(
-        "primary"
-      );
+      navAll.classList.add("primary");
 
       renderAllTransactions();
 
@@ -1499,9 +1504,7 @@ label{
 
       cancelEditMode();
 
-      showSection(
-        "dashboard"
-      );
+      showSection("dashboard");
 
     };
 
@@ -1509,13 +1512,13 @@ label{
   navAdd.onclick =
     () => {
 
-      if(!editingId){
+      if(editingId === null){
+
         resetForm();
+
       }
 
-      showSection(
-        "add"
-      );
+      showSection("add");
 
     };
 
@@ -1525,9 +1528,7 @@ label{
 
       cancelEditMode();
 
-      showSection(
-        "reports"
-      );
+      showSection("reports");
 
     };
 
@@ -1537,9 +1538,7 @@ label{
 
       cancelEditMode();
 
-      showSection(
-        "all"
-      );
+      showSection("all");
 
     };
 
@@ -1547,9 +1546,7 @@ label{
   quickAllBtn.onclick =
     () => {
 
-      showSection(
-        "all"
-      );
+      showSection("all");
 
     };
 
@@ -1560,8 +1557,7 @@ label{
 
   function resetForm(){
 
-    editingId =
-      null;
+    editingId = null;
 
     formTitle.textContent =
       "➕ নতুন হিসাব যোগ করুন";
@@ -1569,14 +1565,15 @@ label{
     saveTxBtn.textContent =
       "☁️ Cloud-এ হিসাব সংরক্ষণ";
 
-    cancelEditBtn.classList.add(
-      "hidden"
-    );
+    cancelEditBtn.classList.add("hidden");
 
     txType.value =
       "income";
 
     txAmount.value =
+      "";
+
+    personName.value =
       "";
 
     txCategory.value =
@@ -1600,8 +1597,7 @@ label{
 
   function cancelEditMode(){
 
-    editingId =
-      null;
+    editingId = null;
 
     formTitle.textContent =
       "➕ নতুন হিসাব যোগ করুন";
@@ -1609,9 +1605,7 @@ label{
     saveTxBtn.textContent =
       "☁️ Cloud-এ হিসাব সংরক্ষণ";
 
-    cancelEditBtn.classList.add(
-      "hidden"
-    );
+    cancelEditBtn.classList.add("hidden");
 
     clearMessage(
       txMsg
@@ -1662,6 +1656,9 @@ label{
     txAmount.value =
       item.amount ?? "";
 
+    personName.value =
+      item.person_name || "";
+
     txCategory.value =
       item.category || "";
 
@@ -1672,33 +1669,34 @@ label{
       item.note || "";
 
 
-    const category =
-      item.type === "expense"
-        ? item.category
-        : "";
+    if(item.type === "expense"){
 
-    const optionExists =
-      [...expenseCategory.options]
-        .some(
-          o =>
-            o.value ===
-            category
-        );
+      const optionExists =
+        [...expenseCategory.options]
+          .some(
+            option =>
+              option.value ===
+              item.category
+          );
 
+      expenseCategory.value =
+        optionExists
+          ? item.category
+          : "";
 
-    expenseCategory.value =
-      optionExists
-        ? category
-        : "";
+    }else{
+
+      expenseCategory.value =
+        "";
+
+    }
 
 
     clearMessage(
       txMsg
     );
 
-    showSection(
-      "add"
-    );
+    showSection("add");
 
     window.scrollTo({
       top:0,
@@ -1794,6 +1792,199 @@ label{
 
 
   /* =====================================================
+     PERSON SUMMARY
+  ===================================================== */
+
+  function calculatePersonSummary(list){
+
+    const people = {};
+
+
+    list.forEach(
+      item => {
+
+        if(
+          ![
+            "lent",
+            "collect",
+            "borrowed",
+            "repay"
+          ].includes(
+            item.type
+          )
+        ){
+
+          return;
+
+        }
+
+
+        const name =
+          String(
+            item.person_name || ""
+          ).trim();
+
+
+        if(!name){
+
+          return;
+
+        }
+
+
+        if(!people[name]){
+
+          people[name] = {
+            lent:0,
+            collect:0,
+            borrowed:0,
+            repay:0
+          };
+
+        }
+
+
+        const amount =
+          Number(
+            item.amount || 0
+          );
+
+
+        if(item.type === "lent"){
+
+          people[name].lent +=
+            amount;
+
+        }
+
+
+        if(item.type === "collect"){
+
+          people[name].collect +=
+            amount;
+
+        }
+
+
+        if(item.type === "borrowed"){
+
+          people[name].borrowed +=
+            amount;
+
+        }
+
+
+        if(item.type === "repay"){
+
+          people[name].repay +=
+            amount;
+
+        }
+
+      }
+    );
+
+
+    return people;
+
+  }
+
+
+  function renderPersonSummary(){
+
+    const people =
+      calculatePersonSummary(
+        transactions
+      );
+
+
+    const entries =
+      Object.entries(
+        people
+      );
+
+
+    if(!entries.length){
+
+      personSummary.innerHTML =
+        `<div class="empty">
+          এখনো কোনো ব্যক্তিভিত্তিক পাওনা বা ধার নেই।
+        </div>`;
+
+      return;
+
+    }
+
+
+    personSummary.innerHTML =
+      entries
+        .map(
+          ([name,data]) => {
+
+            const receivable =
+              Math.max(
+                0,
+                data.lent -
+                data.collect
+              );
+
+
+            const debt =
+              Math.max(
+                0,
+                data.borrowed -
+                data.repay
+              );
+
+
+            return `
+
+              <div class="personBox">
+
+                <div class="personTitle">
+                  👤 ${escapeHtml(name)}
+                </div>
+
+                <div class="row">
+
+                  <span>
+                    আমার পাওনা
+                  </span>
+
+                  <strong>
+                    ${money(
+                      receivable
+                    )}
+                  </strong>
+
+                </div>
+
+                <div class="row">
+
+                  <span>
+                    আমার ধার
+                  </span>
+
+                  <strong>
+                    ${money(
+                      debt
+                    )}
+                  </strong>
+
+                </div>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+  }
+
+
+  /* =====================================================
      DASHBOARD
   ===================================================== */
 
@@ -1879,6 +2070,8 @@ label{
       "%";
 
 
+    renderPersonSummary();
+
     renderAdvice(
       s
     );
@@ -1888,17 +2081,20 @@ label{
   }
 
 
+  /* =====================================================
+     ADVICE
+  ===================================================== */
+
   function renderAdvice(s){
 
-    const advice = [];
+    const list = [];
 
 
     if(
-      s.income === 0 &&
       transactions.length === 0
     ){
 
-      advice.push(
+      list.push(
         "📝 প্রথমে আপনার আয়/ব্যয়ের হিসাব যোগ করুন।"
       );
 
@@ -1910,7 +2106,7 @@ label{
       s.expense > s.income
     ){
 
-      advice.push(
+      list.push(
         "⚠️ বর্তমানে আপনার ব্যয় আয়ের চেয়ে বেশি।"
       );
 
@@ -1923,7 +2119,7 @@ label{
       s.income * 0.50
     ){
 
-      advice.push(
+      list.push(
         "✅ আপনার ব্যয় আয়ের ৫০%-এর মধ্যে আছে।"
       );
 
@@ -1936,20 +2132,30 @@ label{
       s.income * 0.70
     ){
 
-      advice.push(
-        "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে। খরচের Category দেখে প্রয়োজনহীন ব্যয় কমানোর চেষ্টা করুন।"
+      list.push(
+        "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে।"
       );
 
     }
 
 
     if(
-      s.profit > 0 &&
-      s.income > 0
+      s.profit > 0
     ){
 
-      advice.push(
+      list.push(
         "✅ বর্তমানে আপনার আয় ব্যয়ের চেয়ে বেশি।"
+      );
+
+    }
+
+
+    if(
+      s.profit < 0
+    ){
+
+      list.push(
+        "⚠️ বর্তমানে আপনার লস হচ্ছে।"
       );
 
     }
@@ -1959,12 +2165,12 @@ label{
       s.receivable > 0
     ){
 
-      advice.push(
-        "🤝 আপনার কাছে মোট " +
+      list.push(
+        "🤝 আপনার মোট পাওনা " +
         money(
           s.receivable
         ) +
-        " পাওনা আছে।"
+        "।"
       );
 
     }
@@ -1974,8 +2180,8 @@ label{
       s.debt > 0
     ){
 
-      advice.push(
-        "📥 আপনার নেওয়া ধার বাকি " +
+      list.push(
+        "📥 আপনার মোট ধার বাকি " +
         money(
           s.debt
         ) +
@@ -1989,7 +2195,7 @@ label{
       s.deposit > 0
     ){
 
-      advice.push(
+      list.push(
         "🏦 মোট Deposit " +
         money(
           s.deposit
@@ -2000,27 +2206,33 @@ label{
     }
 
 
-    if(!advice.length){
+    if(!list.length){
 
-      advice.push(
-        "📊 হিসাব বাড়ার সঙ্গে সঙ্গে এখানে স্বয়ংক্রিয় বিশ্লেষণ দেখা যাবে।"
+      list.push(
+        "📊 হিসাব যোগ হলে স্বয়ংক্রিয় বিশ্লেষণ এখানে দেখা যাবে।"
       );
 
     }
 
 
     adviceBox.innerHTML =
-      advice
+      list
         .map(
           text =>
-            `<div class="advice">
+            `
+            <div class="advice">
               ${escapeHtml(text)}
-            </div>`
+            </div>
+            `
         )
         .join("");
 
   }
 
+
+  /* =====================================================
+     RECENT
+  ===================================================== */
 
   function renderRecent(){
 
@@ -2036,9 +2248,11 @@ label{
     if(!list.length){
 
       recentList.innerHTML =
-        `<div class="empty">
+        `
+        <div class="empty">
           এখনও কোনো হিসাব নেই।
-        </div>`;
+        </div>
+        `;
 
       return;
 
@@ -2067,6 +2281,18 @@ label{
                       )
                     )}
                   </div>
+
+                  ${
+                    item.person_name
+                      ? `
+                        <div class="small">
+                          👤 ${escapeHtml(
+                            item.person_name
+                          )}
+                        </div>
+                      `
+                      : ""
+                  }
 
                   <div class="small muted">
                     ${escapeHtml(
@@ -2103,43 +2329,37 @@ label{
 
 
   /* =====================================================
-     REPORT RANGE
+     REPORT
   ===================================================== */
 
   function getReportRange(period){
 
-    const today =
+    const now =
       new Date(
         todayString() +
         "T12:00:00"
       );
 
 
-    let start =
-      null;
-
-
-    let end =
-      today;
-
-
     if(period === "today"){
 
-      start =
-        new Date(
-          todayString() +
-          "T00:00:00"
-        );
+      return {
+        start:
+          new Date(
+            todayString() +
+            "T00:00:00"
+          ),
+        end:
+          now
+      };
 
     }
 
 
     if(period === "week"){
 
-      start =
-        new Date(
-          today
-        );
+      const start =
+        new Date(now);
 
       start.setDate(
         start.getDate() -
@@ -2150,38 +2370,57 @@ label{
         0,0,0,0
       );
 
+      return {
+        start,
+        end:now
+      };
+
     }
 
 
     if(period === "month"){
 
-      start =
-        new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          1,
-          0,0,0
-        );
+      return {
+
+        start:
+          new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            1,
+            0,0,0
+          ),
+
+        end:
+          now
+
+      };
 
     }
 
 
     if(period === "year"){
 
-      start =
-        new Date(
-          today.getFullYear(),
-          0,
-          1,
-          0,0,0
-        );
+      return {
+
+        start:
+          new Date(
+            now.getFullYear(),
+            0,
+            1,
+            0,0,0
+          ),
+
+        end:
+          now
+
+      };
 
     }
 
 
     return {
-      start,
-      end
+      start:null,
+      end:null
     };
 
   }
@@ -2192,7 +2431,9 @@ label{
     period
   ){
 
-    if(period === "all"){
+    if(
+      period === "all"
+    ){
 
       return [...list];
 
@@ -2211,7 +2452,7 @@ label{
     return list.filter(
       item => {
 
-        const d =
+        const date =
           new Date(
             String(
               item.date
@@ -2220,8 +2461,8 @@ label{
           );
 
         return (
-          d >= start &&
-          d <= end
+          date >= start &&
+          date <= end
         );
 
       }
@@ -2230,20 +2471,12 @@ label{
   }
 
 
-  /* =====================================================
-     REPORTS
-  ===================================================== */
-
   function renderReports(){
-
-    const period =
-      reportPeriod.value;
-
 
     const list =
       filterByPeriod(
         transactions,
-        period
+        reportPeriod.value
       );
 
 
@@ -2288,28 +2521,36 @@ label{
         <div class="card">
           <div class="muted">আয়</div>
           <div class="money">
-            ${money(s.income)}
+            ${money(
+              s.income
+            )}
           </div>
         </div>
 
         <div class="card">
           <div class="muted">ব্যয়</div>
           <div class="money">
-            ${money(s.expense)}
+            ${money(
+              s.expense
+            )}
           </div>
         </div>
 
         <div class="card">
           <div class="muted">লাভ / লস</div>
           <div class="money">
-            ${money(s.profit)}
+            ${money(
+              s.profit
+            )}
           </div>
         </div>
 
         <div class="card">
           <div class="muted">Deposit</div>
           <div class="money">
-            ${money(s.deposit)}
+            ${money(
+              s.deposit
+            )}
           </div>
         </div>
 
@@ -2342,14 +2583,18 @@ label{
         <div class="row">
           <span>পাওনা</span>
           <strong>
-            ${money(s.receivable)}
+            ${money(
+              s.receivable
+            )}
           </strong>
         </div>
 
         <div class="row">
           <span>ধার বাকি</span>
           <strong>
-            ${money(s.debt)}
+            ${money(
+              s.debt
+            )}
           </strong>
         </div>
 
@@ -2369,6 +2614,10 @@ label{
       list
     );
 
+    renderReportPersonSummary(
+      list
+    );
+
     renderMonthlyReport();
 
   }
@@ -2380,8 +2629,8 @@ label{
 
     const expenses =
       list.filter(
-        x =>
-          x.type ===
+        item =>
+          item.type ===
           "expense"
       );
 
@@ -2392,13 +2641,13 @@ label{
     expenses.forEach(
       item => {
 
-        const key =
+        const name =
           item.category ||
           "অন্যান্য";
 
-        map[key] =
+        map[name] =
           (
-            map[key] ||
+            map[name] ||
             0
           ) +
           Number(
@@ -2412,10 +2661,10 @@ label{
     const total =
       expenses.reduce(
         (
-          sum,
+          total,
           item
         ) =>
-          sum +
+          total +
           Number(
             item.amount || 0
           ),
@@ -2426,7 +2675,8 @@ label{
     const entries =
       Object.entries(
         map
-      ).sort(
+      )
+      .sort(
         (a,b) =>
           b[1] -
           a[1]
@@ -2436,9 +2686,11 @@ label{
     if(!entries.length){
 
       categoryReport.innerHTML =
-        `<div class="empty">
+        `
+        <div class="empty">
           এই সময়ে কোনো খরচ নেই।
-        </div>`;
+        </div>
+        `;
 
       return;
 
@@ -2448,34 +2700,131 @@ label{
     categoryReport.innerHTML =
       entries
         .map(
-          ([key,value]) => {
+          ([name,value]) => {
 
             const pct =
               total > 0
                 ? (
                     value /
                     total
-                  ) *
-                  100
+                  ) * 100
                 : 0;
 
 
             return `
+
               <div class="row">
 
                 <span>
                   ${escapeHtml(
-                    key
+                    name
                   )}
                 </span>
 
                 <strong>
-                  ${money(value)}
+                  ${money(
+                    value
+                  )}
                   ·
                   ${pct.toFixed(1)}%
                 </strong>
 
               </div>
+
+            `;
+
+          }
+        )
+        .join("");
+
+  }
+
+
+  function renderReportPersonSummary(
+    list
+  ){
+
+    const people =
+      calculatePersonSummary(
+        list
+      );
+
+
+    const entries =
+      Object.entries(
+        people
+      );
+
+
+    if(!entries.length){
+
+      reportPersonSummary.innerHTML =
+        `
+        <div class="empty">
+          এই সময়ে কোনো ব্যক্তিভিত্তিক পাওনা বা ধার নেই।
+        </div>
+        `;
+
+      return;
+
+    }
+
+
+    reportPersonSummary.innerHTML =
+      entries
+        .map(
+          ([name,data]) => {
+
+            const receivable =
+              Math.max(
+                0,
+                data.lent -
+                data.collect
+              );
+
+
+            const debt =
+              Math.max(
+                0,
+                data.borrowed -
+                data.repay
+              );
+
+
+            return `
+
+              <div class="personBox">
+
+                <div class="personTitle">
+                  👤 ${escapeHtml(
+                    name
+                  )}
+                </div>
+
+                <div class="row">
+                  <span>
+                    পাওনা
+                  </span>
+                  <strong>
+                    ${money(
+                      receivable
+                    )}
+                  </strong>
+                </div>
+
+                <div class="row">
+                  <span>
+                    ধার বাকি
+                  </span>
+                  <strong>
+                    ${money(
+                      debt
+                    )}
+                  </strong>
+                </div>
+
+              </div>
+
             `;
 
           }
@@ -2511,8 +2860,7 @@ label{
 
           map[month] = {
             income:0,
-            expense:0,
-            profit:0
+            expense:0
           };
 
         }
@@ -2524,7 +2872,10 @@ label{
           );
 
 
-        if(item.type === "income"){
+        if(
+          item.type ===
+          "income"
+        ){
 
           map[month].income +=
             amount;
@@ -2532,7 +2883,10 @@ label{
         }
 
 
-        if(item.type === "expense"){
+        if(
+          item.type ===
+          "expense"
+        ){
 
           map[month].expense +=
             amount;
@@ -2562,9 +2916,11 @@ label{
     if(!months.length){
 
       monthlyReport.innerHTML =
-        `<div class="empty">
-          এখনো পর্যাপ্ত মাসিক হিসাব নেই।
-        </div>`;
+        `
+        <div class="empty">
+          এখনো মাসিক হিসাব নেই।
+        </div>
+        `;
 
       return;
 
@@ -2582,6 +2938,7 @@ label{
 
 
             return `
+
               <div class="row">
 
                 <span>
@@ -2605,6 +2962,7 @@ label{
                 </span>
 
               </div>
+
             `;
 
           }
@@ -2631,7 +2989,7 @@ label{
 
 
   /* =====================================================
-     ALL TRANSACTIONS FILTER
+     ALL TRANSACTIONS
   ===================================================== */
 
   function getFilteredTransactions(){
@@ -2667,26 +3025,16 @@ label{
           item => {
 
             const text =
-              (
+              [
                 typeName(
                   item.type
-                ) +
-                " " +
-                String(
-                  item.category ||
-                  ""
-                ) +
-                " " +
-                String(
-                  item.note ||
-                  ""
-                ) +
-                " " +
-                String(
-                  item.date ||
-                  ""
-                )
-              )
+                ),
+                item.person_name || "",
+                item.category || "",
+                item.note || "",
+                item.date || ""
+              ]
+              .join(" ")
               .toLowerCase();
 
 
@@ -2759,9 +3107,11 @@ label{
     if(!list.length){
 
       allTransactions.innerHTML =
-        `<div class="empty">
+        `
+        <div class="empty">
           কোনো হিসাব পাওয়া যায়নি।
-        </div>`;
+        </div>
+        `;
 
       return;
 
@@ -2791,7 +3141,19 @@ label{
                     )}
                   </div>
 
-                  <div>
+                  ${
+                    item.person_name
+                      ? `
+                        <div>
+                          👤 ${escapeHtml(
+                            item.person_name
+                          )}
+                        </div>
+                      `
+                      : ""
+                  }
+
+                  <div class="small muted">
                     ${escapeHtml(
                       item.category ||
                       "কোনো বিবরণ নেই"
@@ -2802,7 +3164,7 @@ label{
                     item.note
                       ? `
                         <div class="small muted">
-                          ${escapeHtml(
+                          📝 ${escapeHtml(
                             item.note
                           )}
                         </div>
@@ -2824,7 +3186,7 @@ label{
                 <div
                   style="
                     text-align:right;
-                    min-width:110px
+                    min-width:115px
                   "
                 >
 
@@ -2963,7 +3325,7 @@ label{
 
 
   /* =====================================================
-     LOAD CLOUD DATA
+     LOAD CLOUD
   ===================================================== */
 
   async function loadTransactions(){
@@ -2991,7 +3353,7 @@ label{
           "transactions"
         )
         .select(
-          "id,user_id,type,amount,category,date,note,created_at,updated_at"
+          "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
         )
         .order(
           "date",
@@ -3088,6 +3450,10 @@ label{
         );
 
 
+      const person =
+        personName.value.trim();
+
+
       let category =
         txCategory.value.trim();
 
@@ -3128,17 +3494,42 @@ label{
       }
 
 
+      if(
+        [
+          "lent",
+          "collect",
+          "borrowed",
+          "repay"
+        ].includes(
+          type
+        ) &&
+        !person
+      ){
+
+        showMessage(
+          txMsg,
+          "ধার/পাওনার ক্ষেত্রে ব্যক্তির নাম দিন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
       saveTxBtn.disabled =
         true;
 
 
       try{
 
-        /* ===========================
+        /* =================================
            UPDATE
-        =========================== */
+        ================================= */
 
-        if(editingId !== null){
+        if(
+          editingId !== null
+        ){
 
           showMessage(
             txMsg,
@@ -3163,6 +3554,9 @@ label{
               amount:
                 amount,
 
+              person_name:
+                person,
+
               category:
                 category,
 
@@ -3186,7 +3580,7 @@ label{
               currentSession.user.id
             )
             .select(
-              "id,user_id,type,amount,category,date,note,created_at,updated_at"
+              "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
             )
             .single();
 
@@ -3240,13 +3634,6 @@ label{
           renderReports();
 
 
-          showMessage(
-            txMsg,
-            "✅ হিসাব সফলভাবে Edit হয়েছে।",
-            "success"
-          );
-
-
           resetForm();
 
           showSection(
@@ -3259,9 +3646,9 @@ label{
         }
 
 
-        /* ===========================
+        /* =================================
            INSERT
-        =========================== */
+        ================================= */
 
         showMessage(
           txMsg,
@@ -3289,6 +3676,9 @@ label{
             amount:
               amount,
 
+            person_name:
+              person,
+
             category:
               category,
 
@@ -3300,7 +3690,7 @@ label{
 
           })
           .select(
-            "id,user_id,type,amount,category,date,note,created_at,updated_at"
+            "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
           )
           .single();
 
@@ -3350,6 +3740,9 @@ label{
         txAmount.value =
           "";
 
+        personName.value =
+          "";
+
         txCategory.value =
           "";
 
@@ -3391,7 +3784,9 @@ label{
      DELETE
   ===================================================== */
 
-  async function deleteTransaction(id){
+  async function deleteTransaction(
+    id
+  ){
 
     if(!currentSession){
 
@@ -3487,21 +3882,6 @@ label{
               id
             )
         );
-
-
-      if(
-        editingId !== null &&
-        String(
-          editingId
-        ) ===
-        String(
-          id
-        )
-      ){
-
-        resetForm();
-
-      }
 
 
       renderDashboard();
@@ -3660,7 +4040,7 @@ label{
 
         showMessage(
           loginMsg,
-          "✅ Account তৈরি হয়েছে। Email verification প্রয়োজন হলে আপনার Email চেক করুন।",
+          "✅ Account তৈরি হয়েছে। প্রয়োজন হলে Email verification করুন।",
           "success"
         );
 
@@ -3841,7 +4221,7 @@ label{
 
 
   /* =====================================================
-     AUTH UI
+     SHOW DASHBOARD
   ===================================================== */
 
   function showDashboard(
@@ -4036,21 +4416,20 @@ label{
   exportBtn.onclick =
     () => {
 
-      const backup =
-        {
+      const backup = {
 
-          exported_at:
-            new Date()
-              .toISOString(),
+        exported_at:
+          new Date()
+            .toISOString(),
 
-          user:
-            currentSession?.user?.email ||
-            "",
+        user:
+          currentSession?.user?.email ||
+          "",
 
-          transactions:
-            transactions
+        transactions:
+          transactions
 
-        };
+      };
 
 
       const blob =
@@ -4080,6 +4459,7 @@ label{
           "a"
         );
 
+
       a.href =
         url;
 
@@ -4097,7 +4477,7 @@ label{
 
 
   /* =====================================================
-     INITIALIZATION
+     INIT
   ===================================================== */
 
   async function init(){
