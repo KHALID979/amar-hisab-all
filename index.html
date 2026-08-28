@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="bn">
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -11,200 +10,190 @@
 <script src="supabase.js"></script>
 
 <style>
+*{
+box-sizing:border-box
+}
 
 body{
 margin:0;
 background:#f4f6f8;
-font-family:sans-serif;
-color:#111827;
+font-family:
+system-ui,
+"Noto Sans Bengali",
+sans-serif;
+color:#111827
 }
 
 main{
-max-width:500px;
+max-width:900px;
 margin:auto;
-padding:20px;
+padding:15px
 }
 
 .card{
 background:white;
-padding:20px;
-border-radius:15px;
+padding:15px;
+border-radius:16px;
 margin-bottom:15px;
-border:1px solid #ddd;
+border:1px solid #ddd
 }
 
-input,button{
+input,button,select,textarea{
 width:100%;
 padding:12px;
-margin-top:10px;
-border-radius:10px;
+margin-top:8px;
+border-radius:12px;
 border:1px solid #ccc;
-font-size:16px;
+font-size:16px
 }
 
 button{
-background:white;
 font-weight:bold;
-cursor:pointer;
+cursor:pointer
 }
 
 .primary{
 background:#111827;
-color:white;
+color:white
 }
 
 .hidden{
-display:none;
+display:none
 }
 
+.tabs{
+display:flex;
+gap:8px;
+overflow:auto
+}
+
+.tabs button{
+width:auto
+}
+
+.money{
+font-size:22px;
+font-weight:bold
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+border-bottom:1px solid #eee
+}
+
+.muted{
+color:#666
+}
 </style>
 
 </head>
 
-
 <body>
 
-<main>
-
+<main id="app">
 
 <div id="loginBox" class="card">
 
 <h2>🔐 আমার হিসাব Pro</h2>
 
-<p>নিজের Cloud হিসাব দেখতে Login করুন</p>
+<p class="muted">
+Email এবং Password দিয়ে Login করুন
+</p>
+
+<input id="email" type="email" placeholder="Email">
+
+<input id="password" type="password" placeholder="Password">
 
 
-<input id="email"
-placeholder="Email">
-
-
-<input id="password"
-type="password"
-placeholder="Password">
-
-
-<button id="signupBtn">
-নতুন Account তৈরি
+<button id="signupBtn" class="primary">
+নতুন অ্যাকাউন্ট তৈরি
 </button>
 
-
-<button id="loginBtn" class="primary">
+<button id="loginBtn">
 Login
 </button>
 
-
-<p id="msg"></p>
+<p id="loginMsg"></p>
 
 </div>
 
 
+<div id="dashboard" class="hidden">
 
-<div id="appBox" class="hidden">
 
-<div class="card">
+<div class="tabs">
 
-<h2>আমার হিসাব Pro</h2>
+<button class="primary">
+📊 Dashboard
+</button>
 
-<p>Login সফল হয়েছে ✅</p>
+<button>
+➕ হিসাব
+</button>
 
+<button>
+📈 রিপোর্ট
+</button>
+
+<button>
+⏰ Reminder
+</button>
 
 <button id="logoutBtn">
 Logout
 </button>
 
+</div>
+
+
+<div class="card">
+
+<h2>
+আমার হিসাব Pro
+</h2>
+
+<p class="muted">
+দৈনিক হিসাব ব্যবস্থাপনা
+</p>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+<div>মোট আয়</div>
+<div class="money">
+৳0
+</div>
+</div>
+
+
+<div class="card">
+<div>মোট ব্যয়</div>
+<div class="money">
+৳0
+</div>
+</div>
 
 </div>
 
 
 </div>
-
 
 </main>
 
-
-
 <script>
 
-
-const supabaseClient = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-
-
-const email=document.getElementById("email");
-const password=document.getElementById("password");
-const msg=document.getElementById("msg");
-
-
-signupBtn.onclick=async()=>{
-
-
-let {error}=await supabaseClient.auth.signUp({
-
-email:email.value,
-
-password:password.value
-
-});
-
-
-if(error)
-msg.innerText=error.message;
-
-else
-msg.innerText="Account তৈরি হয়েছে। Email check করুন।";
-
-
-};
-
-
-
-loginBtn.onclick=async()=>{
-
-
-let {error}=await supabaseClient.auth.signInWithPassword({
-
-email:email.value,
-
-password:password.value
-
-});
-
-
-if(error)
-
-msg.innerText=error.message;
-
-
-else{
-
-loginBox.classList.add("hidden");
-
-appBox.classList.remove("hidden");
-
-}
-
-
-};
-
-
-
-logoutBtn.onclick=async()=>{
-
-await supabaseClient.auth.signOut();
-
-appBox.classList.add("hidden");
-
-loginBox.classList.remove("hidden");
-
-};
-
-
-
 </script>
-
 
 </body>
 </html>
