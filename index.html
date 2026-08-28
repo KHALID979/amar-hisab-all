@@ -11,279 +11,1071 @@
 
 <style>
 *{
-box-sizing:border-box
+  box-sizing:border-box;
 }
 
 body{
-margin:0;
-background:#f4f6f8;
-font-family:
-system-ui,
-"Noto Sans Bengali",
-sans-serif;
-color:#111827
+  margin:0;
+  background:#f4f6f8;
+  font-family:
+    system-ui,
+    "Noto Sans Bengali",
+    "Segoe UI",
+    sans-serif;
+  color:#111827;
 }
 
 main{
-max-width:900px;
-margin:auto;
-padding:15px
+  max-width:900px;
+  margin:auto;
+  padding:15px;
 }
 
 .card{
-background:white;
-padding:15px;
-border-radius:16px;
-margin-bottom:15px;
-border:1px solid #ddd
+  background:#fff;
+  padding:15px;
+  border-radius:16px;
+  margin-bottom:15px;
+  border:1px solid #ddd;
 }
 
-input,button,select,textarea{
-width:100%;
-padding:12px;
-margin-top:8px;
-border-radius:12px;
-border:1px solid #ccc;
-font-size:16px
+input,
+button,
+select,
+textarea{
+  width:100%;
+  padding:12px;
+  margin-top:8px;
+  border-radius:12px;
+  border:1px solid #ccc;
+  font-size:16px;
+  font-family:inherit;
 }
 
 button{
-font-weight:bold;
-cursor:pointer
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
 }
 
 .primary{
-background:#111827;
-color:white
+  background:#111827;
+  color:#fff;
+  border-color:#111827;
+}
+
+.secondary{
+  background:#fff;
+  color:#111827;
 }
 
 .hidden{
-display:none
+  display:none !important;
 }
 
 .tabs{
-display:flex;
-gap:8px;
-overflow:auto
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  margin-bottom:10px;
 }
 
 .tabs button{
-width:auto
+  width:auto;
+  min-width:max-content;
+  white-space:nowrap;
 }
 
 .money{
-font-size:22px;
-font-weight:bold
+  font-size:22px;
+  font-weight:800;
+  margin-top:5px;
 }
 
 .grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
 }
 
 .row{
-display:flex;
-justify-content:space-between;
-padding:10px 0;
-border-bottom:1px solid #eee
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
 }
 
 .muted{
-color:#666
+  color:#666;
+}
+
+.message{
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  display:none;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  color:#991b1b;
+  background:#fef2f2;
+  border:1px solid #fecaca;
+}
+
+.message.success{
+  color:#065f46;
+  background:#ecfdf5;
+  border:1px solid #a7f3d0;
+}
+
+.message.info{
+  color:#1e40af;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+}
+
+.status{
+  font-size:13px;
+  margin-top:8px;
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  main{
+    padding:10px;
+  }
 }
 </style>
-
 </head>
 
 <body>
 
 <main id="app">
 
-<div id="loginBox" class="card">
+  <!-- =========================
+       LOGIN SECTION
+  ========================== -->
+  <div id="loginBox" class="card">
 
-<h2>🔐 আমার হিসাব Pro</h2>
+    <h2>🔐 আমার হিসাব Pro</h2>
 
-<p class="muted">
-Email এবং Password দিয়ে Login করুন
-</p>
+    <p class="muted">
+      Email এবং Password দিয়ে Login করুন
+    </p>
 
-<input id="email" type="email" placeholder="Email">
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+      autocomplete="email"
+    >
 
-<input id="password" type="password" placeholder="Password">
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
 
+    <button
+      id="signupBtn"
+      class="primary"
+      type="button"
+    >
+      নতুন অ্যাকাউন্ট তৈরি
+    </button>
 
-<button id="signupBtn" class="primary">
-নতুন অ্যাকাউন্ট তৈরি
-</button>
+    <button
+      id="loginBtn"
+      class="secondary"
+      type="button"
+    >
+      Login
+    </button>
 
-<button id="loginBtn">
-Login
-</button>
+    <div id="loginMsg" class="message"></div>
 
-<p id="loginMsg"></p>
-
-</div>
-
-
-<div id="dashboard" class="hidden">
-
-
-<div class="tabs">
-
-<button class="primary">
-📊 Dashboard
-</button>
-
-<button>
-➕ হিসাব
-</button>
-
-<button>
-📈 রিপোর্ট
-</button>
-
-<button>
-⏰ Reminder
-</button>
-
-<button id="logoutBtn">
-Logout
-</button>
-
-</div>
+  </div>
 
 
-<div class="card">
+  <!-- =========================
+       DASHBOARD
+  ========================== -->
+  <div id="dashboard" class="hidden">
 
-<h2>
-আমার হিসাব Pro
-</h2>
+    <div class="tabs">
 
-<p class="muted">
-দৈনিক হিসাব ব্যবস্থাপনা
-</p>
+      <button
+        id="dashboardBtn"
+        class="primary"
+        type="button"
+      >
+        📊 Dashboard
+      </button>
 
-</div>
+      <button
+        id="addBtn"
+        type="button"
+      >
+        ➕ হিসাব
+      </button>
+
+      <button
+        id="reportBtn"
+        type="button"
+      >
+        📈 রিপোর্ট
+      </button>
+
+      <button
+        id="reminderBtn"
+        type="button"
+      >
+        ⏰ Reminder
+      </button>
+
+      <button
+        id="logoutBtn"
+        type="button"
+      >
+        Logout
+      </button>
+
+    </div>
 
 
-<div class="grid">
+    <!-- DASHBOARD HOME -->
+    <section id="dashboardSection">
 
-<div class="card">
-<div>মোট আয়</div>
-<div class="money">
-৳0
-</div>
-</div>
+      <div class="card">
 
+        <h2>আমার হিসাব Pro</h2>
 
-<div class="card">
-<div>মোট ব্যয়</div>
-<div class="money">
-৳0
-</div>
-</div>
+        <p class="muted">
+          দৈনিক হিসাব ব্যবস্থাপনা
+        </p>
 
-</div>
+        <div id="userEmail" class="status muted"></div>
+
+      </div>
 
 
-</div>
+      <div class="grid">
+
+        <div class="card">
+          <div class="muted">মোট আয়</div>
+          <div id="incomeAmount" class="money">৳0</div>
+        </div>
+
+        <div class="card">
+          <div class="muted">মোট ব্যয়</div>
+          <div id="expenseAmount" class="money">৳0</div>
+        </div>
+
+        <div class="card">
+          <div class="muted">লাভ / লস</div>
+          <div id="profitAmount" class="money">৳0</div>
+        </div>
+
+        <div class="card">
+          <div class="muted">Deposit</div>
+          <div id="depositAmount" class="money">৳0</div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="row">
+          <span>আমার কাছে পাওনা</span>
+          <strong id="receivableAmount">৳0</strong>
+        </div>
+
+        <div class="row">
+          <span>আমি যে ধার করেছি</span>
+          <strong id="debtAmount">৳0</strong>
+        </div>
+
+        <div class="row">
+          <span>লাভের হার</span>
+          <strong id="profitPercent">0%</strong>
+        </div>
+
+        <div class="row">
+          <span>আয়ের মধ্যে খরচ</span>
+          <strong id="expensePercent">0%</strong>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>🧠 কী ভালো / কী খেয়াল করা দরকার</h3>
+
+        <p class="muted">
+          Cloud database যুক্ত হওয়ার পর এখানে
+          স্বয়ংক্রিয় বিশ্লেষণ, সতর্কতা এবং পরামর্শ দেখানো হবে।
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ADD SECTION -->
+    <section id="addSection" class="hidden">
+
+      <div class="card">
+
+        <h3>➕ নতুন হিসাব</h3>
+
+        <select id="txType">
+          <option value="income">💰 আয়</option>
+          <option value="expense">💸 ব্যয়</option>
+          <option value="deposit">🏦 Deposit</option>
+          <option value="lent">🤝 কাউকে ধার / আমার কাছে পাওনা</option>
+          <option value="collect">💵 পাওনা আদায়</option>
+          <option value="borrowed">📥 আমি ধার নিলাম</option>
+          <option value="repay">📤 ধার পরিশোধ</option>
+        </select>
+
+        <input
+          id="txAmount"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="টাকার পরিমাণ"
+        >
+
+        <input
+          id="txCategory"
+          placeholder="বিবরণ / category / ব্যক্তির নাম"
+        >
+
+        <input
+          id="txDate"
+          type="date"
+        >
+
+        <textarea
+          id="txNote"
+          placeholder="নোট"
+        ></textarea>
+
+        <button
+          id="saveTxBtn"
+          class="primary"
+          type="button"
+        >
+          হিসাব সংরক্ষণ
+        </button>
+
+        <div id="txMsg" class="message"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- REPORT SECTION -->
+    <section id="reportSection" class="hidden">
+
+      <div class="card">
+
+        <h3>📈 রিপোর্ট</h3>
+
+        <p class="muted">
+          Cloud database যুক্ত হওয়ার পর
+          দৈনিক, সাপ্তাহিক, মাসিক ও বাৎসরিক percentage report এখানে থাকবে।
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- REMINDER SECTION -->
+    <section id="reminderSection" class="hidden">
+
+      <div class="card">
+
+        <h3>⏰ Reminder</h3>
+
+        <p class="muted">
+          Reminder system এখানে থাকবে।
+          পরে meeting, টাকা পাওনা, ধার পরিশোধ,
+          মাসিক খরচ ইত্যাদির reminder যোগ করা হবে।
+        </p>
+
+      </div>
+
+    </section>
+
+  </div>
 
 </main>
 
+
 <script>
-const loginBox = document.getElementById("loginBox");
-const dashboard = document.getElementById("dashboard");
-const msg = document.getElementById("loginMsg");
+/* ========================================
+   আমার হিসাব Pro
+   Authentication + Basic App Control
+======================================== */
+
+(() => {
+
+  "use strict";
 
 
-async function checkLogin(){
+  /* ----------------------------------------
+     DOM
+  ---------------------------------------- */
 
-const {data} = await supabaseClient.auth.getSession();
+  const loginBox = document.getElementById("loginBox");
+  const dashboard = document.getElementById("dashboard");
 
-if(data.session){
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
 
-loginBox.style.display="none";
-dashboard.classList.remove("hidden");
+  const signupBtn = document.getElementById("signupBtn");
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
 
-}else{
+  const loginMsg = document.getElementById("loginMsg");
 
-loginBox.style.display="block";
-dashboard.classList.add("hidden");
+  const userEmail = document.getElementById("userEmail");
 
-}
+  const dashboardSection =
+    document.getElementById("dashboardSection");
 
-}
+  const addSection =
+    document.getElementById("addSection");
 
-checkLogin();
+  const reportSection =
+    document.getElementById("reportSection");
 
+  const reminderSection =
+    document.getElementById("reminderSection");
 
-document.getElementById("signupBtn").onclick = async()=>{
+  const dashboardBtn =
+    document.getElementById("dashboardBtn");
 
-let email=document.getElementById("email").value;
-let password=document.getElementById("password").value;
+  const addBtn =
+    document.getElementById("addBtn");
 
+  const reportBtn =
+    document.getElementById("reportBtn");
 
-const {error}=await supabaseClient.auth.signUp({
- email: email,
- password: password,
- options:{
-   emailRedirectTo:"https://khalid979.github.io/amar-hisab-all/"
- }
-});
+  const reminderBtn =
+    document.getElementById("reminderBtn");
 
-
-if(error){
-
-msg.innerText=error.message;
-
-}else{
-
-msg.innerText="Account তৈরি হয়েছে। Email চেক করুন।";
-
-}
-
-};
+  const txDate =
+    document.getElementById("txDate");
 
 
+  /* ----------------------------------------
+     Date
+  ---------------------------------------- */
 
-document.getElementById("loginBtn").onclick = async()=>{
+  function todayString() {
 
+    const d = new Date();
 
-let email=document.getElementById("email").value;
-let password=document.getElementById("password").value;
+    const year = d.getFullYear();
 
+    const month =
+      String(d.getMonth() + 1).padStart(2, "0");
 
-const {error}=await supabaseClient.auth.signUp({
- email: email,
- password: password,
- options:{
-   emailRedirectTo:"https://khalid979.github.io/amar-hisab-all/"
- }
-});
+    const day =
+      String(d.getDate()).padStart(2, "0");
 
+    return `${year}-${month}-${day}`;
+  }
 
-if(error){
-
-msg.innerText=error.message;
-
-}else{
-
-location.reload();
-
-}
-
-};
+  txDate.value = todayString();
 
 
+  /* ----------------------------------------
+     Message
+  ---------------------------------------- */
 
-document.getElementById("logoutBtn").onclick=async()=>{
+  function showMessage(element, text, type = "info") {
 
-await supabaseClient.auth.signOut();
+    element.textContent = text;
 
-location.reload();
+    element.className =
+      "message show " + type;
+  }
 
-};
+
+  function clearMessage(element) {
+
+    element.textContent = "";
+
+    element.className = "message";
+  }
+
+
+  /* ----------------------------------------
+     Login / Dashboard UI
+  ---------------------------------------- */
+
+  function showDashboard(session) {
+
+    loginBox.classList.add("hidden");
+
+    dashboard.classList.remove("hidden");
+
+    if (
+      session &&
+      session.user &&
+      session.user.email
+    ) {
+
+      userEmail.textContent =
+        "Logged in: " + session.user.email;
+
+    } else {
+
+      userEmail.textContent = "";
+
+    }
+
+    showSection("dashboard");
+
+  }
+
+
+  function showLogin() {
+
+    dashboard.classList.add("hidden");
+
+    loginBox.classList.remove("hidden");
+
+  }
+
+
+  /* ----------------------------------------
+     Sections
+  ---------------------------------------- */
+
+  function showSection(section) {
+
+    dashboardSection.classList.add("hidden");
+    addSection.classList.add("hidden");
+    reportSection.classList.add("hidden");
+    reminderSection.classList.add("hidden");
+
+    dashboardBtn.classList.remove("primary");
+    addBtn.classList.remove("primary");
+    reportBtn.classList.remove("primary");
+    reminderBtn.classList.remove("primary");
+
+    if (section === "dashboard") {
+
+      dashboardSection.classList.remove("hidden");
+      dashboardBtn.classList.add("primary");
+
+    }
+
+    if (section === "add") {
+
+      addSection.classList.remove("hidden");
+      addBtn.classList.add("primary");
+
+    }
+
+    if (section === "report") {
+
+      reportSection.classList.remove("hidden");
+      reportBtn.classList.add("primary");
+
+    }
+
+    if (section === "reminder") {
+
+      reminderSection.classList.remove("hidden");
+      reminderBtn.classList.add("primary");
+
+    }
+
+  }
+
+
+  /* ----------------------------------------
+     Check current session
+  ---------------------------------------- */
+
+  async function checkLogin() {
+
+    try {
+
+      const {
+        data,
+        error
+      } = await supabaseClient.auth.getSession();
+
+      if (error) {
+
+        console.error(
+          "Session error:",
+          error
+        );
+
+        showLogin();
+
+        return;
+
+      }
+
+      if (data && data.session) {
+
+        showDashboard(data.session);
+
+      } else {
+
+        showLogin();
+
+      }
+
+    } catch (error) {
+
+      console.error(
+        "Session check failed:",
+        error
+      );
+
+      showLogin();
+
+    }
+
+  }
+
+
+  /* ----------------------------------------
+     AUTH STATE LISTENER
+  ---------------------------------------- */
+
+  supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+      console.log(
+        "Auth event:",
+        event
+      );
+
+      if (session) {
+
+        showDashboard(session);
+
+      } else {
+
+        showLogin();
+
+      }
+
+    }
+  );
+
+
+  /* ----------------------------------------
+     SIGN UP
+  ---------------------------------------- */
+
+  signupBtn.addEventListener(
+    "click",
+    async () => {
+
+      clearMessage(loginMsg);
+
+      const email =
+        emailInput.value.trim();
+
+      const password =
+        passwordInput.value;
+
+
+      if (!email) {
+
+        showMessage(
+          loginMsg,
+          "Email দিন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (!password) {
+
+        showMessage(
+          loginMsg,
+          "Password দিন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (password.length < 6) {
+
+        showMessage(
+          loginMsg,
+          "Password কমপক্ষে ৬ অক্ষরের দিন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      signupBtn.disabled = true;
+
+      loginBtn.disabled = true;
+
+
+      showMessage(
+        loginMsg,
+        "Account তৈরি হচ্ছে...",
+        "info"
+      );
+
+
+      try {
+
+        const {
+          data,
+          error
+        } = await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password,
+
+          options: {
+
+            emailRedirectTo:
+              "https://khalid979.github.io/amar-hisab-all/"
+
+          }
+
+        });
+
+
+        if (error) {
+
+          showMessage(
+            loginMsg,
+            error.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          data &&
+          data.session
+        ) {
+
+          showMessage(
+            loginMsg,
+            "Account তৈরি হয়েছে এবং Login সফল হয়েছে।",
+            "success"
+          );
+
+          showDashboard(data.session);
+
+          return;
+
+        }
+
+
+        showMessage(
+          loginMsg,
+          "Account তৈরি হয়েছে। Email confirmation প্রয়োজন হলে আপনার Email চেক করুন।",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Signup error:",
+          error
+        );
+
+        showMessage(
+          loginMsg,
+          error?.message ||
+          "Account তৈরি করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+      } finally {
+
+        signupBtn.disabled = false;
+
+        loginBtn.disabled = false;
+
+      }
+
+    }
+  );
+
+
+  /* ----------------------------------------
+     LOGIN
+  ---------------------------------------- */
+
+  loginBtn.addEventListener(
+    "click",
+    async () => {
+
+      clearMessage(loginMsg);
+
+      const email =
+        emailInput.value.trim();
+
+      const password =
+        passwordInput.value;
+
+
+      if (!email) {
+
+        showMessage(
+          loginMsg,
+          "Email দিন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (!password) {
+
+        showMessage(
+          loginMsg,
+          "Password দিন।",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      loginBtn.disabled = true;
+
+      signupBtn.disabled = true;
+
+
+      showMessage(
+        loginMsg,
+        "Login হচ্ছে...",
+        "info"
+      );
+
+
+      try {
+
+        /*
+          IMPORTANT:
+          এখানে signUp() নয়।
+          Login-এর জন্য signInWithPassword()
+        */
+
+        const {
+          data,
+          error
+        } =
+        await supabaseClient.auth.signInWithPassword({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+        if (error) {
+
+          showMessage(
+            loginMsg,
+            error.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          data &&
+          data.session
+        ) {
+
+          showMessage(
+            loginMsg,
+            "Login সফল হয়েছে।",
+            "success"
+          );
+
+          showDashboard(data.session);
+
+        } else {
+
+          showMessage(
+            loginMsg,
+            "Login session পাওয়া যায়নি। আবার চেষ্টা করুন।",
+            "error"
+          );
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "Login error:",
+          error
+        );
+
+        showMessage(
+          loginMsg,
+          error?.message ||
+          "Login করতে সমস্যা হয়েছে।",
+          "error"
+        );
+
+      } finally {
+
+        loginBtn.disabled = false;
+
+        signupBtn.disabled = false;
+
+      }
+
+    }
+  );
+
+
+  /* ----------------------------------------
+     LOGOUT
+  ---------------------------------------- */
+
+  logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+      logoutBtn.disabled = true;
+
+      try {
+
+        const {
+          error
+        } =
+        await supabaseClient.auth.signOut();
+
+        if (error) {
+
+          alert(
+            "Logout করতে সমস্যা হয়েছে: " +
+            error.message
+          );
+
+          return;
+
+        }
+
+        showLogin();
+
+        emailInput.value = "";
+        passwordInput.value = "";
+
+        clearMessage(loginMsg);
+
+      } catch (error) {
+
+        console.error(
+          "Logout error:",
+          error
+        );
+
+        alert(
+          "Logout করতে সমস্যা হয়েছে।"
+        );
+
+      } finally {
+
+        logoutBtn.disabled = false;
+
+      }
+
+    }
+  );
+
+
+  /* ----------------------------------------
+     NAVIGATION
+  ---------------------------------------- */
+
+  dashboardBtn.addEventListener(
+    "click",
+    () => showSection("dashboard")
+  );
+
+
+  addBtn.addEventListener(
+    "click",
+    () => showSection("add")
+  );
+
+
+  reportBtn.addEventListener(
+    "click",
+    () => showSection("report")
+  );
+
+
+  reminderBtn.addEventListener(
+    "click",
+    () => showSection("reminder")
+  );
+
+
+  /* ----------------------------------------
+     INITIAL CHECK
+  ---------------------------------------- */
+
+  checkLogin();
+
+})();
 </script>
 
 </body>
