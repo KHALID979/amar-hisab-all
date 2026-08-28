@@ -2,7 +2,7 @@
 
 const SUPABASE_URL = "https://bzjkjryfqscjrejibxvs.supabase.co";
 
-const SUPABASE_KEY = "তোমার আগের sb_publishable_... key";
+const SUPABASE_KEY = "sb_publishable_cmu5zZrpiGxKosLG16unsQ_mUjy38Fn";
 
 const supabaseClient = supabase.createClient(
   SUPABASE_URL,
@@ -11,7 +11,7 @@ const supabaseClient = supabase.createClient(
     auth: {
       persistSession: true,
       autoRefreshToken: true,
-      detectSessionInUrl: true
+      detectSessionInUrl: false
     }
   }
 );
