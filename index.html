@@ -1,168 +1,210 @@
 <!doctype html>
 <html lang="bn">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
-<link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>আমার হিসাব Pro</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f6f8;color:#111827;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans Bengali","Segoe UI",sans-serif}
-main{max-width:900px;margin:auto;padding:14px 14px 28px}.tabs{display:flex;gap:6px;overflow:auto;padding:2px 0 10px}.tabs button{white-space:nowrap}
-button{min-height:44px;border:1px solid #d1d5db;border-radius:12px;background:#fff;padding:9px 13px;font-weight:700;color:#111827}
-.primary{background:#111827;color:#fff;border-color:#111827}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-@media(min-width:680px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-input,select,textarea{width:100%;min-height:46px;border:1px solid #d1d5db;border-radius:12px;padding:10px;font-size:16px;background:#fff;color:#111827}
-textarea{min-height:90px;resize:vertical}.muted{color:#6b7280;font-size:13px}.small{font-size:12px}.money{font-variant-numeric:tabular-nums;font-weight:800;font-size:20px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee}.hidden{display:none!important}.danger{color:#b91c1c}.success{color:#047857}.warn{color:#b45309}
-.bar{height:8px;background:#e5e7eb;border-radius:99px;overflow:hidden}.fill{height:100%;background:#111827}
-.actions{display:flex;gap:8px;flex-wrap:wrap}.pill{display:inline-block;border:1px solid #d1d5db;border-radius:999px;padding:4px 8px;font-size:12px;background:#fafafa}
-.notice{border-left:4px solid #111827;padding:9px 10px;background:#f9fafb;border-radius:9px;font-size:13px}.notice.warn{border-left-color:#b45309}.notice.good{border-left-color:#047857}
-h2,h3{margin:0 0 6px}.stack>*+*{margin-top:8px}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px;border-bottom:1px solid #eee;vertical-align:top}
-.right{text-align:right}.center{text-align:center}.kpi-sub{font-size:12px;color:#6b7280;margin-top:2px}
+
+body{
+margin:0;
+background:#f4f6f8;
+font-family:sans-serif;
+color:#111827;
+}
+
+main{
+max-width:500px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:15px;
+border:1px solid #ddd;
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+button{
+background:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.primary{
+background:#111827;
+color:white;
+}
+
+.hidden{
+display:none;
+}
+
 </style>
+
 </head>
+
+
 <body>
-<main id="app">
-<div class="tabs">
-<button class="primary" data-tab="home">📊 Dashboard</button>
-<button data-tab="add">➕ হিসাব</button>
-<button data-tab="reports">📈 রিপোর্ট</button>
-<button data-tab="reminders">⏰ Reminder</button>
-<button data-tab="all">🧾 সব হিসাব</button>
+
+<main>
+
+
+<div id="loginBox" class="card">
+
+<h2>🔐 আমার হিসাব Pro</h2>
+
+<p>নিজের Cloud হিসাব দেখতে Login করুন</p>
+
+
+<input id="email"
+placeholder="Email">
+
+
+<input id="password"
+type="password"
+placeholder="Password">
+
+
+<button id="signupBtn">
+নতুন Account তৈরি
+</button>
+
+
+<button id="loginBtn" class="primary">
+Login
+</button>
+
+
+<p id="msg"></p>
+
 </div>
 
-<section id="home">
+
+
+<div id="appBox" class="hidden">
+
 <div class="card">
-<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><h2>আমার হিসাব Pro</h2><div class="muted">দৈনিক · সাপ্তাহিক · মাসিক · বাৎসরিক · পাওনা · ধার · Deposit</div></div><span class="pill" id="dataCount">0 লেনদেন</span></div>
-</div>
-<div class="grid">
-<div class="card"><div class="muted">মোট আয়</div><div id="income" class="money">৳0</div></div>
-<div class="card"><div class="muted">মোট ব্যয়</div><div id="expense" class="money">৳0</div></div>
-<div class="card"><div class="muted">লাভ / লস</div><div id="profit" class="money">৳0</div></div>
-<div class="card"><div class="muted">Deposit</div><div id="deposit" class="money">৳0</div></div>
-</div>
-<div class="card">
-<div class="row"><span>আমার কাছে পাওনা</span><b id="receivable">৳0</b></div>
-<div class="row"><span>আমি যেটা ধার করেছি</span><b id="debt">৳0</b></div>
-<div class="row"><span>লাভের হার</span><b id="profitPct">0%</b></div>
-<div class="row"><span>আয়ের মধ্যে খরচ</span><b id="expensePct">0%</b></div>
-<div class="bar"><div id="expenseBar" class="fill" style="width:0%"></div></div>
-</div>
-<div class="card"><h3>🧠 কী ভালো / কী খেয়াল করা দরকার</h3><div id="advice" class="stack"></div></div>
-<div class="card"><h3>⏰ কাছের Reminder</h3><div id="nearReminders"></div></div>
-<div class="card"><h3>🧾 আজকের হিসাব</h3><div id="todayList"></div></div>
-</section>
 
-<section id="add" class="hidden">
-<div class="card"><h3>➕ নতুন হিসাব</h3>
-<form id="txForm" class="stack">
-<select id="txType">
-<option value="income">💰 আয়</option>
-<option value="expense">💸 ব্যয়</option>
-<option value="deposit">🏦 Deposit</option>
-<option value="lent">🤝 মানুষকে ধার / আমার কাছে পাওনা</option>
-<option value="collect">💵 পাওনা আদায়</option>
-<option value="borrowed">📥 আমি ধার নিলাম</option>
-<option value="repay">📤 ধার পরিশোধ</option>
-</select>
-<input id="amount" type="number" min="0" step="0.01" placeholder="টাকার পরিমাণ" required>
-<input id="category" placeholder="খরচের ধরন / ব্যক্তির নাম (যেমন খাবার, চা-নাস্তা, ভাড়া, রহিম)">
-<select id="expenseCat">
-<option value="">খরচের category (খরচ হলে বাছুন)</option><option>খাবার</option><option>চা-নাস্তা</option><option>থাকা/ভাড়া</option><option>গাড়ি/যাতায়াত</option><option>বিল</option><option>বাজার</option><option>ব্যবসা</option><option>স্বাস্থ্য</option><option>শিক্ষা</option><option>বিনোদন</option><option>অন্যান্য</option>
-</select>
-<input id="txDate" type="date" required>
-<textarea id="note" placeholder="নোট"></textarea>
-<button class="primary" type="submit">সংরক্ষণ</button>
-</form></div>
-<div class="card"><h3>🤖 দ্রুত বাংলা হিসাব</h3><div class="muted">যেমন: “আজ আয় ৮০০০, বাজার ৫০০, চা ৫০, ডিপোজিট ২০০০”</div>
-<input id="aiText" placeholder="স্বাভাবিক ভাষায় লিখুন"><button id="aiBtn" class="primary" style="width:100%;margin-top:8px">বুঝে হিসাব যোগ করুন</button><div id="aiMsg" class="muted" style="margin-top:8px"></div></div>
-</section>
+<h2>আমার হিসাব Pro</h2>
 
-<section id="reports" class="hidden">
-<div class="card"><h3>📈 রিপোর্ট ও Percentage</h3>
-<div class="actions" style="margin-bottom:10px"><button data-period="week" class="primary period">সপ্তাহ</button><button data-period="month" class="period">মাস</button><button data-period="year" class="period">বছর</button></div>
-<div id="periodReport"></div></div>
-<div class="card"><h3>🍽️ খরচের Category</h3><div id="categoryReport"></div></div>
-</section>
+<p>Login সফল হয়েছে ✅</p>
 
-<section id="reminders" class="hidden">
-<div class="card"><h3>⏰ Reminder</h3>
-<div class="notice">এই PWA-তে notification permission নেওয়া যাবে। ব্রাউজার/ফোনের সীমাবদ্ধতার কারণে অ্যাপ পুরোপুরি বন্ধ থাকা অবস্থায় নির্দিষ্ট সময়ে notification নিশ্চিত করা যায় না। গুরুত্বপূর্ণ meeting/সময়-ভিত্তিক reminder-এর জন্য ChatGPT reminder ব্যবহার করা বেশি নির্ভরযোগ্য।</div>
-<form id="remForm" class="stack" style="margin-top:10px">
-<input id="remTitle" placeholder="যেমন: কাল জরুরি মিটিং" required>
-<input id="remWhen" type="datetime-local" required>
-<select id="remRepeat"><option value="once">একবার</option><option value="daily">প্রতিদিন</option><option value="weekly">প্রতি সপ্তাহে</option></select>
-<textarea id="remNote" placeholder="কী মনে করিয়ে দেবে"></textarea>
-<button class="primary" type="submit">Reminder যোগ করুন</button>
-</form>
-<div class="actions" style="margin-top:10px"><button id="notifyBtn">🔔 Notification চালু</button><button id="icsBtn">📅 Reminder Calendar ফাইল</button></div>
+
+<button id="logoutBtn">
+Logout
+</button>
+
+
 </div>
-<div class="card"><h3>আমার Reminder</h3><div id="remList"></div></div>
-</section>
 
-<section id="all" class="hidden">
-<div class="card"><h3>🧾 সব হিসাব</h3><div class="actions"><button id="exportBtn">💾 Backup JSON</button><label style="display:inline-flex;align-items:center"><button type="button" id="importBtn">📥 Restore</button><input id="fileIn" type="file" accept=".json" style="display:none"></label><button id="clearBtn" class="danger">সব মুছুন</button></div></div>
-<div class="card"><div style="overflow:auto"><table><thead><tr><th>তারিখ</th><th>ধরন</th><th>বিবরণ</th><th class="right">টাকা</th></tr></thead><tbody id="allTable"></tbody></table></div></div>
-</section>
+
+</div>
+
+
 </main>
 
+
+
 <script>
-(()=>{
-const $=id=>document.getElementById(id), root=$('app');
-const KEY='amar_hisab_pro_v2';
-let state=JSON.parse(localStorage.getItem(KEY)||'{"tx":[],"reminders":[]}');
-const d=new Date(), pad=n=>String(n).padStart(2,'0');
-const today=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-$('txDate').value=today;
-const money=n=>'৳'+Number(n||0).toLocaleString('en-BD',{maximumFractionDigits:2});
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function save(){localStorage.setItem(KEY,JSON.stringify(state))}
-function typeName(t){return {income:'আয়',expense:'ব্যয়',deposit:'Deposit',lent:'পাওনা',collect:'পাওনা আদায়',borrowed:'ধার নেওয়া',repay:'ধার পরিশোধ'}[t]||t}
-function stats(a){let s={income:0,expense:0,deposit:0,lent:0,collect:0,borrowed:0,repay:0};a.forEach(x=>s[x.type]=(s[x.type]||0)+x.amount);s.profit=s.income-s.expense;s.receivable=Math.max(0,s.lent-s.collect);s.debt=Math.max(0,s.borrowed-s.repay);return s}
-function addTx(x){if(!x.amount||x.amount<=0)return false;state.tx.push(x);save();render();return true}
-function normalizeDigits(s){let bn='০১২৩৪৫৬৭৮৯', ar='٠١٢٣٤٥٦٧٨٩';return String(s).replace(/[০-৯]/g,c=>bn.indexOf(c)).replace(/[٠-٩]/g,c=>ar.indexOf(c))}
-function parseAI(text){let s=normalizeDigits(text.toLowerCase()).replace(/,/g,''),nums=[...s.matchAll(/(\d+(?:\.\d+)?)/g)].map(m=>+m[1]),out=[];const has=(...w)=>w.some(k=>s.includes(k));if(!nums.length)return out;
-let used=0;
-if(has('আয়','ইনকাম','income')){out.push(['income',nums[used++], 'আয়']);}
-let expenseWords=[['বাজার','বাজার'],['খাবার','খাবার'],['চা','চা-নাস্তা'],['নাস্তা','চা-নাস্তা'],['ভাড়া','থাকা/ভাড়া'],['গাড়ি','গাড়ি/যাতায়াত'],['যাতায়াত','গাড়ি/যাতায়াত'],['বিল','বিল'],['ব্যবসা','ব্যবসা']];
-if(has('খরচ','ব্যয়','খরচা','expense')){let n=nums[used++]??nums[0];let cat='অন্যান্য';for(const q of expenseWords){if(s.includes(q[0])){cat=q[1];break}}out.push(['expense',n,cat]);}
-if(has('ডিপোজিট','deposit')){out.push(['deposit',nums[used++]??nums[nums.length-1],'Deposit']);}
-if(has('ধার দিল','ধার দিলাম','পাওনা দিল'))out.push(['lent',nums[nums.length-1],extractPerson(s)]);
-if(has('পাওনা আদায়','ফেরত দিয়েছে','ফেরত পেলাম'))out.push(['collect',nums[nums.length-1],extractPerson(s)]);
-if(has('ধার নিল','ধার নিলাম','ঋণ নিল'))out.push(['borrowed',nums[nums.length-1],extractPerson(s)]);
-if(has('ধার শোধ','পরিশোধ করলাম','ঋণ শোধ'))out.push(['repay',nums[nums.length-1],extractPerson(s)]);
-if(!out.length&&nums.length===1)out.push(['expense',nums[0],'অন্যান্য']);return out}
-function extractPerson(s){let m=s.match(/(?:রহিম|করিম|সুমন|জসিম|রাকিব|শাকিল|সোহেল|আলম|মিজান|জন|ব্যাংক|বস)/);return m?m[0]:'ব্যক্তি/ঋণ'}
-$('aiBtn').onclick=()=>{let a=parseAI($('aiText').value.trim());if(!a.length){$('aiMsg').textContent='হিসাব বুঝতে পারিনি। যেমন: “আজ আয় ৮০০০, বাজার ৫০০”';return}a.forEach(x=>addTx({type:x[0],amount:x[1],category:x[2],date:today,note:'AI দিয়ে যোগ'}));$('aiText').value='';$('aiMsg').textContent=a.length+'টি হিসাব যোগ হয়েছে।';show('home')};
-$('txForm').onsubmit=e=>{e.preventDefault();let type=$('txType').value,cat=$('category').value.trim()||$('expenseCat').value||'';if(addTx({type,amount:+$('amount').value,category:cat,date:$('txDate').value,note:$('note').value.trim()})){e.target.reset();$('txDate').value=today;show('home')}};
-function calcPeriod(kind){let end=new Date(today+'T23:59:59'), start;if(kind==='week'){start=new Date(end);start.setDate(start.getDate()-6)}else if(kind==='month')start=new Date(end.getFullYear(),end.getMonth(),1);else start=new Date(end.getFullYear(),0,1);let a=state.tx.filter(x=>{let z=new Date(x.date+'T12:00:00');return z>=start&&z<=end});return stats(a)}
-function render(){let s=stats(state.tx),pp=s.income?s.profit/s.income*100:0,ep=s.income?s.expense/s.income*100:0;
-$('income').textContent=money(s.income);$('expense').textContent=money(s.expense);$('profit').textContent=money(s.profit);$('deposit').textContent=money(s.deposit);$('receivable').textContent=money(s.receivable);$('debt').textContent=money(s.debt);$('profitPct').textContent=pp.toFixed(1)+'%';$('expensePct').textContent=ep.toFixed(1)+'%';$('expenseBar').style.width=Math.min(100,Math.max(0,ep))+'%';$('dataCount').textContent=state.tx.length+' লেনদেন';
-let daily=state.tx.filter(x=>x.date===today);$('todayList').innerHTML=daily.length?daily.map(x=>`<div class="row"><span><b>${typeName(x.type)}</b> · ${esc(x.category||'')}</span><b>${money(x.amount)}</b></div>`).join(''):'<div class="muted">আজ কোনো হিসাব নেই।</div>';
-let adv=[];if(ep>70&&s.income)adv.push('<div class="notice warn">⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে। অপ্রয়োজনীয় খরচ কমানোর চেষ্টা করুন।</div>');if(pp>=30&&s.income)adv.push('<div class="notice good">✅ লাভের হার ভালো অবস্থায় আছে (৩০%+)।</div>');if(s.receivable>0)adv.push(`<div class="notice">🤝 মানুষের কাছে আপনার পাওনা ${money(s.receivable)}—আদায়ের তারিখ মনে রাখুন।</div>`);if(s.debt>0)adv.push(`<div class="notice warn">📥 আপনার নেওয়া ধার বাকি ${money(s.debt)}—পরিশোধের পরিকল্পনা রাখুন।</div>`);if(!adv.length)adv.push('<div class="muted">ডেটা বাড়লে এখানে স্বয়ংক্রিয় পরামর্শ দেখাবে।</div>');$('advice').innerHTML=adv.join('');
-let rs=[...state.reminders].sort((a,b)=>a.when.localeCompare(b.when)).filter(r=>new Date(r.when)>=new Date()).slice(0,5);$('nearReminders').innerHTML=rs.length?rs.map(r=>`<div class="row"><span><b>${esc(r.title)}</b><div class="muted">${new Date(r.when).toLocaleString('bn-BD')}</div></span><span>${esc(r.repeat)}</span></div>`).join(''):'<div class="muted">কোনো আসন্ন reminder নেই।</div>';
-renderPeriod('week');renderCategories();renderReminders();renderAll();
+
+
+const supabaseClient = supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+const email=document.getElementById("email");
+const password=document.getElementById("password");
+const msg=document.getElementById("msg");
+
+
+signupBtn.onclick=async()=>{
+
+
+let {error}=await supabaseClient.auth.signUp({
+
+email:email.value,
+
+password:password.value
+
+});
+
+
+if(error)
+msg.innerText=error.message;
+
+else
+msg.innerText="Account তৈরি হয়েছে। Email check করুন।";
+
+
+};
+
+
+
+loginBtn.onclick=async()=>{
+
+
+let {error}=await supabaseClient.auth.signInWithPassword({
+
+email:email.value,
+
+password:password.value
+
+});
+
+
+if(error)
+
+msg.innerText=error.message;
+
+
+else{
+
+loginBox.classList.add("hidden");
+
+appBox.classList.remove("hidden");
+
 }
-function renderPeriod(kind){let s=calcPeriod(kind),p=s.income?s.profit/s.income*100:0,e=s.income?s.expense/s.income*100:0,d=s.income?s.deposit/s.income*100:0;$('periodReport').innerHTML=`<div class="grid"><div class="card"><div class="muted">আয়</div><div class="money">${money(s.income)}</div></div><div class="card"><div class="muted">খরচ</div><div class="money">${money(s.expense)}</div></div><div class="card"><div class="muted">লাভ/লস</div><div class="money">${money(s.profit)}</div></div><div class="card"><div class="muted">Deposit</div><div class="money">${money(s.deposit)}</div></div></div><div class="row"><span>লাভ %</span><b>${p.toFixed(1)}%</b></div><div class="row"><span>খরচ %</span><b>${e.toFixed(1)}%</b></div><div class="row"><span>Deposit %</span><b>${d.toFixed(1)}%</b></div><div class="row"><span>পাওনা</span><b>${money(s.receivable)}</b></div><div class="row"><span>ধার বাকি</span><b>${money(s.debt)}</b></div>`}
-function renderCategories(){let a=state.tx.filter(x=>x.type==='expense'),m={};a.forEach(x=>m[x.category||'অন্যান্য']=(m[x.category||'অন্যান্য']||0)+x.amount);let total=a.reduce((q,x)=>q+x.amount,0),ks=Object.entries(m).sort((a,b)=>b[1]-a[1]);$('categoryReport').innerHTML=ks.length?ks.map(([k,v])=>`<div class="row"><span>${esc(k)}</span><b>${money(v)} · ${total?(v/total*100).toFixed(1):0}%</b></div>`).join(''):'<div class="muted">এখনও কোনো খরচ নেই।</div>'}
-function renderReminders(){let a=[...state.reminders].sort((x,y)=>x.when.localeCompare(y.when));$('remList').innerHTML=a.length?a.map((r,i)=>`<div class="row"><span><b>${esc(r.title)}</b><div class="muted">${new Date(r.when).toLocaleString('bn-BD')} · ${esc(r.repeat)}</div>${r.note?'<div class="small">'+esc(r.note)+'</div>':''}</span><button data-delrem="${i}">মুছুন</button></div>`).join(''):'<div class="muted">কোনো reminder নেই।</div>';root.querySelectorAll('[data-delrem]').forEach(b=>b.onclick=()=>{state.reminders.splice(+b.dataset.delrem,1);save();render()})}
-function renderAll(){let a=[...state.tx].sort((x,y)=>y.date.localeCompare(x.date));$('allTable').innerHTML=a.length?a.map(x=>`<tr><td>${esc(x.date)}</td><td>${typeName(x.type)}</td><td>${esc(x.category||'')}<div class="small muted">${esc(x.note||'')}</div></td><td class="right">${money(x.amount)}</td></tr>`).join(''):'<tr><td colspan="4" class="center muted">কোনো হিসাব নেই</td></tr>'}
-root.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>show(b.dataset.tab));
-function show(k){['home','add','reports','reminders','all'].forEach(x=>$(x).classList.toggle('hidden',x!==k));root.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('primary',b.dataset.tab===k))}
-root.querySelectorAll('.period').forEach(b=>b.onclick=()=>{root.querySelectorAll('.period').forEach(x=>x.classList.remove('primary'));b.classList.add('primary');renderPeriod(b.dataset.period)});
-$('remForm').onsubmit=e=>{e.preventDefault();state.reminders.push({title:$('remTitle').value.trim(),when:$('remWhen').value,repeat:$('remRepeat').value,note:$('remNote').value.trim()});save();e.target.reset();render();show('reminders')};
-$('notifyBtn').onclick=async()=>{if(!('Notification'in window)){alert('এই browser notification support করে না।');return}let p=await Notification.requestPermission();alert(p==='granted'?'Notification চালু হয়েছে।':'Notification অনুমতি দেওয়া হয়নি।')};
-$('icsBtn').onclick=()=>{let lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Amar Hisab//Reminder//BN'];state.reminders.forEach(r=>{let dt=new Date(r.when);let fmt=dt.getUTCFullYear()+pad(dt.getUTCMonth()+1)+pad(dt.getUTCDate())+'T'+pad(dt.getUTCHours())+pad(dt.getUTCMinutes())+'00Z';lines.push('BEGIN:VEVENT','UID:'+Date.now()+'-'+Math.random().toString(36).slice(2)+'@amar-hisab','DTSTART:'+fmt,'SUMMARY:'+r.title.replace(/[,;]/g,' '),'DESCRIPTION:'+(r.note||'').replace(/[,;]/g,' '),'END:VEVENT')});lines.push('END:VCALENDAR');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\\r\\n')],{type:'text/calendar'}));a.download='amar-hisab-reminders.ics';a.click();};
-$('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='amar-hisab-backup.json';a.click()};
-$('importBtn').onclick=()=>$('fileIn').click();
-$('fileIn').onchange=e=>{let f=e.target.files[0];if(!f)return;let rd=new FileReader();rd.onload=()=>{try{let x=JSON.parse(rd.result);if(!Array.isArray(x.tx)||!Array.isArray(x.reminders))throw Error();state=x;save();render();alert('Backup restore হয়েছে।')}catch{alert('Backup ফাইলটি সঠিক নয়।')}};rd.readAsText(f)};
-$('clearBtn').onclick=()=>{if(confirm('সব হিসাব ও reminder মুছে ফেলবেন?')){state={tx:[],reminders:[]};save();render()}};
-if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-setInterval(()=>{let now=Date.now();state.reminders.forEach(r=>{if(!r.fired&&new Date(r.when).getTime()<=now){if('Notification'in window&&Notification.permission==='granted')new Notification(r.title,{body:r.note||'আপনার reminder এসেছে।'});r.fired=true}});save();},30000);
-render();
-})();
+
+
+};
+
+
+
+logoutBtn.onclick=async()=>{
+
+await supabaseClient.auth.signOut();
+
+appBox.classList.add("hidden");
+
+loginBox.classList.remove("hidden");
+
+};
+
+
+
 </script>
-</body></html>
+
+
+</body>
+</html>
