@@ -1,9 +1,13 @@
-// Supabase connection
+// ========================================
+// আমার হিসাব Pro
+// Supabase Client Configuration
+// ========================================
 
 const SUPABASE_URL = "https://bzjkjryfqscjrejibxvs.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_cmu5zZrpiGxKosLG16unsQ_mUjy38Fn";
 
+// Supabase client
 const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY,
@@ -15,3 +19,6 @@ const supabaseClient = supabase.createClient(
     }
   }
 );
+
+// Global access (index.html থেকেও ব্যবহার করা যাবে)
+window.supabaseClient = supabaseClient;
