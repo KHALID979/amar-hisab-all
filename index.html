@@ -192,7 +192,92 @@ Logout
 </main>
 
 <script>
+const loginBox = document.getElementById("loginBox");
+const dashboard = document.getElementById("dashboard");
+const msg = document.getElementById("loginMsg");
 
+
+async function checkLogin(){
+
+const {data} = await supabaseClient.auth.getSession();
+
+if(data.session){
+
+loginBox.style.display="none";
+dashboard.classList.remove("hidden");
+
+}else{
+
+loginBox.style.display="block";
+dashboard.classList.add("hidden");
+
+}
+
+}
+
+checkLogin();
+
+
+document.getElementById("signupBtn").onclick = async()=>{
+
+let email=document.getElementById("email").value;
+let password=document.getElementById("password").value;
+
+
+const {error}=await supabaseClient.auth.signUp({
+email,
+password
+});
+
+
+if(error){
+
+msg.innerText=error.message;
+
+}else{
+
+msg.innerText="Account তৈরি হয়েছে। Email চেক করুন।";
+
+}
+
+};
+
+
+
+document.getElementById("loginBtn").onclick = async()=>{
+
+
+let email=document.getElementById("email").value;
+let password=document.getElementById("password").value;
+
+
+const {error}=await supabaseClient.auth.signInWithPassword({
+email,
+password
+});
+
+
+if(error){
+
+msg.innerText=error.message;
+
+}else{
+
+location.reload();
+
+}
+
+};
+
+
+
+document.getElementById("logoutBtn").onclick=async()=>{
+
+await supabaseClient.auth.signOut();
+
+location.reload();
+
+};
 </script>
 
 </body>
