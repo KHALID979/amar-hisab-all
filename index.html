@@ -6892,7 +6892,7 @@ async function setupPushNotifications() {
 }
 
 /* Page load হলে Push setup */
-window.addEventListener("load", () => {
-  setupPushNotifications();
-});
-</script>
+/* Notification button click করলে Push setup হবে */
+document
+  .getElementById("enableNotificationBtn")
+  ?.addEventListener("click", setupPushNotifications);
