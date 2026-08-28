@@ -295,7 +295,7 @@ label{
 }
 
 .reminderItem.done{
-  opacity:.6;
+  opacity:.7;
   background:#f9fafb;
 }
 
@@ -342,6 +342,26 @@ label{
   color:#047857;
 }
 
+.reminderTabs{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.reminderTabs button{
+  margin-top:0;
+}
+
+.statusBadge{
+  display:inline-block;
+  margin-top:5px;
+  padding:4px 8px;
+  border-radius:8px;
+  background:#f3f4f6;
+  font-size:12px;
+}
+
 @media(max-width:760px){
 
   .grid4{
@@ -374,6 +394,10 @@ label{
     font-size:21px;
   }
 
+  .reminderTabs{
+    grid-template-columns:1fr;
+  }
+
 }
 </style>
 </head>
@@ -382,9 +406,7 @@ label{
 
 <main>
 
-<!-- =====================================================
-     LOGIN
-===================================================== -->
+<!-- LOGIN -->
 
 <section id="loginBox" class="card">
 
@@ -428,71 +450,46 @@ label{
 </section>
 
 
-<!-- =====================================================
-     APP
-===================================================== -->
+<!-- APP -->
 
 <section id="dashboard" class="hidden">
 
   <div class="tabs">
 
-    <button
-      id="navDashboard"
-      class="primary"
-      type="button"
-    >
+    <button id="navDashboard" class="primary">
       📊 Dashboard
     </button>
 
-    <button
-      id="navAdd"
-      type="button"
-    >
+    <button id="navAdd">
       ➕ হিসাব
     </button>
 
-    <button
-      id="navReports"
-      type="button"
-    >
+    <button id="navReports">
       📈 রিপোর্ট
     </button>
 
-    <button
-      id="navAll"
-      type="button"
-    >
+    <button id="navAll">
       🧾 সব হিসাব
     </button>
 
-    <button
-      id="navReminders"
-      type="button"
-    >
+    <button id="navReminders">
       ⏰ Reminder
     </button>
 
-    <button
-      id="logoutBtn"
-      type="button"
-    >
+    <button id="logoutBtn">
       Logout
     </button>
 
   </div>
 
 
-  <!-- ===================================================
-       DASHBOARD
-  ==================================================== -->
+  <!-- DASHBOARD -->
 
   <section id="dashboardSection">
 
     <div class="card">
 
-      <h2>
-        💼 আমার হিসাব Pro
-      </h2>
+      <h2>💼 আমার হিসাব Pro</h2>
 
       <div class="muted">
         Cloud Database-এ সংরক্ষিত ব্যক্তিগত হিসাব
@@ -566,10 +563,7 @@ label{
         </div>
 
         <div class="progress">
-          <div
-            id="dashExpenseBar"
-            style="width:0%"
-          ></div>
+          <div id="dashExpenseBar" style="width:0%"></div>
         </div>
 
       </div>
@@ -579,9 +573,7 @@ label{
 
     <div class="card">
 
-      <h3>
-        👥 ব্যক্তিভিত্তিক পাওনা/ধার
-      </h3>
+      <h3>👥 ব্যক্তিভিত্তিক পাওনা/ধার</h3>
 
       <div id="personSummary"></div>
 
@@ -590,16 +582,12 @@ label{
 
     <div class="card">
 
-      <h3>
-        🧠 হিসাবের অবস্থা
-      </h3>
+      <h3>🧠 হিসাবের অবস্থা</h3>
 
       <div id="adviceBox"></div>
 
     </div>
 
-
-    <!-- Upcoming reminders -->
 
     <div class="card">
 
@@ -612,9 +600,7 @@ label{
         "
       >
 
-        <h3>
-          ⏰ আসন্ন Reminder
-        </h3>
+        <h3>⏰ আসন্ন Reminder</h3>
 
         <button
           id="dashboardReminderBtn"
@@ -642,9 +628,7 @@ label{
         "
       >
 
-        <h3>
-          🕘 সাম্প্রতিক হিসাব
-        </h3>
+        <h3>🕘 সাম্প্রতিক হিসাব</h3>
 
         <button
           id="quickAllBtn"
@@ -663,14 +647,9 @@ label{
   </section>
 
 
-  <!-- ===================================================
-       ADD / EDIT TRANSACTION
-  ==================================================== -->
+  <!-- ADD -->
 
-  <section
-    id="addSection"
-    class="hidden"
-  >
+  <section id="addSection" class="hidden">
 
     <div class="card">
 
@@ -679,7 +658,7 @@ label{
       </h3>
 
       <div class="sectionNote">
-        ধার বা পাওনার ক্ষেত্রে ব্যক্তির নাম দিন। নামটি Cloud Database-এ সংরক্ষিত হবে।
+        ধার বা পাওনার ক্ষেত্রে ব্যক্তির নাম দিন।
       </div>
 
 
@@ -687,39 +666,17 @@ label{
 
         <div>
 
-          <label>
-            হিসাবের ধরন
-          </label>
+          <label>হিসাবের ধরন</label>
 
           <select id="txType">
 
-            <option value="income">
-              💰 আয়
-            </option>
-
-            <option value="expense">
-              💸 ব্যয়
-            </option>
-
-            <option value="deposit">
-              🏦 Deposit
-            </option>
-
-            <option value="lent">
-              🤝 ধার দিলাম / আমার কাছে পাওনা
-            </option>
-
-            <option value="collect">
-              💵 পাওনা আদায়
-            </option>
-
-            <option value="borrowed">
-              📥 আমি ধার নিলাম
-            </option>
-
-            <option value="repay">
-              📤 ধার পরিশোধ
-            </option>
+            <option value="income">💰 আয়</option>
+            <option value="expense">💸 ব্যয়</option>
+            <option value="deposit">🏦 Deposit</option>
+            <option value="lent">🤝 ধার দিলাম / আমার কাছে পাওনা</option>
+            <option value="collect">💵 পাওনা আদায়</option>
+            <option value="borrowed">📥 আমি ধার নিলাম</option>
+            <option value="repay">📤 ধার পরিশোধ</option>
 
           </select>
 
@@ -728,9 +685,7 @@ label{
 
         <div>
 
-          <label>
-            টাকার পরিমাণ
-          </label>
+          <label>টাকার পরিমাণ</label>
 
           <input
             id="txAmount"
@@ -745,9 +700,7 @@ label{
       </div>
 
 
-      <label>
-        ব্যক্তির নাম
-      </label>
+      <label>ব্যক্তির নাম</label>
 
       <input
         id="personName"
@@ -756,9 +709,7 @@ label{
       >
 
 
-      <label>
-        বিবরণ / Category
-      </label>
+      <label>বিবরণ / Category</label>
 
       <input
         id="txCategory"
@@ -767,9 +718,7 @@ label{
       >
 
 
-      <label>
-        খরচের Category
-      </label>
+      <label>খরচের Category</label>
 
       <select id="expenseCategory">
 
@@ -777,56 +726,22 @@ label{
           -- খরচ হলে বাছুন --
         </option>
 
-        <option value="খাবার">
-          🍛 খাবার
-        </option>
-
-        <option value="চা-নাস্তা">
-          ☕ চা-নাস্তা
-        </option>
-
-        <option value="বাড়ি/ভাড়া">
-          🏠 বাড়ি/ভাড়া
-        </option>
-
-        <option value="যাতায়াত">
-          🚗 যাতায়াত
-        </option>
-
-        <option value="বিল">
-          🧾 বিল
-        </option>
-
-        <option value="বাজার">
-          🛒 বাজার
-        </option>
-
-        <option value="ব্যবসা">
-          💼 ব্যবসা
-        </option>
-
-        <option value="স্বাস্থ্য">
-          🏥 স্বাস্থ্য
-        </option>
-
-        <option value="শিক্ষা">
-          📚 শিক্ষা
-        </option>
-
-        <option value="বিনোদন">
-          🎮 বিনোদন
-        </option>
-
-        <option value="অন্যান্য">
-          📦 অন্যান্য
-        </option>
+        <option value="খাবার">🍛 খাবার</option>
+        <option value="চা-নাস্তা">☕ চা-নাস্তা</option>
+        <option value="বাড়ি/ভাড়া">🏠 বাড়ি/ভাড়া</option>
+        <option value="যাতায়াত">🚗 যাতায়াত</option>
+        <option value="বিল">🧾 বিল</option>
+        <option value="বাজার">🛒 বাজার</option>
+        <option value="ব্যবসা">💼 ব্যবসা</option>
+        <option value="স্বাস্থ্য">🏥 স্বাস্থ্য</option>
+        <option value="শিক্ষা">📚 শিক্ষা</option>
+        <option value="বিনোদন">🎮 বিনোদন</option>
+        <option value="অন্যান্য">📦 অন্যান্য</option>
 
       </select>
 
 
-      <label>
-        তারিখ
-      </label>
+      <label>তারিখ</label>
 
       <input
         id="txDate"
@@ -834,9 +749,7 @@ label{
       >
 
 
-      <label>
-        নোট
-      </label>
+      <label>নোট</label>
 
       <textarea
         id="txNote"
@@ -855,71 +768,46 @@ label{
 
       <button
         id="cancelEditBtn"
-        type="button"
         class="hidden"
+        type="button"
       >
         Edit বাতিল
       </button>
 
 
-      <div
-        id="txMsg"
-        class="message"
-      ></div>
+      <div id="txMsg" class="message"></div>
 
     </div>
 
   </section>
 
 
-  <!-- ===================================================
-       REPORTS
-  ==================================================== -->
+  <!-- REPORTS -->
 
-  <section
-    id="reportsSection"
-    class="hidden"
-  >
+  <section id="reportsSection" class="hidden">
 
     <div class="card">
 
-      <h3>
-        📈 রিপোর্ট
-      </h3>
+      <h3>📈 রিপোর্ট</h3>
 
       <div class="formGrid">
 
         <div>
 
-          <label>
-            রিপোর্টের সময়কাল
-          </label>
+          <label>রিপোর্টের সময়কাল</label>
 
           <select id="reportPeriod">
 
-            <option value="today">
-              আজ
-            </option>
-
-            <option value="week">
-              এই সপ্তাহ
-            </option>
-
-            <option value="month" selected>
-              এই মাস
-            </option>
-
-            <option value="year">
-              এই বছর
-            </option>
-
-            <option value="all">
-              সব সময়
-            </option>
+            <option value="today">আজ</option>
+            <option value="week">এই সপ্তাহ</option>
+            <option value="month" selected>এই মাস</option>
+            <option value="year">এই বছর</option>
+            <option value="all">সব সময়</option>
 
           </select>
 
         </div>
+
 
         <div>
 
@@ -943,9 +831,7 @@ label{
 
     <div class="card">
 
-      <h3>
-        🍽️ খরচের Category
-      </h3>
+      <h3>🍽️ খরচের Category</h3>
 
       <div id="categoryReport"></div>
 
@@ -954,9 +840,7 @@ label{
 
     <div class="card">
 
-      <h3>
-        👥 ব্যক্তিভিত্তিক হিসাব
-      </h3>
+      <h3>👥 ব্যক্তিভিত্তিক হিসাব</h3>
 
       <div id="reportPersonSummary"></div>
 
@@ -965,9 +849,7 @@ label{
 
     <div class="card">
 
-      <h3>
-        📅 মাসভিত্তিক সারসংক্ষেপ
-      </h3>
+      <h3>📅 মাসভিত্তিক সারসংক্ষেপ</h3>
 
       <div id="monthlyReport"></div>
 
@@ -976,14 +858,9 @@ label{
   </section>
 
 
-  <!-- ===================================================
-       ALL TRANSACTIONS
-  ==================================================== -->
+  <!-- ALL -->
 
-  <section
-    id="allSection"
-    class="hidden"
-  >
+  <section id="allSection" class="hidden">
 
     <div class="card">
 
@@ -991,19 +868,16 @@ label{
         style="
           display:flex;
           justify-content:space-between;
-          gap:10px;
-          align-items:flex-start
+          gap:10px
         "
       >
 
         <div>
 
-          <h3>
-            🧾 সব Cloud হিসাব
-          </h3>
+          <h3>🧾 সব Cloud হিসাব</h3>
 
           <div class="muted small">
-            Search, Filter, Edit ও Delete করা যাবে।
+            Search, Filter, Edit ও Delete
           </div>
 
         </div>
@@ -1029,43 +903,18 @@ label{
 
         <div>
 
-          <label>
-            ধরন
-          </label>
+          <label>ধরন</label>
 
           <select id="filterType">
 
-            <option value="">
-              সব ধরন
-            </option>
-
-            <option value="income">
-              আয়
-            </option>
-
-            <option value="expense">
-              ব্যয়
-            </option>
-
-            <option value="deposit">
-              Deposit
-            </option>
-
-            <option value="lent">
-              পাওনা
-            </option>
-
-            <option value="collect">
-              পাওনা আদায়
-            </option>
-
-            <option value="borrowed">
-              ধার নেওয়া
-            </option>
-
-            <option value="repay">
-              ধার পরিশোধ
-            </option>
+            <option value="">সব ধরন</option>
+            <option value="income">আয়</option>
+            <option value="expense">ব্যয়</option>
+            <option value="deposit">Deposit</option>
+            <option value="lent">পাওনা</option>
+            <option value="collect">পাওনা আদায়</option>
+            <option value="borrowed">ধার নেওয়া</option>
+            <option value="repay">ধার পরিশোধ</option>
 
           </select>
 
@@ -1074,9 +923,7 @@ label{
 
         <div>
 
-          <label>
-            শুরু তারিখ
-          </label>
+          <label>শুরু তারিখ</label>
 
           <input
             id="filterFrom"
@@ -1088,9 +935,7 @@ label{
 
         <div>
 
-          <label>
-            শেষ তারিখ
-          </label>
+          <label>শেষ তারিখ</label>
 
           <input
             id="filterTo"
@@ -1104,25 +949,15 @@ label{
 
       <div class="filterGrid">
 
-        <button
-          id="clearFiltersBtn"
-          type="button"
-        >
+        <button id="clearFiltersBtn">
           ফিল্টার পরিষ্কার
         </button>
 
-        <button
-          id="reloadBtn"
-          class="primary"
-          type="button"
-        >
+        <button id="reloadBtn" class="primary">
           ☁️ Cloud থেকে Load
         </button>
 
-        <button
-          id="exportBtn"
-          type="button"
-        >
+        <button id="exportBtn">
           💾 Backup JSON
         </button>
 
@@ -1139,14 +974,9 @@ label{
   </section>
 
 
-  <!-- ===================================================
-       REMINDERS
-  ==================================================== -->
+  <!-- REMINDERS -->
 
-  <section
-    id="remindersSection"
-    class="hidden"
-  >
+  <section id="remindersSection" class="hidden">
 
     <div class="card">
 
@@ -1155,13 +985,11 @@ label{
       </h3>
 
       <div class="sectionNote">
-        গুরুত্বপূর্ণ কাজ, পাওনা আদায়, ধার পরিশোধ বা অন্য কোনো বিষয় মনে রাখার জন্য Reminder তৈরি করুন।
+        গুরুত্বপূর্ণ কাজ, পাওনা আদায়, ধার পরিশোধ বা অন্য কোনো বিষয় মনে রাখুন।
       </div>
 
 
-      <label>
-        Reminder-এর নাম
-      </label>
+      <label>Reminder-এর নাম</label>
 
       <input
         id="reminderTitle"
@@ -1174,9 +1002,7 @@ label{
 
         <div>
 
-          <label>
-            ব্যক্তির নাম
-          </label>
+          <label>ব্যক্তির নাম</label>
 
           <input
             id="reminderPerson"
@@ -1189,9 +1015,7 @@ label{
 
         <div>
 
-          <label>
-            টাকার পরিমাণ
-          </label>
+          <label>টাকার পরিমাণ</label>
 
           <input
             id="reminderAmount"
@@ -1206,9 +1030,7 @@ label{
       </div>
 
 
-      <label>
-        Reminder-এর তারিখ
-      </label>
+      <label>Reminder-এর তারিখ</label>
 
       <input
         id="reminderDate"
@@ -1216,9 +1038,7 @@ label{
       >
 
 
-      <label>
-        নোট
-      </label>
+      <label>নোট</label>
 
       <textarea
         id="reminderNote"
@@ -1263,9 +1083,7 @@ label{
         "
       >
 
-        <h3>
-          📋 আমার Reminder
-        </h3>
+        <h3>📋 আমার Reminder</h3>
 
         <span
           id="reminderCount"
@@ -1277,16 +1095,15 @@ label{
       </div>
 
 
-      <div
-        class="filterGrid"
-        style="margin-top:8px"
-      >
+      <!-- এই তিনটি বাটন নতুনভাবে কাজ করবে -->
+
+      <div class="reminderTabs">
 
         <button
           id="showAllRemindersBtn"
           type="button"
         >
-          সব
+          📋 সব
         </button>
 
         <button
@@ -1294,20 +1111,23 @@ label{
           type="button"
           class="primary"
         >
-          বাকি
+          ⏰ বাকি
         </button>
 
         <button
           id="showDoneRemindersBtn"
           type="button"
         >
-          সম্পন্ন
+          ✅ সম্পন্ন
         </button>
 
       </div>
 
 
-      <div id="reminderList"></div>
+      <div
+        id="reminderList"
+        style="margin-top:8px"
+      ></div>
 
     </div>
 
@@ -1319,14 +1139,30 @@ label{
 
 
 <script>
-(() => {
 
 "use strict";
 
 
-/* =====================================================
+/* =========================================================
+   STATE
+========================================================= */
+
+let transactions = [];
+
+let reminders = [];
+
+let currentSession = null;
+
+let editingId = null;
+
+let editingReminderId = null;
+
+let reminderView = "pending";
+
+
+/* =========================================================
    DOM
-===================================================== */
+========================================================= */
 
 const loginBox =
   document.getElementById("loginBox");
@@ -1388,9 +1224,7 @@ const remindersSection =
   document.getElementById("remindersSection");
 
 
-/* =====================================================
-   DASHBOARD DOM
-===================================================== */
+/* Dashboard */
 
 const dashIncome =
   document.getElementById("dashIncome");
@@ -1422,32 +1256,20 @@ const dashCount =
 const dashExpenseBar =
   document.getElementById("dashExpenseBar");
 
-const adviceBox =
-  document.getElementById("adviceBox");
-
 const personSummary =
   document.getElementById("personSummary");
+
+const adviceBox =
+  document.getElementById("adviceBox");
 
 const recentList =
   document.getElementById("recentList");
 
-const quickAllBtn =
-  document.getElementById("quickAllBtn");
-
-const dashboardReminderBtn =
-  document.getElementById(
-    "dashboardReminderBtn"
-  );
-
 const dashboardReminders =
-  document.getElementById(
-    "dashboardReminders"
-  );
+  document.getElementById("dashboardReminders");
 
 
-/* =====================================================
-   TRANSACTION FORM DOM
-===================================================== */
+/* Transaction */
 
 const formTitle =
   document.getElementById("formTitle");
@@ -1465,9 +1287,7 @@ const txCategory =
   document.getElementById("txCategory");
 
 const expenseCategory =
-  document.getElementById(
-    "expenseCategory"
-  );
+  document.getElementById("expenseCategory");
 
 const txDate =
   document.getElementById("txDate");
@@ -1479,37 +1299,25 @@ const saveTxBtn =
   document.getElementById("saveTxBtn");
 
 const cancelEditBtn =
-  document.getElementById(
-    "cancelEditBtn"
-  );
+  document.getElementById("cancelEditBtn");
 
 const txMsg =
   document.getElementById("txMsg");
 
 
-/* =====================================================
-   REPORT DOM
-===================================================== */
+/* Reports */
 
 const reportPeriod =
-  document.getElementById(
-    "reportPeriod"
-  );
+  document.getElementById("reportPeriod");
 
 const refreshReportBtn =
-  document.getElementById(
-    "refreshReportBtn"
-  );
+  document.getElementById("refreshReportBtn");
 
 const reportContent =
-  document.getElementById(
-    "reportContent"
-  );
+  document.getElementById("reportContent");
 
 const categoryReport =
-  document.getElementById(
-    "categoryReport"
-  );
+  document.getElementById("categoryReport");
 
 const reportPersonSummary =
   document.getElementById(
@@ -1517,64 +1325,31 @@ const reportPersonSummary =
   );
 
 const monthlyReport =
-  document.getElementById(
-    "monthlyReport"
-  );
+  document.getElementById("monthlyReport");
 
 
-/* =====================================================
-   ALL TRANSACTION DOM
-===================================================== */
+/* All */
 
 const searchTx =
-  document.getElementById(
-    "searchTx"
-  );
+  document.getElementById("searchTx");
 
 const filterType =
-  document.getElementById(
-    "filterType"
-  );
+  document.getElementById("filterType");
 
 const filterFrom =
-  document.getElementById(
-    "filterFrom"
-  );
+  document.getElementById("filterFrom");
 
 const filterTo =
-  document.getElementById(
-    "filterTo"
-  );
-
-const clearFiltersBtn =
-  document.getElementById(
-    "clearFiltersBtn"
-  );
-
-const reloadBtn =
-  document.getElementById(
-    "reloadBtn"
-  );
-
-const exportBtn =
-  document.getElementById(
-    "exportBtn"
-  );
+  document.getElementById("filterTo");
 
 const allTransactions =
-  document.getElementById(
-    "allTransactions"
-  );
+  document.getElementById("allTransactions");
 
 const allCount =
-  document.getElementById(
-    "allCount"
-  );
+  document.getElementById("allCount");
 
 
-/* =====================================================
-   REMINDER DOM
-===================================================== */
+/* Reminders */
 
 const reminderFormTitle =
   document.getElementById(
@@ -1647,53 +1422,23 @@ const showDoneRemindersBtn =
   );
 
 
-/* =====================================================
-   STATE
-===================================================== */
-
-let transactions = [];
-
-let reminders = [];
-
-let currentSession = null;
-
-let editingId = null;
-
-let editingReminderId = null;
-
-let reminderView =
-  "pending";
-
-
-/* =====================================================
+/* =========================================================
    HELPERS
-===================================================== */
+========================================================= */
 
 function todayString(){
 
-  const d =
-    new Date();
+  const d = new Date();
 
-  const year =
-    d.getFullYear();
-
-  const month =
+  return [
+    d.getFullYear(),
     String(
       d.getMonth() + 1
-    ).padStart(2,"0");
-
-  const day =
+    ).padStart(2,"0"),
     String(
       d.getDate()
-    ).padStart(2,"0");
-
-  return (
-    year +
-    "-" +
-    month +
-    "-" +
-    day
-  );
+    ).padStart(2,"0")
+  ].join("-");
 
 }
 
@@ -1701,13 +1446,14 @@ function todayString(){
 function money(value){
 
   return "৳" +
-    Number(value || 0)
-      .toLocaleString(
-        "en-BD",
-        {
-          maximumFractionDigits:2
-        }
-      );
+    Number(
+      value || 0
+    ).toLocaleString(
+      "en-BD",
+      {
+        maximumFractionDigits:2
+      }
+    );
 
 }
 
@@ -1730,24 +1476,40 @@ function escapeHtml(value){
 }
 
 
+function formatDate(value){
+
+  if(!value){
+    return "";
+  }
+
+  const p =
+    String(value).split("-");
+
+  if(p.length !== 3){
+    return value;
+  }
+
+  return (
+    p[2] +
+    "/" +
+    p[1] +
+    "/" +
+    p[0]
+  );
+
+}
+
+
 function typeName(type){
 
   return {
-
     income:"আয়",
-
     expense:"ব্যয়",
-
     deposit:"Deposit",
-
     lent:"পাওনা",
-
     collect:"পাওনা আদায়",
-
     borrowed:"ধার নেওয়া",
-
     repay:"ধার পরিশোধ"
-
   }[type] || type;
 
 }
@@ -1756,21 +1518,13 @@ function typeName(type){
 function typeIcon(type){
 
   return {
-
     income:"💰",
-
     expense:"💸",
-
     deposit:"🏦",
-
     lent:"🤝",
-
     collect:"💵",
-
     borrowed:"📥",
-
     repay:"📤"
-
   }[type] || "🧾";
 
 }
@@ -1782,8 +1536,7 @@ function showMessage(
   type="info"
 ){
 
-  element.textContent =
-    text;
+  element.textContent = text;
 
   element.className =
     "message show " +
@@ -1794,8 +1547,7 @@ function showMessage(
 
 function clearMessage(element){
 
-  element.textContent =
-    "";
+  element.textContent = "";
 
   element.className =
     "message";
@@ -1803,83 +1555,9 @@ function clearMessage(element){
 }
 
 
-function sortTransactions(list){
-
-  return [...list].sort(
-    (a,b) => {
-
-      const dateA =
-        String(
-          a.date || ""
-        );
-
-      const dateB =
-        String(
-          b.date || ""
-        );
-
-      if(
-        dateA !== dateB
-      ){
-
-        return dateB.localeCompare(
-          dateA
-        );
-
-      }
-
-      return String(
-        b.created_at || ""
-      ).localeCompare(
-        String(
-          a.created_at || ""
-        )
-      );
-
-    }
-  );
-
-}
-
-
-function formatDate(dateString){
-
-  if(!dateString){
-
-    return "";
-
-  }
-
-
-  const parts =
-    String(
-      dateString
-    ).split("-");
-
-
-  if(
-    parts.length !== 3
-  ){
-
-    return dateString;
-
-  }
-
-
-  return (
-    parts[2] +
-    "/" +
-    parts[1] +
-    "/" +
-    parts[0]
-  );
-
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
+/* =========================================================
+   NAV
+========================================================= */
 
 function showSection(name){
 
@@ -1904,30 +1582,21 @@ function showSection(name){
   );
 
 
-  navDashboard.classList.remove(
-    "primary"
-  );
-
-  navAdd.classList.remove(
-    "primary"
-  );
-
-  navReports.classList.remove(
-    "primary"
-  );
-
-  navAll.classList.remove(
-    "primary"
-  );
-
-  navReminders.classList.remove(
-    "primary"
+  [
+    navDashboard,
+    navAdd,
+    navReports,
+    navAll,
+    navReminders
+  ].forEach(
+    btn =>
+      btn.classList.remove(
+        "primary"
+      )
   );
 
 
-  if(
-    name === "dashboard"
-  ){
+  if(name === "dashboard"){
 
     dashboardSection.classList.remove(
       "hidden"
@@ -1940,9 +1609,7 @@ function showSection(name){
   }
 
 
-  if(
-    name === "add"
-  ){
+  if(name === "add"){
 
     addSection.classList.remove(
       "hidden"
@@ -1955,9 +1622,7 @@ function showSection(name){
   }
 
 
-  if(
-    name === "reports"
-  ){
+  if(name === "reports"){
 
     reportsSection.classList.remove(
       "hidden"
@@ -1972,9 +1637,7 @@ function showSection(name){
   }
 
 
-  if(
-    name === "all"
-  ){
+  if(name === "all"){
 
     allSection.classList.remove(
       "hidden"
@@ -1989,9 +1652,7 @@ function showSection(name){
   }
 
 
-  if(
-    name === "reminders"
-  ){
+  if(name === "reminders"){
 
     remindersSection.classList.remove(
       "hidden"
@@ -2009,107 +1670,52 @@ function showSection(name){
 
 
 navDashboard.onclick =
-  () => {
-
-    cancelEditMode();
-
-    cancelReminderEdit();
-
-    showSection(
-      "dashboard"
-    );
-
-  };
+  () => showSection("dashboard");
 
 
 navAdd.onclick =
   () => {
 
-    if(
-      editingId === null
-    ){
-
-      resetForm();
-
+    if(editingId === null){
+      resetTransactionForm();
     }
 
-    cancelReminderEdit();
-
-    showSection(
-      "add"
-    );
+    showSection("add");
 
   };
 
 
 navReports.onclick =
-  () => {
-
-    cancelEditMode();
-
-    cancelReminderEdit();
-
-    showSection(
-      "reports"
-    );
-
-  };
+  () => showSection("reports");
 
 
 navAll.onclick =
-  () => {
-
-    cancelEditMode();
-
-    cancelReminderEdit();
-
-    showSection(
-      "all"
-    );
-
-  };
+  () => showSection("all");
 
 
 navReminders.onclick =
-  () => {
-
-    cancelEditMode();
-
-    showSection(
-      "reminders"
-    );
-
-  };
+  () => showSection("reminders");
 
 
-quickAllBtn.onclick =
-  () => {
-
-    showSection(
-      "all"
-    );
-
-  };
+document.getElementById(
+  "quickAllBtn"
+).onclick =
+  () => showSection("all");
 
 
-dashboardReminderBtn.onclick =
-  () => {
-
-    showSection(
-      "reminders"
-    );
-
-  };
+document.getElementById(
+  "dashboardReminderBtn"
+).onclick =
+  () => showSection("reminders");
 
 
-/* =====================================================
-   TRANSACTION FORM
-===================================================== */
+/* =========================================================
+   TRANSACTION
+========================================================= */
 
-function resetForm(){
+function resetTransactionForm(){
 
-  editingId =
-    null;
+  editingId = null;
 
   formTitle.textContent =
     "➕ নতুন হিসাব যোগ করুন";
@@ -2121,62 +1727,24 @@ function resetForm(){
     "hidden"
   );
 
-  txType.value =
-    "income";
+  txType.value = "income";
 
-  txAmount.value =
-    "";
+  txAmount.value = "";
 
-  personName.value =
-    "";
+  personName.value = "";
 
-  txCategory.value =
-    "";
+  txCategory.value = "";
 
-  expenseCategory.value =
-    "";
+  expenseCategory.value = "";
 
   txDate.value =
     todayString();
 
-  txNote.value =
-    "";
+  txNote.value = "";
 
-  clearMessage(
-    txMsg
-  );
+  clearMessage(txMsg);
 
 }
-
-
-function cancelEditMode(){
-
-  editingId =
-    null;
-
-  formTitle.textContent =
-    "➕ নতুন হিসাব যোগ করুন";
-
-  saveTxBtn.textContent =
-    "☁️ Cloud-এ হিসাব সংরক্ষণ";
-
-  cancelEditBtn.classList.add(
-    "hidden"
-  );
-
-  clearMessage(
-    txMsg
-  );
-
-}
-
-
-cancelEditBtn.onclick =
-  () => {
-
-    resetForm();
-
-  };
 
 
 function startEdit(id){
@@ -2190,19 +1758,12 @@ function startEdit(id){
 
 
   if(!item){
-
-    alert(
-      "এই হিসাবটি পাওয়া যায়নি।"
-    );
-
+    alert("হিসাব পাওয়া যায়নি।");
     return;
-
   }
 
 
-  editingId =
-    item.id;
-
+  editingId = item.id;
 
   formTitle.textContent =
     "✏️ হিসাব Edit করুন";
@@ -2228,45 +1789,31 @@ function startEdit(id){
     item.category || "";
 
   txDate.value =
-    item.date || todayString();
+    item.date ||
+    todayString();
 
   txNote.value =
     item.note || "";
 
 
-  if(
+  expenseCategory.value =
     item.type === "expense"
-  ){
-
-    const exists =
-      [...expenseCategory.options]
-        .some(
-          option =>
-            option.value ===
-            item.category
-        );
-
-
-    expenseCategory.value =
-      exists
-        ? item.category
-        : "";
-
-  }else{
-
-    expenseCategory.value =
-      "";
-
-  }
+      ? (
+          [...expenseCategory.options]
+            .some(
+              o =>
+                o.value ===
+                item.category
+            )
+            ? item.category
+            : ""
+        )
+      : "";
 
 
-  clearMessage(
-    txMsg
-  );
+  clearMessage(txMsg);
 
-  showSection(
-    "add"
-  );
+  showSection("add");
 
   window.scrollTo({
     top:0,
@@ -2276,26 +1823,20 @@ function startEdit(id){
 }
 
 
-/* =====================================================
-   TRANSACTION STATS
-===================================================== */
+cancelEditBtn.onclick =
+  () => resetTransactionForm();
+
 
 function calculateStats(list){
 
   const s = {
 
     income:0,
-
     expense:0,
-
     deposit:0,
-
     lent:0,
-
     collect:0,
-
     borrowed:0,
-
     repay:0
 
   };
@@ -2304,7 +1845,7 @@ function calculateStats(list){
   list.forEach(
     item => {
 
-      const value =
+      const amount =
         Number(
           item.amount || 0
         );
@@ -2319,7 +1860,7 @@ function calculateStats(list){
       ){
 
         s[item.type] +=
-          value;
+          amount;
 
       }
 
@@ -2353,11 +1894,9 @@ function calculateStats(list){
 }
 
 
-/* =====================================================
-   PERSON SUMMARY
-===================================================== */
-
-function calculatePersonSummary(list){
+function calculatePersonSummary(
+  list
+){
 
   const people = {};
 
@@ -2375,9 +1914,7 @@ function calculatePersonSummary(list){
           item.type
         )
       ){
-
         return;
-
       }
 
 
@@ -2388,19 +1925,19 @@ function calculatePersonSummary(list){
 
 
       if(!name){
-
         return;
-
       }
 
 
       if(!people[name]){
 
         people[name] = {
+
           lent:0,
           collect:0,
           borrowed:0,
           repay:0
+
         };
 
       }
@@ -2412,44 +1949,8 @@ function calculatePersonSummary(list){
         );
 
 
-      if(
-        item.type === "lent"
-      ){
-
-        people[name].lent +=
-          amount;
-
-      }
-
-
-      if(
-        item.type === "collect"
-      ){
-
-        people[name].collect +=
-          amount;
-
-      }
-
-
-      if(
-        item.type === "borrowed"
-      ){
-
-        people[name].borrowed +=
-          amount;
-
-      }
-
-
-      if(
-        item.type === "repay"
-      ){
-
-        people[name].repay +=
-          amount;
-
-      }
+      people[name][item.type] +=
+        amount;
 
     }
   );
@@ -2514,37 +2015,21 @@ function renderPersonSummary(){
           <div class="personBox">
 
             <div class="personTitle">
-              👤 ${escapeHtml(
-                name
-              )}
+              👤 ${escapeHtml(name)}
             </div>
 
             <div class="row">
-
-              <span>
-                আমার পাওনা
-              </span>
-
+              <span>আমার পাওনা</span>
               <strong>
-                ${money(
-                  receivable
-                )}
+                ${money(receivable)}
               </strong>
-
             </div>
 
             <div class="row">
-
-              <span>
-                আমার ধার
-              </span>
-
+              <span>আমার ধার</span>
               <strong>
-                ${money(
-                  debt
-                )}
+                ${money(debt)}
               </strong>
-
             </div>
 
           </div>
@@ -2558,9 +2043,217 @@ function renderPersonSummary(){
 }
 
 
-/* =====================================================
-   DASHBOARD
-===================================================== */
+function renderAdvice(s){
+
+  const list = [];
+
+
+  if(!transactions.length){
+
+    list.push(
+      "📝 প্রথমে আপনার হিসাব যোগ করুন।"
+    );
+
+  }
+
+
+  if(
+    s.income > 0 &&
+    s.expense <=
+    s.income * 0.50
+  ){
+
+    list.push(
+      "✅ আপনার ব্যয় আয়ের ৫০%-এর মধ্যে আছে।"
+    );
+
+  }
+
+
+  if(
+    s.income > 0 &&
+    s.expense >
+    s.income * 0.70
+  ){
+
+    list.push(
+      "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে।"
+    );
+
+  }
+
+
+  if(s.profit > 0){
+
+    list.push(
+      "✅ বর্তমানে আপনার আয় ব্যয়ের চেয়ে বেশি।"
+    );
+
+  }
+
+
+  if(s.profit < 0){
+
+    list.push(
+      "⚠️ বর্তমানে আপনার লস হচ্ছে।"
+    );
+
+  }
+
+
+  if(s.receivable > 0){
+
+    list.push(
+      "🤝 আপনার মোট পাওনা " +
+      money(s.receivable) +
+      "।"
+    );
+
+  }
+
+
+  if(s.debt > 0){
+
+    list.push(
+      "📥 আপনার মোট ধার বাকি " +
+      money(s.debt) +
+      "।"
+    );
+
+  }
+
+
+  if(s.deposit > 0){
+
+    list.push(
+      "🏦 মোট Deposit " +
+      money(s.deposit) +
+      "।"
+    );
+
+  }
+
+
+  if(!list.length){
+
+    list.push(
+      "📊 হিসাব যোগ হলে বিশ্লেষণ এখানে দেখা যাবে।"
+    );
+
+  }
+
+
+  adviceBox.innerHTML =
+    list
+      .map(
+        x =>
+          `
+          <div class="advice">
+            ${escapeHtml(x)}
+          </div>
+          `
+      )
+      .join("");
+
+}
+
+
+function renderRecent(){
+
+  const list =
+    [...transactions]
+      .sort(
+        (a,b) =>
+          String(
+            b.date || ""
+          ).localeCompare(
+            String(
+              a.date || ""
+            )
+          )
+      )
+      .slice(
+        0,
+        5
+      );
+
+
+  if(!list.length){
+
+    recentList.innerHTML =
+      `
+      <div class="empty">
+        এখনও কোনো হিসাব নেই।
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  recentList.innerHTML =
+    list
+      .map(
+        item =>
+          `
+
+          <div class="txItem">
+
+            <div class="txTop">
+
+              <div>
+
+                <div class="txTitle">
+                  ${typeIcon(item.type)}
+                  ${escapeHtml(
+                    typeName(item.type)
+                  )}
+                </div>
+
+                ${
+                  item.person_name
+                    ? `
+                      <div class="small">
+                        👤 ${escapeHtml(
+                          item.person_name
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+                <div class="small muted">
+                  ${escapeHtml(
+                    item.category ||
+                    "কোনো বিবরণ নেই"
+                  )}
+                </div>
+
+                <div class="small muted">
+                  ${escapeHtml(
+                    formatDate(
+                      item.date
+                    )
+                  )}
+                </div>
+
+              </div>
+
+              <div class="txAmount">
+                ${money(item.amount)}
+              </div>
+
+            </div>
+
+          </div>
+
+          `
+      )
+      .join("");
+
+}
+
 
 function renderDashboard(){
 
@@ -2571,34 +2264,22 @@ function renderDashboard(){
 
 
   dashIncome.textContent =
-    money(
-      s.income
-    );
+    money(s.income);
 
   dashExpense.textContent =
-    money(
-      s.expense
-    );
+    money(s.expense);
 
   dashProfit.textContent =
-    money(
-      s.profit
-    );
+    money(s.profit);
 
   dashDeposit.textContent =
-    money(
-      s.deposit
-    );
+    money(s.deposit);
 
   dashReceivable.textContent =
-    money(
-      s.receivable
-    );
+    money(s.receivable);
 
   dashDebt.textContent =
-    money(
-      s.debt
-    );
+    money(s.debt);
 
 
   const profitPct =
@@ -2646,9 +2327,7 @@ function renderDashboard(){
 
   renderPersonSummary();
 
-  renderAdvice(
-    s
-  );
+  renderAdvice(s);
 
   renderRecent();
 
@@ -2657,178 +2336,476 @@ function renderDashboard(){
 }
 
 
-/* =====================================================
-   ADVICE
-===================================================== */
+saveTxBtn.onclick =
+  async () => {
 
-function renderAdvice(s){
-
-  const list = [];
+    clearMessage(txMsg);
 
 
-  if(
-    transactions.length === 0
-  ){
+    if(!currentSession){
 
-    list.push(
-      "📝 প্রথমে আপনার আয়/ব্যয়ের হিসাব যোগ করুন।"
-    );
+      showMessage(
+        txMsg,
+        "আগে Login করুন।",
+        "error"
+      );
 
+      return;
+
+    }
+
+
+    const type =
+      txType.value;
+
+    const amount =
+      Number(
+        txAmount.value
+      );
+
+    const person =
+      personName.value.trim();
+
+    let category =
+      txCategory.value.trim();
+
+    const date =
+      txDate.value ||
+      todayString();
+
+    const note =
+      txNote.value.trim();
+
+
+    if(
+      type === "expense" &&
+      expenseCategory.value
+    ){
+
+      category =
+        expenseCategory.value;
+
+    }
+
+
+    if(
+      !amount ||
+      amount <= 0
+    ){
+
+      showMessage(
+        txMsg,
+        "সঠিক টাকার পরিমাণ দিন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      [
+        "lent",
+        "collect",
+        "borrowed",
+        "repay"
+      ].includes(type) &&
+      !person
+    ){
+
+      showMessage(
+        txMsg,
+        "ধার/পাওনার ক্ষেত্রে ব্যক্তির নাম দিন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    saveTxBtn.disabled =
+      true;
+
+
+    try{
+
+      const payload = {
+
+        type,
+        amount,
+        person_name:person,
+        category,
+        date,
+        note
+
+      };
+
+
+      if(editingId !== null){
+
+        payload.updated_at =
+          new Date()
+            .toISOString();
+
+
+        const {
+          data,
+          error
+        } =
+        await supabaseClient
+          .from("transactions")
+          .update(payload)
+          .eq(
+            "id",
+            editingId
+          )
+          .eq(
+            "user_id",
+            currentSession.user.id
+          )
+          .select()
+          .single();
+
+
+        if(error){
+
+          showMessage(
+            txMsg,
+            "পরিবর্তন Save হয়নি: " +
+            error.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const index =
+          transactions.findIndex(
+            x =>
+              String(x.id) ===
+              String(editingId)
+          );
+
+
+        if(index !== -1){
+          transactions[index] =
+            data;
+        }
+
+
+        resetTransactionForm();
+
+        renderDashboard();
+
+        renderAllTransactions();
+
+        renderReports();
+
+        showSection("all");
+
+
+      }else{
+
+        const {
+          data,
+          error
+        } =
+        await supabaseClient
+          .from("transactions")
+          .insert({
+
+            user_id:
+              currentSession.user.id,
+
+            ...payload
+
+          })
+          .select()
+          .single();
+
+
+        if(error){
+
+          showMessage(
+            txMsg,
+            "Cloud-এ Save হয়নি: " +
+            error.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        transactions.unshift(
+          data
+        );
+
+
+        showMessage(
+          txMsg,
+          "✅ হিসাব Cloud Database-এ সংরক্ষিত হয়েছে।",
+          "success"
+        );
+
+
+        txAmount.value = "";
+
+        personName.value = "";
+
+        txCategory.value = "";
+
+        expenseCategory.value = "";
+
+        txDate.value =
+          todayString();
+
+        txNote.value = "";
+
+
+        renderDashboard();
+
+        renderAllTransactions();
+
+        renderReports();
+
+      }
+
+
+    }catch(error){
+
+      showMessage(
+        txMsg,
+        error?.message ||
+        "সমস্যা হয়েছে।",
+        "error"
+      );
+
+    }finally{
+
+      saveTxBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+async function deleteTransaction(id){
+
+  if(!currentSession){
+    return;
   }
 
 
   if(
-    s.income > 0 &&
-    s.expense > s.income
+    !confirm(
+      "এই হিসাবটি Cloud Database থেকে মুছে ফেলবেন?"
+    )
   ){
+    return;
+  }
 
-    list.push(
-      "⚠️ বর্তমানে আপনার ব্যয় আয়ের চেয়ে বেশি।"
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("transactions")
+    .delete()
+    .eq(
+      "id",
+      id
+    )
+    .eq(
+      "user_id",
+      currentSession.user.id
     );
+
+
+  if(error){
+
+    alert(
+      "হিসাব মুছতে সমস্যা:\n" +
+      error.message
+    );
+
+    return;
 
   }
 
 
-  if(
-    s.income > 0 &&
-    s.expense <=
-    s.income * 0.50
-  ){
-
-    list.push(
-      "✅ আপনার ব্যয় আয়ের ৫০%-এর মধ্যে আছে।"
+  transactions =
+    transactions.filter(
+      x =>
+        String(x.id) !==
+        String(id)
     );
 
-  }
 
+  renderDashboard();
 
-  if(
-    s.income > 0 &&
-    s.expense >
-    s.income * 0.70
-  ){
+  renderAllTransactions();
 
-    list.push(
-      "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে।"
-    );
-
-  }
-
-
-  if(
-    s.profit > 0
-  ){
-
-    list.push(
-      "✅ বর্তমানে আপনার আয় ব্যয়ের চেয়ে বেশি।"
-    );
-
-  }
-
-
-  if(
-    s.profit < 0
-  ){
-
-    list.push(
-      "⚠️ বর্তমানে আপনার লস হচ্ছে।"
-    );
-
-  }
-
-
-  if(
-    s.receivable > 0
-  ){
-
-    list.push(
-      "🤝 আপনার মোট পাওনা " +
-      money(
-        s.receivable
-      ) +
-      "।"
-    );
-
-  }
-
-
-  if(
-    s.debt > 0
-  ){
-
-    list.push(
-      "📥 আপনার মোট ধার বাকি " +
-      money(
-        s.debt
-      ) +
-      "।"
-    );
-
-  }
-
-
-  if(
-    s.deposit > 0
-  ){
-
-    list.push(
-      "🏦 মোট Deposit " +
-      money(
-        s.deposit
-      ) +
-      "।"
-    );
-
-  }
-
-
-  if(!list.length){
-
-    list.push(
-      "📊 হিসাব যোগ হলে স্বয়ংক্রিয় বিশ্লেষণ এখানে দেখা যাবে।"
-    );
-
-  }
-
-
-  adviceBox.innerHTML =
-    list
-      .map(
-        text =>
-          `
-          <div class="advice">
-            ${escapeHtml(
-              text
-            )}
-          </div>
-          `
-      )
-      .join("");
+  renderReports();
 
 }
 
 
-/* =====================================================
-   RECENT TRANSACTIONS
-===================================================== */
+/* =========================================================
+   LOAD TRANSACTIONS
+========================================================= */
 
-function renderRecent(){
+async function loadTransactions(){
 
-  const list =
-    sortTransactions(
-      transactions
-    ).slice(
-      0,
-      5
+  if(!currentSession){
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("transactions")
+    .select("*")
+    .order(
+      "date",
+      {
+        ascending:false
+      }
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
     );
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+
+  transactions =
+    data || [];
+
+
+  renderDashboard();
+
+  renderAllTransactions();
+
+  renderReports();
+
+}
+
+
+/* =========================================================
+   ALL TRANSACTIONS
+========================================================= */
+
+function renderAllTransactions(){
+
+  let list =
+    [...transactions];
+
+
+  const q =
+    searchTx.value
+      .trim()
+      .toLowerCase();
+
+
+  if(q){
+
+    list =
+      list.filter(
+        item => {
+
+          const text =
+            [
+              typeName(
+                item.type
+              ),
+              item.person_name,
+              item.category,
+              item.note,
+              item.date
+            ]
+            .join(" ")
+            .toLowerCase();
+
+
+          return text.includes(q);
+
+        }
+      );
+
+  }
+
+
+  if(filterType.value){
+
+    list =
+      list.filter(
+        x =>
+          x.type ===
+          filterType.value
+      );
+
+  }
+
+
+  if(filterFrom.value){
+
+    list =
+      list.filter(
+        x =>
+          String(
+            x.date || ""
+          ) >=
+          filterFrom.value
+      );
+
+  }
+
+
+  if(filterTo.value){
+
+    list =
+      list.filter(
+        x =>
+          String(
+            x.date || ""
+          ) <=
+          filterTo.value
+      );
+
+  }
+
+
+  allCount.textContent =
+    list.length +
+    " হিসাব";
 
 
   if(!list.length){
 
-    recentList.innerHTML =
+    allTransactions.innerHTML =
       `
       <div class="empty">
-        এখনও কোনো হিসাব নেই।
+        কোনো হিসাব পাওয়া যায়নি।
       </div>
       `;
 
@@ -2837,7 +2814,7 @@ function renderRecent(){
   }
 
 
-  recentList.innerHTML =
+  allTransactions.innerHTML =
     list
       .map(
         item =>
@@ -2850,20 +2827,16 @@ function renderRecent(){
               <div>
 
                 <div class="txTitle">
-                  ${typeIcon(
-                    item.type
-                  )}
+                  ${typeIcon(item.type)}
                   ${escapeHtml(
-                    typeName(
-                      item.type
-                    )
+                    typeName(item.type)
                   )}
                 </div>
 
                 ${
                   item.person_name
                     ? `
-                      <div class="small">
+                      <div>
                         👤 ${escapeHtml(
                           item.person_name
                         )}
@@ -2875,9 +2848,21 @@ function renderRecent(){
                 <div class="small muted">
                   ${escapeHtml(
                     item.category ||
-                    "কোনো বিবরণ নেই"
+                    ""
                   )}
                 </div>
+
+                ${
+                  item.note
+                    ? `
+                      <div class="small muted">
+                        📝 ${escapeHtml(
+                          item.note
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
 
                 <div class="small muted">
                   ${escapeHtml(
@@ -2890,10 +2875,38 @@ function renderRecent(){
               </div>
 
 
-              <div class="txAmount">
-                ${money(
-                  item.amount
-                )}
+              <div
+                style="
+                  min-width:120px;
+                  text-align:right
+                "
+              >
+
+                <div class="txAmount">
+                  ${money(item.amount)}
+                </div>
+
+                <div class="txActions">
+
+                  <button
+                    data-edit="${escapeHtml(
+                      item.id
+                    )}"
+                  >
+                    ✏️ Edit
+                  </button>
+
+                  <button
+                    class="danger"
+                    data-delete="${escapeHtml(
+                      item.id
+                    )}"
+                  >
+                    🗑️ Delete
+                  </button>
+
+                </div>
+
               </div>
 
             </div>
@@ -2904,14 +2917,159 @@ function renderRecent(){
       )
       .join("");
 
+
+  allTransactions
+    .querySelectorAll(
+      "[data-edit]"
+    )
+    .forEach(
+      b =>
+        b.onclick =
+          () =>
+            startEdit(
+              b.dataset.edit
+            )
+    );
+
+
+  allTransactions
+    .querySelectorAll(
+      "[data-delete]"
+    )
+    .forEach(
+      b =>
+        b.onclick =
+          () =>
+            deleteTransaction(
+              b.dataset.delete
+            )
+    );
+
 }
 
 
-/* =====================================================
-   REPORTS
-===================================================== */
+[
+  searchTx,
+  filterType,
+  filterFrom,
+  filterTo
+].forEach(
+  el =>
+    el.addEventListener(
+      "input",
+      renderAllTransactions
+    )
+);
 
-function getReportRange(period){
+
+document.getElementById(
+  "clearFiltersBtn"
+).onclick =
+  () => {
+
+    searchTx.value = "";
+
+    filterType.value = "";
+
+    filterFrom.value = "";
+
+    filterTo.value = "";
+
+    renderAllTransactions();
+
+  };
+
+
+document.getElementById(
+  "reloadBtn"
+).onclick =
+  async () => {
+
+    await loadTransactions();
+
+    await loadReminders();
+
+  };
+
+
+document.getElementById(
+  "exportBtn"
+).onclick =
+  () => {
+
+    const data = {
+
+      exported_at:
+        new Date()
+          .toISOString(),
+
+      user:
+        currentSession?.user?.email ||
+        "",
+
+      transactions,
+
+      reminders
+
+    };
+
+
+    const blob =
+      new Blob(
+        [
+          JSON.stringify(
+            data,
+            null,
+            2
+          )
+        ],
+        {
+          type:
+            "application/json"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const a =
+      document.createElement(
+        "a"
+      );
+
+
+    a.href = url;
+
+    a.download =
+      "amar-hisab-backup.json";
+
+    a.click();
+
+    URL.revokeObjectURL(
+      url
+    );
+
+  };
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+function reportList(){
+
+  const period =
+    reportPeriod.value;
+
+
+  if(period === "all"){
+    return [...transactions];
+  }
+
 
   const now =
     new Date(
@@ -2920,31 +3078,22 @@ function getReportRange(period){
     );
 
 
-  if(
-    period === "today"
-  ){
+  let start;
 
-    return {
 
-      start:
-        new Date(
-          todayString() +
-          "T00:00:00"
-        ),
+  if(period === "today"){
 
-      end:
+    start =
+      new Date(
         now
-
-    };
+      );
 
   }
 
 
-  if(
-    period === "week"
-  ){
+  if(period === "week"){
 
-    const start =
+    start =
       new Date(
         now
       );
@@ -2954,109 +3103,37 @@ function getReportRange(period){
       6
     );
 
-    start.setHours(
-      0,
-      0,
-      0,
-      0
-    );
+  }
 
 
-    return {
+  if(period === "month"){
 
-      start,
-      end:now
-
-    };
+    start =
+      new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        1
+      );
 
   }
 
 
-  if(
-    period === "month"
-  ){
+  if(period === "year"){
 
-    return {
-
-      start:
-        new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          1,
-          0,
-          0,
-          0
-        ),
-
-      end:
-        now
-
-    };
+    start =
+      new Date(
+        now.getFullYear(),
+        0,
+        1
+      );
 
   }
 
 
-  if(
-    period === "year"
-  ){
-
-    return {
-
-      start:
-        new Date(
-          now.getFullYear(),
-          0,
-          1,
-          0,
-          0,
-          0
-        ),
-
-      end:
-        now
-
-    };
-
-  }
-
-
-  return {
-
-    start:null,
-    end:null
-
-  };
-
-}
-
-
-function filterByPeriod(
-  list,
-  period
-){
-
-  if(
-    period === "all"
-  ){
-
-    return [...list];
-
-  }
-
-
-  const {
-    start,
-    end
-  } =
-  getReportRange(
-    period
-  );
-
-
-  return list.filter(
+  return transactions.filter(
     item => {
 
-      const date =
+      const d =
         new Date(
           String(
             item.date
@@ -3065,10 +3142,8 @@ function filterByPeriod(
         );
 
 
-      return (
-        date >= start &&
-        date <= end
-      );
+      return d >= start &&
+             d <= now;
 
     }
   );
@@ -3079,10 +3154,7 @@ function filterByPeriod(
 function renderReports(){
 
   const list =
-    filterByPeriod(
-      transactions,
-      reportPeriod.value
-    );
+    reportList();
 
 
   const s =
@@ -3124,38 +3196,30 @@ function renderReports(){
     <div class="grid4">
 
       <div class="card">
-        <div class="muted">আয়</div>
+        <div>আয়</div>
         <div class="money">
-          ${money(
-            s.income
-          )}
+          ${money(s.income)}
         </div>
       </div>
 
       <div class="card">
-        <div class="muted">ব্যয়</div>
+        <div>ব্যয়</div>
         <div class="money">
-          ${money(
-            s.expense
-          )}
+          ${money(s.expense)}
         </div>
       </div>
 
       <div class="card">
-        <div class="muted">লাভ / লস</div>
+        <div>লাভ / লস</div>
         <div class="money">
-          ${money(
-            s.profit
-          )}
+          ${money(s.profit)}
         </div>
       </div>
 
       <div class="card">
-        <div class="muted">Deposit</div>
+        <div>Deposit</div>
         <div class="money">
-          ${money(
-            s.deposit
-          )}
+          ${money(s.deposit)}
         </div>
       </div>
 
@@ -3188,18 +3252,14 @@ function renderReports(){
       <div class="row">
         <span>পাওনা</span>
         <strong>
-          ${money(
-            s.receivable
-          )}
+          ${money(s.receivable)}
         </strong>
       </div>
 
       <div class="row">
         <span>ধার বাকি</span>
         <strong>
-          ${money(
-            s.debt
-          )}
+          ${money(s.debt)}
         </strong>
       </div>
 
@@ -3215,77 +3275,50 @@ function renderReports(){
     `;
 
 
-  renderCategoryReport(
-    list
-  );
+  renderCategoryReport(list);
 
-  renderReportPersonSummary(
-    list
-  );
+  renderReportPeople(list);
 
   renderMonthlyReport();
 
 }
 
 
-function renderCategoryReport(
-  list
-){
-
-  const expenses =
-    list.filter(
-      item =>
-        item.type ===
-        "expense"
-    );
-
+function renderCategoryReport(list){
 
   const map = {};
 
 
-  expenses.forEach(
-    item => {
+  list
+    .filter(
+      x =>
+        x.type ===
+        "expense"
+    )
+    .forEach(
+      x => {
 
-      const name =
-        item.category ||
-        "অন্যান্য";
-
-
-      map[name] =
-        (
-          map[name] ||
-          0
-        ) +
-        Number(
-          item.amount || 0
-        );
-
-    }
-  );
+        const key =
+          x.category ||
+          "অন্যান্য";
 
 
-  const total =
-    expenses.reduce(
-      (
-        total,
-        item
-      ) =>
-        total +
-        Number(
-          item.amount || 0
-        ),
-      0
+        map[key] =
+          (
+            map[key] ||
+            0
+          ) +
+          Number(
+            x.amount || 0
+          );
+
+      }
     );
 
 
   const entries =
     Object.entries(
       map
-    )
-    .sort(
-      (a,b) =>
-        b[1] -
-        a[1]
     );
 
 
@@ -3305,50 +3338,31 @@ function renderCategoryReport(
 
   categoryReport.innerHTML =
     entries
+      .sort(
+        (a,b) =>
+          b[1] -
+          a[1]
+      )
       .map(
-        ([name,value]) => {
+        ([key,value]) =>
+          `
+          <div class="row">
+            <span>
+              ${escapeHtml(key)}
+            </span>
 
-          const pct =
-            total > 0
-              ? (
-                  value /
-                  total
-                ) * 100
-              : 0;
-
-
-          return `
-
-            <div class="row">
-
-              <span>
-                ${escapeHtml(
-                  name
-                )}
-              </span>
-
-              <strong>
-                ${money(
-                  value
-                )}
-                ·
-                ${pct.toFixed(1)}%
-              </strong>
-
-            </div>
-
-          `;
-
-        }
+            <strong>
+              ${money(value)}
+            </strong>
+          </div>
+          `
       )
       .join("");
 
 }
 
 
-function renderReportPersonSummary(
-  list
-){
+function renderReportPeople(list){
 
   const people =
     calculatePersonSummary(
@@ -3367,7 +3381,7 @@ function renderReportPersonSummary(
     reportPersonSummary.innerHTML =
       `
       <div class="empty">
-        এই সময়ে কোনো ব্যক্তিভিত্তিক পাওনা বা ধার নেই।
+        কোনো ব্যক্তিভিত্তিক হিসাব নেই।
       </div>
       `;
 
@@ -3399,37 +3413,27 @@ function renderReportPersonSummary(
 
           return `
 
-            <div class="personBox">
+          <div class="personBox">
 
-              <div class="personTitle">
-                👤 ${escapeHtml(
-                  name
-                )}
-              </div>
-
-              <div class="row">
-                <span>
-                  পাওনা
-                </span>
-                <strong>
-                  ${money(
-                    receivable
-                  )}
-                </strong>
-              </div>
-
-              <div class="row">
-                <span>
-                  ধার বাকি
-                </span>
-                <strong>
-                  ${money(
-                    debt
-                  )}
-                </strong>
-              </div>
-
+            <div class="personTitle">
+              👤 ${escapeHtml(name)}
             </div>
+
+            <div class="row">
+              <span>পাওনা</span>
+              <strong>
+                ${money(receivable)}
+              </strong>
+            </div>
+
+            <div class="row">
+              <span>ধার বাকি</span>
+              <strong>
+                ${money(debt)}
+              </strong>
+            </div>
+
+          </div>
 
           `;
 
@@ -3449,9 +3453,7 @@ function renderMonthlyReport(){
     item => {
 
       if(!item.date){
-
         return;
-
       }
 
 
@@ -3467,11 +3469,8 @@ function renderMonthlyReport(){
       if(!map[month]){
 
         map[month] = {
-
           income:0,
-
           expense:0
-
         };
 
       }
@@ -3508,7 +3507,7 @@ function renderMonthlyReport(){
   );
 
 
-  const months =
+  const entries =
     Object.entries(
       map
     )
@@ -3524,12 +3523,12 @@ function renderMonthlyReport(){
     );
 
 
-  if(!months.length){
+  if(!entries.length){
 
     monthlyReport.innerHTML =
       `
       <div class="empty">
-        এখনো মাসিক হিসাব নেই।
+        কোনো মাসিক হিসাব নেই।
       </div>
       `;
 
@@ -3539,300 +3538,25 @@ function renderMonthlyReport(){
 
 
   monthlyReport.innerHTML =
-    months
+    entries
       .map(
-        ([month,data]) => {
-
-          const profit =
-            data.income -
-            data.expense;
-
-
-          return `
-
-            <div class="row">
-
-              <span>
-                ${escapeHtml(
-                  month
-                )}
-              </span>
-
-              <span>
-                আয় ${money(
-                  data.income
-                )}
-                ·
-                ব্যয় ${money(
-                  data.expense
-                )}
-                ·
-                লাভ ${money(
-                  profit
-                )}
-              </span>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
-
-}
-
-
-reportPeriod.onchange =
-  () => {
-
-    renderReports();
-
-  };
-
-
-refreshReportBtn.onclick =
-  () => {
-
-    renderReports();
-
-  };
-
-
-/* =====================================================
-   ALL TRANSACTIONS
-===================================================== */
-
-function getFilteredTransactions(){
-
-  let list =
-    sortTransactions(
-      transactions
-    );
-
-
-  const query =
-    searchTx.value
-      .trim()
-      .toLowerCase();
-
-
-  const selectedType =
-    filterType.value;
-
-
-  const from =
-    filterFrom.value;
-
-
-  const to =
-    filterTo.value;
-
-
-  if(query){
-
-    list =
-      list.filter(
-        item => {
-
-          const text =
-            [
-              typeName(
-                item.type
-              ),
-              item.person_name || "",
-              item.category || "",
-              item.note || "",
-              item.date || ""
-            ]
-            .join(" ")
-            .toLowerCase();
-
-
-          return text.includes(
-            query
-          );
-
-        }
-      );
-
-  }
-
-
-  if(selectedType){
-
-    list =
-      list.filter(
-        item =>
-          item.type ===
-          selectedType
-      );
-
-  }
-
-
-  if(from){
-
-    list =
-      list.filter(
-        item =>
-          String(
-            item.date || ""
-          ) >=
-          from
-      );
-
-  }
-
-
-  if(to){
-
-    list =
-      list.filter(
-        item =>
-          String(
-            item.date || ""
-          ) <=
-          to
-      );
-
-  }
-
-
-  return list;
-
-}
-
-
-function renderAllTransactions(){
-
-  const list =
-    getFilteredTransactions();
-
-
-  allCount.textContent =
-    list.length +
-    " হিসাব";
-
-
-  if(!list.length){
-
-    allTransactions.innerHTML =
-      `
-      <div class="empty">
-        কোনো হিসাব পাওয়া যায়নি।
-      </div>
-      `;
-
-    return;
-
-  }
-
-
-  allTransactions.innerHTML =
-    list
-      .map(
-        item =>
+        ([month,data]) =>
           `
 
-          <div class="txItem">
+          <div class="row">
 
-            <div class="txTop">
+            <span>
+              ${escapeHtml(month)}
+            </span>
 
-              <div>
-
-                <div class="txTitle">
-                  ${typeIcon(
-                    item.type
-                  )}
-                  ${escapeHtml(
-                    typeName(
-                      item.type
-                    )
-                  )}
-                </div>
-
-                ${
-                  item.person_name
-                    ? `
-                      <div>
-                        👤 ${escapeHtml(
-                          item.person_name
-                        )}
-                      </div>
-                    `
-                    : ""
-                }
-
-                <div class="small muted">
-                  ${escapeHtml(
-                    item.category ||
-                    "কোনো বিবরণ নেই"
-                  )}
-                </div>
-
-                ${
-                  item.note
-                    ? `
-                      <div class="small muted">
-                        📝 ${escapeHtml(
-                          item.note
-                        )}
-                      </div>
-                    `
-                    : ""
-                }
-
-                <div class="small muted">
-                  ${escapeHtml(
-                    formatDate(
-                      item.date
-                    )
-                  )}
-                </div>
-
-              </div>
-
-
-              <div
-                style="
-                  text-align:right;
-                  min-width:115px
-                "
-              >
-
-                <div class="txAmount">
-                  ${money(
-                    item.amount
-                  )}
-                </div>
-
-                <div class="txActions">
-
-                  <button
-                    type="button"
-                    data-edit="${escapeHtml(
-                      item.id
-                    )}"
-                  >
-                    ✏️ Edit
-                  </button>
-
-                  <button
-                    type="button"
-                    class="danger"
-                    data-delete="${escapeHtml(
-                      item.id
-                    )}"
-                  >
-                    🗑️ Delete
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
+            <strong>
+              আয় ${money(data.income)}
+              · ব্যয় ${money(data.expense)}
+              · লাভ ${money(
+                data.income -
+                data.expense
+              )}
+            </strong>
 
           </div>
 
@@ -3840,659 +3564,23 @@ function renderAllTransactions(){
       )
       .join("");
 
-
-  allTransactions
-    .querySelectorAll(
-      "[data-edit]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
-            startEdit(
-              button.dataset.edit
-            );
-
-          };
-
-      }
-    );
-
-
-  allTransactions
-    .querySelectorAll(
-      "[data-delete]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
-            deleteTransaction(
-              button.dataset.delete
-            );
-
-          };
-
-      }
-    );
-
 }
 
 
-searchTx.oninput =
-  () => {
+reportPeriod.onchange =
+  renderReports;
 
-    renderAllTransactions();
+refreshReportBtn.onclick =
+  renderReports;
 
-  };
 
+/* =========================================================
+   REMINDERS
+   IMPORTANT:
+   completed state is handled explicitly.
+========================================================= */
 
-filterType.onchange =
-  () => {
-
-    renderAllTransactions();
-
-  };
-
-
-filterFrom.onchange =
-  () => {
-
-    renderAllTransactions();
-
-  };
-
-
-filterTo.onchange =
-  () => {
-
-    renderAllTransactions();
-
-  };
-
-
-clearFiltersBtn.onclick =
-  () => {
-
-    searchTx.value =
-      "";
-
-    filterType.value =
-      "";
-
-    filterFrom.value =
-      "";
-
-    filterTo.value =
-      "";
-
-    renderAllTransactions();
-
-  };
-
-
-/* =====================================================
-   LOAD TRANSACTIONS
-===================================================== */
-
-async function loadTransactions(){
-
-  if(!currentSession){
-
-    transactions =
-      [];
-
-    renderDashboard();
-
-    return;
-
-  }
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-    await supabaseClient
-      .from(
-        "transactions"
-      )
-      .select(
-        "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
-      )
-      .order(
-        "date",
-        {
-          ascending:false
-        }
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
-
-
-    if(error){
-
-      console.error(
-        "Transaction load error:",
-        error
-      );
-
-      alert(
-        "Cloud হিসাব Load করতে সমস্যা:\n" +
-        error.message
-      );
-
-      return;
-
-    }
-
-
-    transactions =
-      Array.isArray(data)
-        ? data
-        : [];
-
-
-    renderDashboard();
-
-    renderAllTransactions();
-
-    renderReports();
-
-
-  }catch(error){
-
-    console.error(
-      error
-    );
-
-    alert(
-      "Cloud হিসাব Load করতে সমস্যা হয়েছে।"
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   SAVE / UPDATE TRANSACTION
-===================================================== */
-
-saveTxBtn.onclick =
-  async () => {
-
-    clearMessage(
-      txMsg
-    );
-
-
-    if(!currentSession){
-
-      showMessage(
-        txMsg,
-        "আগে Login করুন।",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    const type =
-      txType.value;
-
-
-    const amount =
-      Number(
-        txAmount.value
-      );
-
-
-    const person =
-      personName.value.trim();
-
-
-    let category =
-      txCategory.value.trim();
-
-
-    if(
-      type === "expense" &&
-      expenseCategory.value
-    ){
-
-      category =
-        expenseCategory.value;
-
-    }
-
-
-    const date =
-      txDate.value ||
-      todayString();
-
-
-    const note =
-      txNote.value.trim();
-
-
-    if(
-      !amount ||
-      amount <= 0
-    ){
-
-      showMessage(
-        txMsg,
-        "সঠিক টাকার পরিমাণ দিন।",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if(
-      [
-        "lent",
-        "collect",
-        "borrowed",
-        "repay"
-      ].includes(
-        type
-      ) &&
-      !person
-    ){
-
-      showMessage(
-        txMsg,
-        "ধার/পাওনার ক্ষেত্রে ব্যক্তির নাম দিন।",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    saveTxBtn.disabled =
-      true;
-
-
-    try{
-
-      if(
-        editingId !== null
-      ){
-
-        showMessage(
-          txMsg,
-          "পরিবর্তন Cloud-এ সংরক্ষণ হচ্ছে...",
-          "info"
-        );
-
-
-        const {
-          data,
-          error
-        } =
-        await supabaseClient
-          .from(
-            "transactions"
-          )
-          .update({
-
-            type:
-              type,
-
-            amount:
-              amount,
-
-            person_name:
-              person,
-
-            category:
-              category,
-
-            date:
-              date,
-
-            note:
-              note,
-
-            updated_at:
-              new Date()
-                .toISOString()
-
-          })
-          .eq(
-            "id",
-            editingId
-          )
-          .eq(
-            "user_id",
-            currentSession.user.id
-          )
-          .select(
-            "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
-          )
-          .single();
-
-
-        if(error){
-
-          showMessage(
-            txMsg,
-            "পরিবর্তন Save হয়নি: " +
-            error.message,
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        const index =
-          transactions.findIndex(
-            item =>
-              String(
-                item.id
-              ) ===
-              String(
-                editingId
-              )
-          );
-
-
-        if(
-          index !== -1 &&
-          data
-        ){
-
-          transactions[index] =
-            data;
-
-        }
-
-
-        renderDashboard();
-
-        renderAllTransactions();
-
-        renderReports();
-
-
-        resetForm();
-
-        showSection(
-          "all"
-        );
-
-
-        return;
-
-      }
-
-
-      showMessage(
-        txMsg,
-        "Cloud Database-এ সংরক্ষণ হচ্ছে...",
-        "info"
-      );
-
-
-      const {
-        data,
-        error
-      } =
-      await supabaseClient
-        .from(
-          "transactions"
-        )
-        .insert({
-
-          user_id:
-            currentSession.user.id,
-
-          type:
-            type,
-
-          amount:
-            amount,
-
-          person_name:
-            person,
-
-          category:
-            category,
-
-          date:
-            date,
-
-          note:
-            note
-
-        })
-        .select(
-          "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
-        )
-        .single();
-
-
-      if(error){
-
-        showMessage(
-          txMsg,
-          "Cloud-এ Save হয়নি: " +
-          error.message,
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(data){
-
-        transactions.unshift(
-          data
-        );
-
-      }
-
-
-      renderDashboard();
-
-      renderAllTransactions();
-
-      renderReports();
-
-
-      showMessage(
-        txMsg,
-        "✅ হিসাব Cloud Database-এ সংরক্ষিত হয়েছে।",
-        "success"
-      );
-
-
-      txAmount.value =
-        "";
-
-      personName.value =
-        "";
-
-      txCategory.value =
-        "";
-
-      expenseCategory.value =
-        "";
-
-      txDate.value =
-        todayString();
-
-      txNote.value =
-        "";
-
-
-    }catch(error){
-
-      console.error(
-        error
-      );
-
-      showMessage(
-        txMsg,
-        error?.message ||
-        "Cloud-এ সংরক্ষণ করতে সমস্যা হয়েছে।",
-        "error"
-      );
-
-    }finally{
-
-      saveTxBtn.disabled =
-        false;
-
-    }
-
-  };
-
-
-/* =====================================================
-   DELETE TRANSACTION
-===================================================== */
-
-async function deleteTransaction(
-  id
-){
-
-  if(!currentSession){
-
-    return;
-
-  }
-
-
-  const item =
-    transactions.find(
-      x =>
-        String(
-          x.id
-        ) ===
-        String(
-          id
-        )
-    );
-
-
-  const ok =
-    confirm(
-      (
-        item
-          ? typeName(
-              item.type
-            ) +
-            " - " +
-            money(
-              item.amount
-            )
-          : "এই হিসাব"
-      ) +
-      "\n\nএই হিসাবটি Cloud Database থেকে মুছে ফেলবেন?"
-    );
-
-
-  if(!ok){
-
-    return;
-
-  }
-
-
-  try{
-
-    const {
-      error
-    } =
-    await supabaseClient
-      .from(
-        "transactions"
-      )
-      .delete()
-      .eq(
-        "id",
-        id
-      )
-      .eq(
-        "user_id",
-        currentSession.user.id
-      );
-
-
-    if(error){
-
-      alert(
-        "হিসাব মুছতে সমস্যা:\n" +
-        error.message
-      );
-
-      return;
-
-    }
-
-
-    transactions =
-      transactions.filter(
-        item =>
-          String(
-            item.id
-          ) !==
-          String(
-            id
-          )
-      );
-
-
-    renderDashboard();
-
-    renderAllTransactions();
-
-    renderReports();
-
-
-  }catch(error){
-
-    console.error(
-      error
-    );
-
-    alert(
-      "হিসাব মুছতে সমস্যা হয়েছে।"
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   REMINDER HELPERS
-===================================================== */
-
-function reminderStatus(
+function getReminderStatus(
   date
 ){
 
@@ -4501,7 +3589,8 @@ function reminderStatus(
 
 
   if(
-    date < today
+    String(date) <
+    today
   ){
 
     return {
@@ -4513,7 +3602,8 @@ function reminderStatus(
 
 
   if(
-    date === today
+    String(date) ===
+    today
   ){
 
     return {
@@ -4537,53 +3627,27 @@ function sortReminders(list){
   return [...list].sort(
     (a,b) => {
 
-      if(
-        Boolean(
-          a.completed
-        ) !==
-        Boolean(
-          b.completed
-        )
-      ){
+      /* সবসময় completed item শেষে */
 
-        return a.completed
-          ? 1
-          : -1;
+      const ca =
+        a.completed === true;
 
-      }
+      const cb =
+        b.completed === true;
 
 
-      const dateA =
-        String(
-          a.reminder_date ||
-          ""
-        );
+      if(ca !== cb){
 
-      const dateB =
-        String(
-          b.reminder_date ||
-          ""
-        );
-
-
-      if(
-        dateA !== dateB
-      ){
-
-        return dateA.localeCompare(
-          dateB
-        );
+        return ca ? 1 : -1;
 
       }
 
 
       return String(
-        b.created_at ||
-        ""
+        a.reminder_date || ""
       ).localeCompare(
         String(
-          a.created_at ||
-          ""
+          b.reminder_date || ""
         )
       );
 
@@ -4608,20 +3672,16 @@ function resetReminderForm(){
     "hidden"
   );
 
-  reminderTitle.value =
-    "";
+  reminderTitle.value = "";
 
-  reminderPerson.value =
-    "";
+  reminderPerson.value = "";
 
-  reminderAmount.value =
-    "";
+  reminderAmount.value = "";
 
   reminderDate.value =
     todayString();
 
-  reminderNote.value =
-    "";
+  reminderNote.value = "";
 
   clearMessage(
     reminderMsg
@@ -4630,45 +3690,17 @@ function resetReminderForm(){
 }
 
 
-function cancelReminderEdit(){
-
-  editingReminderId =
-    null;
-
-  reminderFormTitle.textContent =
-    "⏰ নতুন Reminder যোগ করুন";
-
-  saveReminderBtn.textContent =
-    "☁️ Reminder সংরক্ষণ";
-
-  cancelReminderEditBtn.classList.add(
-    "hidden"
-  );
-
-}
-
-
 cancelReminderEditBtn.onclick =
-  () => {
-
-    resetReminderForm();
-
-  };
+  () => resetReminderForm();
 
 
-function startReminderEdit(
-  id
-){
+function startReminderEdit(id){
 
   const item =
     reminders.find(
       x =>
-        String(
-          x.id
-        ) ===
-        String(
-          id
-        )
+        String(x.id) ===
+        String(id)
     );
 
 
@@ -4733,95 +3765,67 @@ function startReminderEdit(
 }
 
 
-/* =====================================================
-   LOAD REMINDERS
-===================================================== */
+/* Reminder load */
 
 async function loadReminders(){
 
   if(!currentSession){
 
-    reminders =
-      [];
+    reminders = [];
 
     renderReminders();
-
-    renderDashboardReminders();
 
     return;
 
   }
 
 
-  try{
-
-    const {
-      data,
-      error
-    } =
-    await supabaseClient
-      .from(
-        "reminders"
-      )
-      .select(
-        "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
-      )
-      .order(
-        "reminder_date",
-        {
-          ascending:true
-        }
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("reminders")
+    .select("*")
+    .order(
+      "reminder_date",
+      {
+        ascending:true
+      }
+    );
 
 
-    if(error){
-
-      console.error(
-        "Reminder load error:",
-        error
-      );
-
-      alert(
-        "Reminder Load করতে সমস্যা:\n" +
-        error.message
-      );
-
-      return;
-
-    }
-
-
-    reminders =
-      Array.isArray(data)
-        ? data
-        : [];
-
-
-    renderReminders();
-
-    renderDashboardReminders();
-
-
-  }catch(error){
+  if(error){
 
     console.error(
+      "Reminder load:",
       error
     );
 
+    return;
+
   }
+
+
+  reminders =
+    (data || []).map(
+      item => ({
+
+        ...item,
+
+        completed:
+          item.completed === true
+
+      })
+    );
+
+
+  renderReminders();
+
+  renderDashboardReminders();
 
 }
 
-
-/* =====================================================
-   SAVE / UPDATE REMINDER
-===================================================== */
 
 saveReminderBtn.onclick =
   async () => {
@@ -4847,21 +3851,17 @@ saveReminderBtn.onclick =
     const title =
       reminderTitle.value.trim();
 
-
     const person =
       reminderPerson.value.trim();
-
 
     const amount =
       Number(
         reminderAmount.value || 0
       );
 
-
     const date =
       reminderDate.value ||
       todayString();
-
 
     const note =
       reminderNote.value.trim();
@@ -4880,38 +3880,49 @@ saveReminderBtn.onclick =
     }
 
 
-    if(
-      amount < 0
-    ){
-
-      showMessage(
-        reminderMsg,
-        "টাকার পরিমাণ সঠিক দিন।",
-        "error"
-      );
-
-      return;
-
-    }
-
-
     saveReminderBtn.disabled =
       true;
 
 
     try{
 
-      /* UPDATE */
+      /*
+        when_at রাখা হলো কারণ তোমার
+        existing reminders table-এ এই column আছে।
+      */
+
+      const whenAt =
+        date +
+        "T09:00:00";
+
+
+      const payload = {
+
+        title,
+
+        person_name:
+          person,
+
+        amount,
+
+        reminder_date:
+          date,
+
+        note,
+
+        when_at:
+          whenAt
+
+      };
+
 
       if(
         editingReminderId !== null
       ){
 
-        showMessage(
-          reminderMsg,
-          "Reminder পরিবর্তন সংরক্ষণ হচ্ছে...",
-          "info"
-        );
+        payload.updated_at =
+          new Date()
+            .toISOString();
 
 
         const {
@@ -4919,31 +3930,10 @@ saveReminderBtn.onclick =
           error
         } =
         await supabaseClient
-          .from(
-            "reminders"
+          .from("reminders")
+          .update(
+            payload
           )
-          .update({
-
-            title:
-              title,
-
-            person_name:
-              person,
-
-            amount:
-              amount,
-
-            reminder_date:
-              date,
-
-            note:
-              note,
-
-            updated_at:
-              new Date()
-                .toISOString()
-
-          })
           .eq(
             "id",
             editingReminderId
@@ -4952,9 +3942,7 @@ saveReminderBtn.onclick =
             "user_id",
             currentSession.user.id
           )
-          .select(
-            "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
-          )
+          .select()
           .single();
 
 
@@ -4974,23 +3962,23 @@ saveReminderBtn.onclick =
 
         const index =
           reminders.findIndex(
-            item =>
-              String(
-                item.id
-              ) ===
+            x =>
+              String(x.id) ===
               String(
                 editingReminderId
               )
           );
 
 
-        if(
-          index !== -1 &&
-          data
-        ){
+        if(index !== -1){
 
           reminders[index] =
-            data;
+            {
+              ...data,
+              completed:
+                data.completed ===
+                true
+            };
 
         }
 
@@ -4998,6 +3986,8 @@ saveReminderBtn.onclick =
         renderReminders();
 
         renderDashboardReminders();
+
+        resetReminderForm();
 
 
         showMessage(
@@ -5007,103 +3997,72 @@ saveReminderBtn.onclick =
         );
 
 
-        resetReminderForm();
+      }else{
 
-        return;
+        const {
+          data,
+          error
+        } =
+        await supabaseClient
+          .from("reminders")
+          .insert({
 
-      }
+            user_id:
+              currentSession.user.id,
+
+            ...payload,
+
+            completed:false
+
+          })
+          .select()
+          .single();
 
 
-      /* INSERT */
+        if(error){
 
-      showMessage(
-        reminderMsg,
-        "Reminder Cloud-এ সংরক্ষণ হচ্ছে...",
-        "info"
-      );
+          showMessage(
+            reminderMsg,
+            "Reminder Save হয়নি: " +
+            error.message,
+            "error"
+          );
+
+          return;
+
+        }
 
 
-      const {
-        data,
-        error
-      } =
-      await supabaseClient
-        .from(
-          "reminders"
-        )
-        .insert({
+        reminders.push({
 
-          user_id:
-            currentSession.user.id,
-
-          title:
-            title,
-
-          person_name:
-            person,
-
-          amount:
-            amount,
-
-          reminder_date:
-            date,
-
-          note:
-            note,
+          ...data,
 
           completed:
-            false
+            data.completed === true
 
-        })
-        .select(
-          "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
-        )
-        .single();
+        });
 
 
-      if(error){
+        renderReminders();
+
+        renderDashboardReminders();
+
+
+        resetReminderForm();
+
 
         showMessage(
           reminderMsg,
-          "Reminder Save হয়নি: " +
-          error.message,
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(data){
-
-        reminders.push(
-          data
+          "✅ Reminder Cloud Database-এ সংরক্ষিত হয়েছে।",
+          "success"
         );
 
       }
-
-
-      renderReminders();
-
-      renderDashboardReminders();
-
-
-      showMessage(
-        reminderMsg,
-        "✅ Reminder Cloud Database-এ সংরক্ষিত হয়েছে।",
-        "success"
-      );
-
-
-      resetReminderForm();
 
 
     }catch(error){
 
-      console.error(
-        error
-      );
+      console.error(error);
 
       showMessage(
         reminderMsg,
@@ -5122,152 +4081,34 @@ saveReminderBtn.onclick =
   };
 
 
-/* =====================================================
-   DELETE REMINDER
-===================================================== */
+/* Toggle completed */
 
-async function deleteReminder(
-  id
-){
+async function toggleReminder(id){
 
   if(!currentSession){
-
     return;
+  }
 
+
+  const index =
+    reminders.findIndex(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
+
+
+  if(index === -1){
+    return;
   }
 
 
   const item =
-    reminders.find(
-      x =>
-        String(
-          x.id
-        ) ===
-        String(
-          id
-        )
-    );
+    reminders[index];
 
 
-  const ok =
-    confirm(
-      (
-        item?.title ||
-        "এই Reminder"
-      ) +
-      "\n\nReminder-টি মুছে ফেলবেন?"
-    );
-
-
-  if(!ok){
-
-    return;
-
-  }
-
-
-  try{
-
-    const {
-      error
-    } =
-    await supabaseClient
-      .from(
-        "reminders"
-      )
-      .delete()
-      .eq(
-        "id",
-        id
-      )
-      .eq(
-        "user_id",
-        currentSession.user.id
-      );
-
-
-    if(error){
-
-      alert(
-        "Reminder মুছতে সমস্যা:\n" +
-        error.message
-      );
-
-      return;
-
-    }
-
-
-    reminders =
-      reminders.filter(
-        item =>
-          String(
-            item.id
-          ) !==
-          String(
-            id
-          )
-      );
-
-
-    renderReminders();
-
-    renderDashboardReminders();
-
-
-  }catch(error){
-
-    console.error(
-      error
-    );
-
-    alert(
-      "Reminder মুছতে সমস্যা হয়েছে।"
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   COMPLETE / UNCOMPLETE REMINDER
-===================================================== */
-
-async function toggleReminder(
-  id
-){
-
-  if(!currentSession){
-
-    return;
-
-  }
-
-
-  const item =
-    reminders.find(
-      x =>
-        String(
-          x.id
-        ) ===
-        String(
-          id
-        )
-    );
-
-
-  if(!item){
-
-    return;
-
-  }
-
-
-  const newValue =
-    !Boolean(
-      item.completed
-    );
+  const newCompleted =
+    item.completed !== true;
 
 
   try{
@@ -5277,13 +4118,11 @@ async function toggleReminder(
       error
     } =
     await supabaseClient
-      .from(
-        "reminders"
-      )
+      .from("reminders")
       .update({
 
         completed:
-          newValue,
+          newCompleted,
 
         updated_at:
           new Date()
@@ -5298,16 +4137,14 @@ async function toggleReminder(
         "user_id",
         currentSession.user.id
       )
-      .select(
-        "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
-      )
+      .select()
       .single();
 
 
     if(error){
 
       alert(
-        "Reminder পরিবর্তন করতে সমস্যা:\n" +
+        "Reminder status পরিবর্তন হয়নি:\n" +
         error.message
       );
 
@@ -5316,28 +4153,20 @@ async function toggleReminder(
     }
 
 
-    const index =
-      reminders.findIndex(
-        x =>
-          String(
-            x.id
-          ) ===
-          String(
-            id
-          )
-      );
+    reminders[index] = {
+
+      ...data,
+
+      completed:
+        data.completed === true
+
+    };
 
 
-    if(
-      index !== -1 &&
-      data
-    ){
-
-      reminders[index] =
-        data;
-
-    }
-
+    /*
+      সবচেয়ে গুরুত্বপূর্ণ:
+      click করার পরে active view একই থাকবে।
+    */
 
     renderReminders();
 
@@ -5346,8 +4175,10 @@ async function toggleReminder(
 
   }catch(error){
 
-    console.error(
-      error
+    console.error(error);
+
+    alert(
+      "Reminder পরিবর্তন করতে সমস্যা হয়েছে।"
     );
 
   }
@@ -5355,9 +4186,80 @@ async function toggleReminder(
 }
 
 
-/* =====================================================
-   RENDER REMINDERS
-===================================================== */
+/* Delete */
+
+async function deleteReminder(id){
+
+  if(!currentSession){
+    return;
+  }
+
+
+  const item =
+    reminders.find(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
+
+
+  if(
+    !confirm(
+      (
+        item?.title ||
+        "এই Reminder"
+      ) +
+      "\n\nReminder মুছে ফেলবেন?"
+    )
+  ){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("reminders")
+    .delete()
+    .eq(
+      "id",
+      id
+    )
+    .eq(
+      "user_id",
+      currentSession.user.id
+    );
+
+
+  if(error){
+
+    alert(
+      "Reminder মুছতে সমস্যা:\n" +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  reminders =
+    reminders.filter(
+      x =>
+        String(x.id) !==
+        String(id)
+    );
+
+
+  renderReminders();
+
+  renderDashboardReminders();
+
+}
+
+
+/* MAIN RENDER */
 
 function renderReminders(){
 
@@ -5367,29 +4269,35 @@ function renderReminders(){
     );
 
 
+  /*
+    completed === true
+    এবং completed !== true
+    আলাদা করে দেখা হচ্ছে।
+  */
+
   if(
-    reminderView === "pending"
+    reminderView ===
+    "pending"
   ){
 
     list =
       list.filter(
         item =>
-          !item.completed
+          item.completed !== true
       );
 
   }
 
 
   if(
-    reminderView === "done"
+    reminderView ===
+    "done"
   ){
 
     list =
       list.filter(
         item =>
-          Boolean(
-            item.completed
-          )
+          item.completed === true
       );
 
   }
@@ -5400,22 +4308,56 @@ function renderReminders(){
     " Reminder";
 
 
+  /*
+    Active tab নিশ্চিতভাবে দেখাবে
+  */
+
+  showAllRemindersBtn.classList.toggle(
+    "primary",
+    reminderView === "all"
+  );
+
+  showPendingRemindersBtn.classList.toggle(
+    "primary",
+    reminderView === "pending"
+  );
+
+  showDoneRemindersBtn.classList.toggle(
+    "primary",
+    reminderView === "done"
+  );
+
+
   if(!list.length){
 
-    const text =
+    let text =
+      "এখন কোনো বাকি Reminder নেই।";
+
+
+    if(
+      reminderView === "all"
+    ){
+
+      text =
+        "এখনো কোনো Reminder নেই।";
+
+    }
+
+
+    if(
       reminderView === "done"
-        ? "কোনো সম্পন্ন Reminder নেই।"
-        : reminderView === "all"
-          ? "এখনো কোনো Reminder নেই।"
-          : "এখন কোনো বাকি Reminder নেই।";
+    ){
+
+      text =
+        "এখনো কোনো সম্পন্ন Reminder নেই।";
+
+    }
 
 
     reminderList.innerHTML =
       `
       <div class="empty">
-        ${escapeHtml(
-          text
-        )}
+        ${escapeHtml(text)}
       </div>
       `;
 
@@ -5430,16 +4372,20 @@ function renderReminders(){
         item => {
 
           const status =
-            reminderStatus(
+            getReminderStatus(
               item.reminder_date
             );
+
+
+          const done =
+            item.completed === true;
 
 
           return `
 
           <div class="
             reminderItem
-            ${item.completed ? "done" : ""}
+            ${done ? "done" : ""}
           ">
 
             <div class="reminderTop">
@@ -5447,16 +4393,33 @@ function renderReminders(){
               <div>
 
                 <div class="reminderTitle">
-                  ${item.completed ? "✅" : "⏰"}
+                  ${
+                    done
+                      ? "✅"
+                      : "⏰"
+                  }
+
                   ${escapeHtml(
                     item.title
                   )}
                 </div>
 
+
+                <div class="statusBadge">
+
+                  ${
+                    done
+                      ? "✅ সম্পন্ন"
+                      : status.text
+                  }
+
+                </div>
+
+
                 ${
                   item.person_name
                     ? `
-                      <div style="margin-top:4px">
+                      <div style="margin-top:5px">
                         👤 ${escapeHtml(
                           item.person_name
                         )}
@@ -5465,12 +4428,13 @@ function renderReminders(){
                     : ""
                 }
 
+
                 ${
                   Number(
                     item.amount || 0
                   ) > 0
                     ? `
-                      <div style="margin-top:4px">
+                      <div style="margin-top:5px">
                         💰 ${money(
                           item.amount
                         )}
@@ -5479,24 +4443,33 @@ function renderReminders(){
                     : ""
                 }
 
+
                 <div class="
-                  reminderDate
-                  ${status.className}
-                ">
-                  ${status.text}
-                  ·
+                  small
+                  ${
+                    done
+                      ? "muted"
+                      : status.className
+                  }
+                " style="margin-top:4px">
+
+                  📌
                   ${escapeHtml(
                     formatDate(
                       item.reminder_date
                     )
                   )}
+
                 </div>
+
 
                 ${
                   item.note
                     ? `
-                      <div class="small muted"
-                           style="margin-top:5px">
+                      <div
+                        class="small muted"
+                        style="margin-top:5px"
+                      >
                         📝 ${escapeHtml(
                           item.note
                         )}
@@ -5515,30 +4488,34 @@ function renderReminders(){
               <button
                 type="button"
                 class="successBtn"
-                data-reminder-toggle="${escapeHtml(
+                data-toggle-reminder="${escapeHtml(
                   item.id
                 )}"
               >
+
                 ${
-                  item.completed
+                  done
                     ? "↩️ আবার বাকি"
                     : "✅ সম্পন্ন"
                 }
+
               </button>
+
 
               <button
                 type="button"
-                data-reminder-edit="${escapeHtml(
+                data-edit-reminder="${escapeHtml(
                   item.id
                 )}"
               >
                 ✏️ Edit
               </button>
 
+
               <button
                 type="button"
                 class="danger"
-                data-reminder-delete="${escapeHtml(
+                data-delete-reminder="${escapeHtml(
                   item.id
                 )}"
               >
@@ -5558,83 +4535,94 @@ function renderReminders(){
 
   reminderList
     .querySelectorAll(
-      "[data-reminder-toggle]"
+      "[data-toggle-reminder]"
     )
     .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
+      btn =>
+        btn.onclick =
+          () =>
             toggleReminder(
-              button.dataset.reminderToggle
-            );
-
-          };
-
-      }
+              btn.dataset.toggleReminder
+            )
     );
 
 
   reminderList
     .querySelectorAll(
-      "[data-reminder-edit]"
+      "[data-edit-reminder]"
     )
     .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
+      btn =>
+        btn.onclick =
+          () =>
             startReminderEdit(
-              button.dataset.reminderEdit
-            );
-
-          };
-
-      }
+              btn.dataset.editReminder
+            )
     );
 
 
   reminderList
     .querySelectorAll(
-      "[data-reminder-delete]"
+      "[data-delete-reminder]"
     )
     .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
+      btn =>
+        btn.onclick =
+          () =>
             deleteReminder(
-              button.dataset.reminderDelete
-            );
-
-          };
-
-      }
+              btn.dataset.deleteReminder
+            )
     );
 
 }
 
 
-/* =====================================================
-   DASHBOARD REMINDERS
-===================================================== */
+/* তিনটি filter */
+
+showAllRemindersBtn.onclick =
+  () => {
+
+    reminderView =
+      "all";
+
+    renderReminders();
+
+  };
+
+
+showPendingRemindersBtn.onclick =
+  () => {
+
+    reminderView =
+      "pending";
+
+    renderReminders();
+
+  };
+
+
+showDoneRemindersBtn.onclick =
+  () => {
+
+    reminderView =
+      "done";
+
+    renderReminders();
+
+  };
+
+
+/* Dashboard reminders */
 
 function renderDashboardReminders(){
 
-  const pending =
+  const list =
     sortReminders(
       reminders.filter(
         item =>
-          !item.completed
+          item.completed !== true
       )
-    );
-
-
-  const list =
-    pending.slice(
+    ).slice(
       0,
       5
     );
@@ -5657,159 +4645,63 @@ function renderDashboardReminders(){
   dashboardReminders.innerHTML =
     list
       .map(
-        item => {
-
-          const status =
-            reminderStatus(
-              item.reminder_date
-            );
-
-
-          return `
+        item =>
+          `
 
           <div class="reminderItem">
 
-            <div class="reminderTop">
+            <div class="reminderTitle">
+              ⏰ ${escapeHtml(
+                item.title
+              )}
+            </div>
 
-              <div>
+            ${
+              item.person_name
+                ? `
+                  <div class="small">
+                    👤 ${escapeHtml(
+                      item.person_name
+                    )}
+                  </div>
+                `
+                : ""
+            }
 
-                <div class="reminderTitle">
-                  ⏰ ${escapeHtml(
-                    item.title
-                  )}
-                </div>
+            ${
+              Number(
+                item.amount || 0
+              ) > 0
+                ? `
+                  <div class="small">
+                    💰 ${money(
+                      item.amount
+                    )}
+                  </div>
+                `
+                : ""
+            }
 
-                ${
-                  item.person_name
-                    ? `
-                      <div class="small">
-                        👤 ${escapeHtml(
-                          item.person_name
-                        )}
-                      </div>
-                    `
-                    : ""
-                }
-
-                ${
-                  Number(
-                    item.amount || 0
-                  ) > 0
-                    ? `
-                      <div class="small">
-                        💰 ${money(
-                          item.amount
-                        )}
-                      </div>
-                    `
-                    : ""
-                }
-
-                <div class="
-                  small
-                  reminderDate
-                  ${status.className}
-                ">
-                  ${status.text}
-                  ·
-                  ${escapeHtml(
-                    formatDate(
-                      item.reminder_date
-                    )
-                  )}
-                </div>
-
-              </div>
-
+            <div class="small">
+              📌 ${escapeHtml(
+                formatDate(
+                  item.reminder_date
+                )
+              )}
             </div>
 
           </div>
 
-          `;
-
-        }
+          `
       )
       .join("");
 
 }
 
 
-/* =====================================================
-   REMINDER FILTER BUTTONS
-===================================================== */
-
-showAllRemindersBtn.onclick =
-  () => {
-
-    reminderView =
-      "all";
-
-    showAllRemindersBtn.classList.add(
-      "primary"
-    );
-
-    showPendingRemindersBtn.classList.remove(
-      "primary"
-    );
-
-    showDoneRemindersBtn.classList.remove(
-      "primary"
-    );
-
-    renderReminders();
-
-  };
-
-
-showPendingRemindersBtn.onclick =
-  () => {
-
-    reminderView =
-      "pending";
-
-    showAllRemindersBtn.classList.remove(
-      "primary"
-    );
-
-    showPendingRemindersBtn.classList.add(
-      "primary"
-    );
-
-    showDoneRemindersBtn.classList.remove(
-      "primary"
-    );
-
-    renderReminders();
-
-  };
-
-
-showDoneRemindersBtn.onclick =
-  () => {
-
-    reminderView =
-      "done";
-
-    showAllRemindersBtn.classList.remove(
-      "primary"
-    );
-
-    showPendingRemindersBtn.classList.remove(
-      "primary"
-    );
-
-    showDoneRemindersBtn.classList.add(
-      "primary"
-    );
-
-    renderReminders();
-
-  };
-
-
-/* =====================================================
-   SIGN UP
-===================================================== */
+/* =========================================================
+   AUTH
+========================================================= */
 
 signupBtn.onclick =
   async () => {
@@ -5821,7 +4713,6 @@ signupBtn.onclick =
 
     const email =
       emailInput.value.trim();
-
 
     const password =
       passwordInput.value;
@@ -5840,21 +4731,9 @@ signupBtn.onclick =
     }
 
 
-    if(!password){
-
-      showMessage(
-        loginMsg,
-        "Password দিন।",
-        "error"
-      );
-
-      return;
-
-    }
-
-
     if(
-      password.length < 6
+      password.length <
+      6
     ){
 
       showMessage(
@@ -5868,114 +4747,74 @@ signupBtn.onclick =
     }
 
 
-    signupBtn.disabled =
-      true;
+    signupBtn.disabled = true;
 
-    loginBtn.disabled =
-      true;
+    loginBtn.disabled = true;
+
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient.auth
+      .signUp({
+
+        email,
+
+        password,
+
+        options:{
+          emailRedirectTo:
+            "https://khalid979.github.io/amar-hisab-all/"
+        }
+
+      });
+
+
+    signupBtn.disabled = false;
+
+    loginBtn.disabled = false;
+
+
+    if(error){
+
+      showMessage(
+        loginMsg,
+        error.message,
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(data?.session){
+
+      currentSession =
+        data.session;
+
+      showDashboard(
+        data.session
+      );
+
+      await loadTransactions();
+
+      await loadReminders();
+
+      return;
+
+    }
 
 
     showMessage(
       loginMsg,
-      "Account তৈরি হচ্ছে...",
-      "info"
+      "✅ Account তৈরি হয়েছে। প্রয়োজন হলে Email verification করুন।",
+      "success"
     );
-
-
-    try{
-
-      const {
-        data,
-        error
-      } =
-      await supabaseClient
-        .auth
-        .signUp({
-
-          email:
-            email,
-
-          password:
-            password,
-
-          options:{
-            emailRedirectTo:
-              "https://khalid979.github.io/amar-hisab-all/"
-          }
-
-        });
-
-
-      if(error){
-
-        showMessage(
-          loginMsg,
-          error.message,
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        data &&
-        data.session
-      ){
-
-        currentSession =
-          data.session;
-
-        showDashboard(
-          data.session
-        );
-
-        await loadTransactions();
-
-        await loadReminders();
-
-        return;
-
-      }
-
-
-      showMessage(
-        loginMsg,
-        "✅ Account তৈরি হয়েছে। প্রয়োজন হলে Email verification করুন।",
-        "success"
-      );
-
-
-    }catch(error){
-
-      console.error(
-        error
-      );
-
-      showMessage(
-        loginMsg,
-        error?.message ||
-        "Account তৈরি করতে সমস্যা হয়েছে।",
-        "error"
-      );
-
-    }finally{
-
-      signupBtn.disabled =
-        false;
-
-      loginBtn.disabled =
-        false;
-
-    }
 
   };
 
-
-/* =====================================================
-   LOGIN
-===================================================== */
 
 loginBtn.onclick =
   async () => {
@@ -5987,7 +4826,6 @@ loginBtn.onclick =
 
     const email =
       emailInput.value.trim();
-
 
     const password =
       passwordInput.value;
@@ -6019,18 +4857,9 @@ loginBtn.onclick =
     }
 
 
-    loginBtn.disabled =
-      true;
+    loginBtn.disabled = true;
 
-    signupBtn.disabled =
-      true;
-
-
-    showMessage(
-      loginMsg,
-      "Login হচ্ছে...",
-      "info"
-    );
+    signupBtn.disabled = true;
 
 
     try{
@@ -6039,15 +4868,12 @@ loginBtn.onclick =
         data,
         error
       } =
-      await supabaseClient
-        .auth
+      await supabaseClient.auth
         .signInWithPassword({
 
-          email:
-            email,
+          email,
 
-          password:
-            password
+          password
 
         });
 
@@ -6065,74 +4891,35 @@ loginBtn.onclick =
       }
 
 
-      if(
-        data &&
+      currentSession =
+        data.session;
+
+
+      showDashboard(
         data.session
-      ){
-
-        currentSession =
-          data.session;
-
-        showDashboard(
-          data.session
-        );
-
-        await loadTransactions();
-
-        await loadReminders();
-
-        clearMessage(
-          loginMsg
-        );
-
-      }else{
-
-        showMessage(
-          loginMsg,
-          "Login session পাওয়া যায়নি।",
-          "error"
-        );
-
-      }
-
-
-    }catch(error){
-
-      console.error(
-        error
       );
 
-      showMessage(
-        loginMsg,
-        error?.message ||
-        "Login করতে সমস্যা হয়েছে।",
-        "error"
-      );
+
+      await loadTransactions();
+
+      await loadReminders();
+
 
     }finally{
 
-      loginBtn.disabled =
-        false;
+      loginBtn.disabled = false;
 
-      signupBtn.disabled =
-        false;
+      signupBtn.disabled = false;
 
     }
 
   };
 
 
-/* =====================================================
-   SHOW DASHBOARD
-===================================================== */
-
-function showDashboard(
-  session
-){
+function showDashboard(session){
 
   currentSession =
     session;
-
 
   loginBox.classList.add(
     "hidden"
@@ -6157,27 +4944,13 @@ function showDashboard(
 }
 
 
-/* =====================================================
-   SHOW LOGIN
-===================================================== */
-
 function showLogin(){
 
-  currentSession =
-    null;
+  currentSession = null;
 
-  transactions =
-    [];
+  transactions = [];
 
-  reminders =
-    [];
-
-  editingId =
-    null;
-
-  editingReminderId =
-    null;
-
+  reminders = [];
 
   dashboard.classList.add(
     "hidden"
@@ -6190,79 +4963,21 @@ function showLogin(){
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
-
 logoutBtn.onclick =
   async () => {
 
-    logoutBtn.disabled =
-      true;
+    await supabaseClient
+      .auth
+      .signOut();
 
-
-    try{
-
-      const {
-        error
-      } =
-      await supabaseClient
-        .auth
-        .signOut();
-
-
-      if(error){
-
-        alert(
-          "Logout করতে সমস্যা:\n" +
-          error.message
-        );
-
-        return;
-
-      }
-
-
-      resetForm();
-
-      resetReminderForm();
-
-      showLogin();
-
-      emailInput.value =
-        "";
-
-      passwordInput.value =
-        "";
-
-      clearMessage(
-        loginMsg
-      );
-
-
-    }catch(error){
-
-      console.error(
-        error
-      );
-
-      alert(
-        "Logout করতে সমস্যা হয়েছে।"
-      );
-
-    }finally{
-
-      logoutBtn.disabled =
-        false;
-
-    }
+    showLogin();
 
   };
 
 
-/* =====================================================
+/* =========================================================
    AUTH STATE
-===================================================== */
+========================================================= */
 
 supabaseClient.auth
   .onAuthStateChange(
@@ -6271,13 +4986,10 @@ supabaseClient.auth
       session
     ) => {
 
-      console.log(
-        "Auth event:",
-        event
-      );
-
-
-      if(session){
+      if(
+        session &&
+        !currentSession
+      ){
 
         currentSession =
           session;
@@ -6290,7 +5002,10 @@ supabaseClient.auth
 
         await loadReminders();
 
-      }else{
+      }
+
+
+      if(!session){
 
         showLogin();
 
@@ -6300,105 +5015,9 @@ supabaseClient.auth
   );
 
 
-/* =====================================================
-   RELOAD
-===================================================== */
-
-reloadBtn.onclick =
-  async () => {
-
-    reloadBtn.disabled =
-      true;
-
-    try{
-
-      await loadTransactions();
-
-      await loadReminders();
-
-    }finally{
-
-      reloadBtn.disabled =
-        false;
-
-    }
-
-  };
-
-
-/* =====================================================
-   BACKUP
-===================================================== */
-
-exportBtn.onclick =
-  () => {
-
-    const backup = {
-
-      exported_at:
-        new Date()
-          .toISOString(),
-
-      user:
-        currentSession?.user?.email ||
-        "",
-
-      transactions:
-        transactions,
-
-      reminders:
-        reminders
-
-    };
-
-
-    const blob =
-      new Blob(
-        [
-          JSON.stringify(
-            backup,
-            null,
-            2
-          )
-        ],
-        {
-          type:
-            "application/json"
-        }
-      );
-
-
-    const url =
-      URL.createObjectURL(
-        blob
-      );
-
-
-    const a =
-      document.createElement(
-        "a"
-      );
-
-
-    a.href =
-      url;
-
-    a.download =
-      "amar-hisab-cloud-backup.json";
-
-    a.click();
-
-
-    URL.revokeObjectURL(
-      url
-    );
-
-  };
-
-
-/* =====================================================
-   INITIALIZATION
-===================================================== */
+/* =========================================================
+   INIT
+========================================================= */
 
 async function init(){
 
@@ -6415,18 +5034,13 @@ async function init(){
       data,
       error
     } =
-    await supabaseClient
-      .auth
+    await supabaseClient.auth
       .getSession();
 
 
     if(error){
 
-      console.error(
-        error
-      );
-
-      showLogin();
+      console.error(error);
 
       return;
 
@@ -6434,8 +5048,7 @@ async function init(){
 
 
     if(
-      data &&
-      data.session
+      data?.session
     ){
 
       currentSession =
@@ -6458,9 +5071,7 @@ async function init(){
 
   }catch(error){
 
-    console.error(
-      error
-    );
+    console.error(error);
 
     showLogin();
 
@@ -6471,7 +5082,6 @@ async function init(){
 
 init();
 
-})();
 </script>
 
 </body>
