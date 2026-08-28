@@ -225,8 +225,11 @@ let password=document.getElementById("password").value;
 
 
 const {error}=await supabaseClient.auth.signUp({
-email,
-password
+ email: email,
+ password: password,
+ options:{
+   emailRedirectTo:"https://khalid979.github.io/amar-hisab-all/"
+ }
 });
 
 
