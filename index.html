@@ -26,9 +26,9 @@ body{
 }
 
 main{
-  max-width:900px;
+  max-width:980px;
   margin:auto;
-  padding:15px;
+  padding:14px;
 }
 
 .card{
@@ -36,7 +36,11 @@ main{
   border:1px solid #ddd;
   border-radius:16px;
   padding:15px;
-  margin-bottom:15px;
+  margin-bottom:14px;
+}
+
+h2,h3,h4{
+  margin:0 0 8px;
 }
 
 input,
@@ -46,8 +50,8 @@ button{
   width:100%;
   padding:12px;
   margin-top:8px;
-  border:1px solid #ccc;
   border-radius:12px;
+  border:1px solid #ccc;
   font-size:16px;
   font-family:inherit;
 }
@@ -79,6 +83,12 @@ button:disabled{
   border-color:#fecaca;
 }
 
+.successBtn{
+  background:#fff;
+  color:#047857;
+  border-color:#a7f3d0;
+}
+
 .hidden{
   display:none !important;
 }
@@ -87,6 +97,7 @@ button:disabled{
   display:flex;
   gap:8px;
   overflow:auto;
+  padding-bottom:4px;
   margin-bottom:10px;
 }
 
@@ -102,33 +113,45 @@ button:disabled{
   gap:10px;
 }
 
+.grid4{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+
 .money{
-  font-size:22px;
+  font-size:24px;
   font-weight:800;
-  margin-top:5px;
+  margin-top:4px;
+}
+
+.muted{
+  color:#6b7280;
+}
+
+.small{
+  font-size:12px;
 }
 
 .row{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
+  gap:12px;
   padding:10px 0;
   border-bottom:1px solid #eee;
 }
 
-.muted{
-  color:#666;
+.row:last-child{
+  border-bottom:0;
 }
 
-.small{
-  font-size:13px;
-}
-
-.status{
-  font-size:13px;
-  color:#666;
-  margin-top:8px;
+.badge{
+  display:inline-block;
+  background:#f3f4f6;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:12px;
 }
 
 .message{
@@ -143,92 +166,143 @@ button:disabled{
 }
 
 .message.error{
-  color:#991b1b;
   background:#fef2f2;
+  color:#991b1b;
   border:1px solid #fecaca;
 }
 
 .message.success{
-  color:#065f46;
   background:#ecfdf5;
+  color:#065f46;
   border:1px solid #a7f3d0;
 }
 
 .message.info{
-  color:#1e40af;
   background:#eff6ff;
+  color:#1e40af;
   border:1px solid #bfdbfe;
 }
 
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:999px;
-  background:#f3f4f6;
-  font-size:12px;
+.formGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.tx-item{
-  padding:12px 0;
+.filterGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+}
+
+.txItem{
   border-bottom:1px solid #eee;
+  padding:12px 0;
 }
 
-.tx-top{
+.txTop{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
   gap:12px;
 }
 
-.tx-title{
+.txTitle{
   font-weight:800;
 }
 
-.tx-amount{
+.txAmount{
   font-weight:800;
   white-space:nowrap;
 }
 
-.tx-actions{
+.txActions{
   display:flex;
   gap:6px;
+  flex-wrap:wrap;
   margin-top:8px;
 }
 
-.tx-actions button{
+.txActions button{
   width:auto;
+  margin-top:0;
   padding:7px 10px;
   font-size:13px;
-  margin-top:0;
+}
+
+.kpi{
+  min-height:105px;
+}
+
+.sectionNote{
+  background:#f9fafb;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:10px;
+  margin-top:8px;
+  font-size:13px;
+}
+
+.advice{
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+
+.advice:last-child{
+  border-bottom:0;
+}
+
+.progress{
+  height:9px;
+  background:#e5e7eb;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.progress > div{
+  height:100%;
+  background:#111827;
 }
 
 .empty{
   text-align:center;
-  color:#666;
-  padding:20px 10px;
+  color:#6b7280;
+  padding:24px 10px;
 }
 
-.section-title{
-  margin-top:0;
+label{
+  display:block;
+  margin-top:8px;
+  font-size:13px;
+  color:#4b5563;
 }
 
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-@media(max-width:600px){
-  .grid{
-    grid-template-columns:1fr 1fr;
+@media(max-width:760px){
+  .grid4{
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
-  .form-grid{
+  .filterGrid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:520px){
+  main{
+    padding:10px;
+  }
+
+  .formGrid{
     grid-template-columns:1fr;
   }
 
-  main{
-    padding:10px;
+  .txTop{
+    gap:8px;
+  }
+
+  .money{
+    font-size:21px;
   }
 }
 </style>
@@ -236,367 +310,704 @@ button:disabled{
 
 <body>
 
-<main id="app">
+<main>
 
-  <!-- =========================
-       LOGIN
-  ========================== -->
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
-  <div id="loginBox" class="card">
+<section id="loginBox" class="card">
 
-    <h2>🔐 আমার হিসাব Pro</h2>
+  <h2>🔐 আমার হিসাব Pro</h2>
 
-    <p class="muted">
-      Email এবং Password দিয়ে Login করুন
-    </p>
+  <p class="muted">
+    আপনার ব্যক্তিগত Cloud হিসাব ব্যবস্থাপনা
+  </p>
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Email"
-      autocomplete="email"
-    >
+  <input
+    id="email"
+    type="email"
+    placeholder="Email"
+    autocomplete="email"
+  >
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-      autocomplete="current-password"
-    >
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+    autocomplete="current-password"
+  >
+
+  <button
+    id="loginBtn"
+    class="primary"
+    type="button"
+  >
+    🔓 Login
+  </button>
+
+  <button
+    id="signupBtn"
+    type="button"
+  >
+    🆕 নতুন অ্যাকাউন্ট তৈরি
+  </button>
+
+  <div
+    id="loginMsg"
+    class="message"
+  ></div>
+
+</section>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<section id="dashboard" class="hidden">
+
+  <!-- NAVIGATION -->
+
+  <div class="tabs">
 
     <button
-      id="signupBtn"
+      id="navDashboard"
       class="primary"
       type="button"
     >
-      নতুন অ্যাকাউন্ট তৈরি
+      📊 Dashboard
     </button>
 
     <button
-      id="loginBtn"
-      class="secondary"
+      id="navAdd"
       type="button"
     >
-      Login
+      ➕ হিসাব
     </button>
 
-    <div id="loginMsg" class="message"></div>
+    <button
+      id="navReports"
+      type="button"
+    >
+      📈 রিপোর্ট
+    </button>
+
+    <button
+      id="navAll"
+      type="button"
+    >
+      🧾 সব হিসাব
+    </button>
+
+    <button
+      id="logoutBtn"
+      type="button"
+    >
+      Logout
+    </button>
 
   </div>
 
 
-  <!-- =========================
+  <!-- ===================================================
        DASHBOARD
-  ========================== -->
+  ==================================================== -->
 
-  <div id="dashboard" class="hidden">
+  <section id="dashboardSection">
 
-    <div class="tabs">
+    <div class="card">
 
-      <button
-        id="dashboardBtn"
-        class="primary"
-        type="button"
-      >
-        📊 Dashboard
-      </button>
+      <h2>
+        💼 আমার হিসাব Pro
+      </h2>
 
-      <button
-        id="addBtn"
-        type="button"
-      >
-        ➕ হিসাব
-      </button>
+      <div class="muted">
+        Cloud Database-এ সংরক্ষিত ব্যক্তিগত হিসাব
+      </div>
 
-      <button
-        id="allBtn"
-        type="button"
-      >
-        🧾 সব হিসাব
-      </button>
-
-      <button
-        id="logoutBtn"
-        type="button"
-      >
-        Logout
-      </button>
+      <div
+        id="userEmail"
+        class="small muted"
+        style="margin-top:7px"
+      ></div>
 
     </div>
 
 
-    <!-- =========================
-         DASHBOARD
-    ========================== -->
+    <div class="grid4">
 
-    <section id="dashboardSection">
-
-      <div class="card">
-
-        <h2 class="section-title">
-          আমার হিসাব Pro
-        </h2>
-
-        <p class="muted">
-          Cloud Database-এ সংরক্ষিত হিসাব
-        </p>
-
-        <div id="userEmail" class="status"></div>
-
+      <div class="card kpi">
+        <div class="muted">মোট আয়</div>
+        <div
+          id="dashIncome"
+          class="money"
+        >
+          ৳0
+        </div>
       </div>
 
-
-      <div class="grid">
-
-        <div class="card">
-          <div class="muted">মোট আয়</div>
-          <div id="incomeAmount" class="money">৳0</div>
+      <div class="card kpi">
+        <div class="muted">মোট ব্যয়</div>
+        <div
+          id="dashExpense"
+          class="money"
+        >
+          ৳0
         </div>
-
-        <div class="card">
-          <div class="muted">মোট ব্যয়</div>
-          <div id="expenseAmount" class="money">৳0</div>
-        </div>
-
-        <div class="card">
-          <div class="muted">লাভ / লস</div>
-          <div id="profitAmount" class="money">৳0</div>
-        </div>
-
-        <div class="card">
-          <div class="muted">Deposit</div>
-          <div id="depositAmount" class="money">৳0</div>
-        </div>
-
       </div>
 
-
-      <div class="card">
-
-        <div class="row">
-          <span>আমার কাছে পাওনা</span>
-          <strong id="receivableAmount">৳0</strong>
+      <div class="card kpi">
+        <div class="muted">লাভ / লস</div>
+        <div
+          id="dashProfit"
+          class="money"
+        >
+          ৳0
         </div>
-
-        <div class="row">
-          <span>আমি যে ধার করেছি</span>
-          <strong id="debtAmount">৳0</strong>
-        </div>
-
-        <div class="row">
-          <span>লাভের হার</span>
-          <strong id="profitPercent">0%</strong>
-        </div>
-
-        <div class="row">
-          <span>আয়ের মধ্যে খরচ</span>
-          <strong id="expensePercent">0%</strong>
-        </div>
-
-        <div class="row">
-          <span>মোট Cloud হিসাব</span>
-          <strong id="transactionCount">0</strong>
-        </div>
-
       </div>
 
+      <div class="card kpi">
+        <div class="muted">Deposit</div>
+        <div
+          id="dashDeposit"
+          class="money"
+        >
+          ৳0
+        </div>
+      </div>
 
-      <div class="card">
+    </div>
 
-        <h3>🧠 হিসাবের অবস্থা</h3>
 
-        <div id="adviceBox">
-          <div class="muted">
-            হিসাব যোগ হলে এখানে বিশ্লেষণ দেখাবে।
-          </div>
+    <div class="card">
+
+      <div class="row">
+        <span>🤝 আমার কাছে পাওনা</span>
+        <strong id="dashReceivable">৳0</strong>
+      </div>
+
+      <div class="row">
+        <span>📥 আমার ধার বাকি</span>
+        <strong id="dashDebt">৳0</strong>
+      </div>
+
+      <div class="row">
+        <span>📊 লাভের হার</span>
+        <strong id="dashProfitPct">0%</strong>
+      </div>
+
+      <div class="row">
+        <span>💸 আয়ের মধ্যে ব্যয়</span>
+        <strong id="dashExpensePct">0%</strong>
+      </div>
+
+      <div class="row">
+        <span>🧾 মোট Cloud হিসাব</span>
+        <strong id="dashCount">0</strong>
+      </div>
+
+      <div style="margin-top:10px">
+        <div class="small muted">
+          আয়ের তুলনায় খরচ
         </div>
 
+        <div class="progress">
+          <div
+            id="dashExpenseBar"
+            style="width:0%"
+          ></div>
+        </div>
       </div>
 
-
-      <div class="card">
-
-        <h3>🕘 সাম্প্রতিক হিসাব</h3>
-
-        <div id="recentTransactions"></div>
-
-      </div>
-
-    </section>
+    </div>
 
 
-    <!-- =========================
-         ADD / EDIT TRANSACTION
-    ========================== -->
+    <div class="card">
 
-    <section id="addSection" class="hidden">
+      <h3>🧠 হিসাবের অবস্থা</h3>
 
-      <div class="card">
+      <div id="adviceBox"></div>
 
-        <h3 id="formTitle">
-          ➕ নতুন হিসাব যোগ করুন
+    </div>
+
+
+    <div class="card">
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+
+        <h3>
+          🕘 সাম্প্রতিক হিসাব
         </h3>
 
-        <div class="form-grid">
+        <button
+          id="quickAllBtn"
+          type="button"
+          style="width:auto;padding:7px 10px"
+        >
+          সব দেখুন
+        </button>
 
-          <div>
+      </div>
 
-            <label class="small">
-              হিসাবের ধরন
-            </label>
+      <div id="recentList"></div>
 
-            <select id="txType">
+    </div>
 
-              <option value="income">
-                💰 আয়
-              </option>
-
-              <option value="expense">
-                💸 ব্যয়
-              </option>
-
-              <option value="deposit">
-                🏦 Deposit
-              </option>
-
-              <option value="lent">
-                🤝 কাউকে ধার / আমার কাছে পাওনা
-              </option>
-
-              <option value="collect">
-                💵 পাওনা আদায়
-              </option>
-
-              <option value="borrowed">
-                📥 আমি ধার নিলাম
-              </option>
-
-              <option value="repay">
-                📤 ধার পরিশোধ
-              </option>
-
-            </select>
-
-          </div>
+  </section>
 
 
-          <div>
+  <!-- ===================================================
+       ADD / EDIT
+  ==================================================== -->
 
-            <label class="small">
-              টাকার পরিমাণ
-            </label>
+  <section
+    id="addSection"
+    class="hidden"
+  >
 
-            <input
-              id="txAmount"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="যেমন 500"
-            >
+    <div class="card">
 
-          </div>
+      <h3 id="formTitle">
+        ➕ নতুন হিসাব যোগ করুন
+      </h3>
+
+      <div class="sectionNote">
+        আয়, ব্যয়, Deposit, পাওনা ও ধার—সবকিছু Cloud Database-এ আপনার account-এর সঙ্গে সংরক্ষণ হবে।
+      </div>
+
+
+      <div class="formGrid">
+
+        <div>
+
+          <label>
+            হিসাবের ধরন
+          </label>
+
+          <select id="txType">
+
+            <option value="income">
+              💰 আয়
+            </option>
+
+            <option value="expense">
+              💸 ব্যয়
+            </option>
+
+            <option value="deposit">
+              🏦 Deposit
+            </option>
+
+            <option value="lent">
+              🤝 ধার দিলাম / আমার কাছে পাওনা
+            </option>
+
+            <option value="collect">
+              💵 পাওনা আদায়
+            </option>
+
+            <option value="borrowed">
+              📥 আমি ধার নিলাম
+            </option>
+
+            <option value="repay">
+              📤 ধার পরিশোধ
+            </option>
+
+          </select>
 
         </div>
 
 
-        <label class="small">
-          বিবরণ / Category / ব্যক্তির নাম
-        </label>
+        <div>
 
-        <input
-          id="txCategory"
-          type="text"
-          placeholder="যেমন বাজার, রহিম, বেতন"
+          <label>
+            টাকার পরিমাণ
+          </label>
+
+          <input
+            id="txAmount"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="যেমন 500"
+          >
+
+        </div>
+
+      </div>
+
+
+      <label>
+        বিবরণ / Category / ব্যক্তির নাম
+      </label>
+
+      <input
+        id="txCategory"
+        type="text"
+        placeholder="যেমন বেতন, বাজার, রহিম"
+      >
+
+
+      <label>
+        খরচের Category
+      </label>
+
+      <select id="expenseCategory">
+
+        <option value="">
+          -- খরচ হলে বাছুন --
+        </option>
+
+        <option value="খাবার">
+          🍛 খাবার
+        </option>
+
+        <option value="চা-নাস্তা">
+          ☕ চা-নাস্তা
+        </option>
+
+        <option value="বাড়ি/ভাড়া">
+          🏠 বাড়ি/ভাড়া
+        </option>
+
+        <option value="যাতায়াত">
+          🚗 যাতায়াত
+        </option>
+
+        <option value="বিল">
+          🧾 বিল
+        </option>
+
+        <option value="বাজার">
+          🛒 বাজার
+        </option>
+
+        <option value="ব্যবসা">
+          💼 ব্যবসা
+        </option>
+
+        <option value="স্বাস্থ্য">
+          🏥 স্বাস্থ্য
+        </option>
+
+        <option value="শিক্ষা">
+          📚 শিক্ষা
+        </option>
+
+        <option value="বিনোদন">
+          🎮 বিনোদন
+        </option>
+
+        <option value="অন্যান্য">
+          📦 অন্যান্য
+        </option>
+
+      </select>
+
+
+      <label>
+        তারিখ
+      </label>
+
+      <input
+        id="txDate"
+        type="date"
+      >
+
+
+      <label>
+        নোট
+      </label>
+
+      <textarea
+        id="txNote"
+        placeholder="প্রয়োজনে বিস্তারিত নোট লিখুন"
+      ></textarea>
+
+
+      <button
+        id="saveTxBtn"
+        class="primary"
+        type="button"
+      >
+        ☁️ Cloud-এ হিসাব সংরক্ষণ
+      </button>
+
+
+      <button
+        id="cancelEditBtn"
+        type="button"
+        class="hidden"
+      >
+        Edit বাতিল
+      </button>
+
+
+      <div
+        id="txMsg"
+        class="message"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       REPORTS
+  ==================================================== -->
+
+  <section
+    id="reportsSection"
+    class="hidden"
+  >
+
+    <div class="card">
+
+      <h3>
+        📈 রিপোর্ট
+      </h3>
+
+      <div class="formGrid">
+
+        <div>
+
+          <label>
+            রিপোর্টের সময়কাল
+          </label>
+
+          <select id="reportPeriod">
+
+            <option value="today">
+              আজ
+            </option>
+
+            <option value="week">
+              এই সপ্তাহ
+            </option>
+
+            <option value="month" selected>
+              এই মাস
+            </option>
+
+            <option value="year">
+              এই বছর
+            </option>
+
+            <option value="all">
+              সব সময়
+            </option>
+
+          </select>
+
+        </div>
+
+        <div style="display:flex;align-items:end">
+
+          <button
+            id="refreshReportBtn"
+            class="primary"
+            type="button"
+          >
+            রিপোর্ট দেখুন
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="reportContent"
+    ></div>
+
+
+    <div class="card">
+
+      <h3>
+        🍽️ খরচের Category
+      </h3>
+
+      <div id="categoryReport"></div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>
+        📅 মাসভিত্তিক সারসংক্ষেপ
+      </h3>
+
+      <div id="monthlyReport"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       ALL TRANSACTIONS
+  ==================================================== -->
+
+  <section
+    id="allSection"
+    class="hidden"
+  >
+
+    <div class="card">
+
+      <div
+        style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"
+      >
+
+        <div>
+
+          <h3>
+            🧾 সব Cloud হিসাব
+          </h3>
+
+          <div class="muted small">
+            এখানে হিসাব Search, Filter, Edit ও Delete করতে পারবে।
+          </div>
+
+        </div>
+
+        <span
+          id="allCount"
+          class="badge"
         >
+          0 হিসাব
+        </span>
+
+      </div>
 
 
-        <label class="small">
-          তারিখ
-        </label>
-
-        <input
-          id="txDate"
-          type="date"
-        >
+      <input
+        id="searchTx"
+        type="search"
+        placeholder="🔎 হিসাব খুঁজুন..."
+      >
 
 
-        <label class="small">
-          নোট
-        </label>
+      <div class="filterGrid">
 
-        <textarea
-          id="txNote"
-          placeholder="প্রয়োজনে নোট লিখুন"
-        ></textarea>
+        <div>
 
+          <label>
+            ধরন
+          </label>
+
+          <select id="filterType">
+
+            <option value="">
+              সব ধরন
+            </option>
+
+            <option value="income">
+              আয়
+            </option>
+
+            <option value="expense">
+              ব্যয়
+            </option>
+
+            <option value="deposit">
+              Deposit
+            </option>
+
+            <option value="lent">
+              পাওনা
+            </option>
+
+            <option value="collect">
+              পাওনা আদায়
+            </option>
+
+            <option value="borrowed">
+              ধার নেওয়া
+            </option>
+
+            <option value="repay">
+              ধার পরিশোধ
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div>
+
+          <label>
+            শুরু তারিখ
+          </label>
+
+          <input
+            id="filterFrom"
+            type="date"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label>
+            শেষ তারিখ
+          </label>
+
+          <input
+            id="filterTo"
+            type="date"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="filterGrid">
 
         <button
-          id="saveTxBtn"
+          id="clearFiltersBtn"
+          type="button"
+        >
+          ফিল্টার পরিষ্কার
+        </button>
+
+        <button
+          id="reloadBtn"
           class="primary"
           type="button"
         >
-          ☁️ Cloud-এ হিসাব সংরক্ষণ
+          ☁️ Cloud থেকে আবার Load
         </button>
-
 
         <button
-          id="cancelEditBtn"
-          class="secondary hidden"
+          id="exportBtn"
           type="button"
         >
-          Edit বাতিল
+          💾 Backup JSON
         </button>
 
-
-        <div id="txMsg" class="message"></div>
-
       </div>
 
-    </section>
 
+      <div
+        id="allTransactions"
+        style="margin-top:8px"
+      ></div>
 
-    <!-- =========================
-         ALL TRANSACTIONS
-    ========================== -->
+    </div>
 
-    <section id="allSection" class="hidden">
+  </section>
 
-      <div class="card">
-
-        <div class="tx-top">
-
-          <div>
-
-            <h3 class="section-title">
-              🧾 সব Cloud হিসাব
-            </h3>
-
-            <div class="muted small">
-              এখান থেকে হিসাব Edit অথবা Delete করতে পারবে।
-            </div>
-
-          </div>
-
-          <span
-            id="allCount"
-            class="badge"
-          >
-            0 হিসাব
-          </span>
-
-        </div>
-
-
-        <div
-          id="allTransactions"
-          style="margin-top:10px"
-        ></div>
-
-      </div>
-
-    </section>
-
-  </div>
+</section>
 
 </main>
 
@@ -607,9 +1018,9 @@ button:disabled{
   "use strict";
 
 
-  /* ========================================
+  /* =====================================================
      DOM
-  ======================================== */
+  ===================================================== */
 
   const loginBox =
     document.getElementById("loginBox");
@@ -623,11 +1034,11 @@ button:disabled{
   const passwordInput =
     document.getElementById("password");
 
-  const signupBtn =
-    document.getElementById("signupBtn");
-
   const loginBtn =
     document.getElementById("loginBtn");
+
+  const signupBtn =
+    document.getElementById("signupBtn");
 
   const logoutBtn =
     document.getElementById("logoutBtn");
@@ -639,24 +1050,70 @@ button:disabled{
     document.getElementById("userEmail");
 
 
+  const navDashboard =
+    document.getElementById("navDashboard");
+
+  const navAdd =
+    document.getElementById("navAdd");
+
+  const navReports =
+    document.getElementById("navReports");
+
+  const navAll =
+    document.getElementById("navAll");
+
+
   const dashboardSection =
     document.getElementById("dashboardSection");
 
   const addSection =
     document.getElementById("addSection");
 
+  const reportsSection =
+    document.getElementById("reportsSection");
+
   const allSection =
     document.getElementById("allSection");
 
 
-  const dashboardBtn =
-    document.getElementById("dashboardBtn");
+  const dashIncome =
+    document.getElementById("dashIncome");
 
-  const addBtn =
-    document.getElementById("addBtn");
+  const dashExpense =
+    document.getElementById("dashExpense");
 
-  const allBtn =
-    document.getElementById("allBtn");
+  const dashProfit =
+    document.getElementById("dashProfit");
+
+  const dashDeposit =
+    document.getElementById("dashDeposit");
+
+  const dashReceivable =
+    document.getElementById("dashReceivable");
+
+  const dashDebt =
+    document.getElementById("dashDebt");
+
+  const dashProfitPct =
+    document.getElementById("dashProfitPct");
+
+  const dashExpensePct =
+    document.getElementById("dashExpensePct");
+
+  const dashCount =
+    document.getElementById("dashCount");
+
+  const dashExpenseBar =
+    document.getElementById("dashExpenseBar");
+
+  const adviceBox =
+    document.getElementById("adviceBox");
+
+  const recentList =
+    document.getElementById("recentList");
+
+  const quickAllBtn =
+    document.getElementById("quickAllBtn");
 
 
   const formTitle =
@@ -670,6 +1127,9 @@ button:disabled{
 
   const txCategory =
     document.getElementById("txCategory");
+
+  const expenseCategory =
+    document.getElementById("expenseCategory");
 
   const txDate =
     document.getElementById("txDate");
@@ -687,35 +1147,42 @@ button:disabled{
     document.getElementById("txMsg");
 
 
-  const incomeAmount =
-    document.getElementById("incomeAmount");
+  const reportPeriod =
+    document.getElementById("reportPeriod");
 
-  const expenseAmount =
-    document.getElementById("expenseAmount");
+  const refreshReportBtn =
+    document.getElementById("refreshReportBtn");
 
-  const profitAmount =
-    document.getElementById("profitAmount");
+  const reportContent =
+    document.getElementById("reportContent");
 
-  const depositAmount =
-    document.getElementById("depositAmount");
+  const categoryReport =
+    document.getElementById("categoryReport");
 
-  const receivableAmount =
-    document.getElementById("receivableAmount");
+  const monthlyReport =
+    document.getElementById("monthlyReport");
 
-  const debtAmount =
-    document.getElementById("debtAmount");
 
-  const profitPercent =
-    document.getElementById("profitPercent");
+  const searchTx =
+    document.getElementById("searchTx");
 
-  const expensePercent =
-    document.getElementById("expensePercent");
+  const filterType =
+    document.getElementById("filterType");
 
-  const transactionCount =
-    document.getElementById("transactionCount");
+  const filterFrom =
+    document.getElementById("filterFrom");
 
-  const recentTransactions =
-    document.getElementById("recentTransactions");
+  const filterTo =
+    document.getElementById("filterTo");
+
+  const clearFiltersBtn =
+    document.getElementById("clearFiltersBtn");
+
+  const reloadBtn =
+    document.getElementById("reloadBtn");
+
+  const exportBtn =
+    document.getElementById("exportBtn");
 
   const allTransactions =
     document.getElementById("allTransactions");
@@ -723,13 +1190,10 @@ button:disabled{
   const allCount =
     document.getElementById("allCount");
 
-  const adviceBox =
-    document.getElementById("adviceBox");
 
-
-  /* ========================================
+  /* =====================================================
      STATE
-  ======================================== */
+  ===================================================== */
 
   let transactions = [];
 
@@ -738,39 +1202,34 @@ button:disabled{
   let editingId = null;
 
 
-  /* ========================================
-     DATE
-  ======================================== */
+  /* =====================================================
+     HELPERS
+  ===================================================== */
 
-  function todayString() {
+  function todayString(){
 
-    const d = new Date();
+    const d =
+      new Date();
 
     const year =
       d.getFullYear();
 
     const month =
-      String(d.getMonth() + 1)
-        .padStart(2, "0");
+      String(
+        d.getMonth()+1
+      ).padStart(2,"0");
 
     const day =
-      String(d.getDate())
-        .padStart(2, "0");
+      String(
+        d.getDate()
+      ).padStart(2,"0");
 
     return `${year}-${month}-${day}`;
 
   }
 
 
-  txDate.value =
-    todayString();
-
-
-  /* ========================================
-     HELPERS
-  ======================================== */
-
-  function money(value) {
+  function money(value){
 
     return "৳" +
       Number(value || 0)
@@ -784,26 +1243,27 @@ button:disabled{
   }
 
 
-  function escapeHtml(value) {
+  function escapeHtml(value){
 
-    return String(value ?? "")
-      .replace(
-        /[&<>"']/g,
-        char => ({
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#39;"
-        }[char])
-      );
+    return String(
+      value ?? ""
+    ).replace(
+      /[&<>"']/g,
+      char => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+      }[char])
+    );
 
   }
 
 
-  function typeName(type) {
+  function typeName(type){
 
-    const names = {
+    return {
 
       income:"আয়",
 
@@ -819,9 +1279,30 @@ button:disabled{
 
       repay:"ধার পরিশোধ"
 
-    };
+    }[type] || type;
 
-    return names[type] || type;
+  }
+
+
+  function typeIcon(type){
+
+    return {
+
+      income:"💰",
+
+      expense:"💸",
+
+      deposit:"🏦",
+
+      lent:"🤝",
+
+      collect:"💵",
+
+      borrowed:"📥",
+
+      repay:"📤"
+
+    }[type] || "🧾";
 
   }
 
@@ -829,8 +1310,8 @@ button:disabled{
   function showMessage(
     element,
     text,
-    type = "info"
-  ) {
+    type="info"
+  ){
 
     element.textContent =
       text;
@@ -842,9 +1323,10 @@ button:disabled{
   }
 
 
-  function clearMessage(element) {
+  function clearMessage(element){
 
-    element.textContent = "";
+    element.textContent =
+      "";
 
     element.className =
       "message";
@@ -852,11 +1334,73 @@ button:disabled{
   }
 
 
-  /* ========================================
-     NAVIGATION
-  ======================================== */
+  function sortTransactions(list){
 
-  function showSection(section) {
+    return [...list].sort(
+      (a,b) => {
+
+        const dateA =
+          String(
+            a.date || ""
+          );
+
+        const dateB =
+          String(
+            b.date || ""
+          );
+
+        if(dateA !== dateB){
+
+          return dateB.localeCompare(
+            dateA
+          );
+
+        }
+
+        return String(
+          b.created_at || ""
+        ).localeCompare(
+          String(
+            a.created_at || ""
+          )
+        );
+
+      }
+    );
+
+  }
+
+
+  function formatDate(dateString){
+
+    if(!dateString){
+      return "";
+    }
+
+    const parts =
+      String(dateString)
+        .split("-");
+
+    if(parts.length !== 3){
+      return dateString;
+    }
+
+    return (
+      parts[2] +
+      "/" +
+      parts[1] +
+      "/" +
+      parts[0]
+    );
+
+  }
+
+
+  /* =====================================================
+     NAVIGATION
+  ===================================================== */
+
+  function showSection(name){
 
     dashboardSection.classList.add(
       "hidden"
@@ -866,102 +1410,158 @@ button:disabled{
       "hidden"
     );
 
+    reportsSection.classList.add(
+      "hidden"
+    );
+
     allSection.classList.add(
       "hidden"
     );
 
 
-    dashboardBtn.classList.remove(
+    navDashboard.classList.remove(
       "primary"
     );
 
-    addBtn.classList.remove(
+    navAdd.classList.remove(
       "primary"
     );
 
-    allBtn.classList.remove(
+    navReports.classList.remove(
+      "primary"
+    );
+
+    navAll.classList.remove(
       "primary"
     );
 
 
-    if (section === "dashboard") {
+    if(name === "dashboard"){
 
       dashboardSection.classList.remove(
         "hidden"
       );
 
-      dashboardBtn.classList.add(
+      navDashboard.classList.add(
         "primary"
       );
 
     }
 
 
-    if (section === "add") {
+    if(name === "add"){
 
       addSection.classList.remove(
         "hidden"
       );
 
-      addBtn.classList.add(
+      navAdd.classList.add(
         "primary"
       );
 
     }
 
 
-    if (section === "all") {
+    if(name === "reports"){
+
+      reportsSection.classList.remove(
+        "hidden"
+      );
+
+      navReports.classList.add(
+        "primary"
+      );
+
+      renderReports();
+
+    }
+
+
+    if(name === "all"){
 
       allSection.classList.remove(
         "hidden"
       );
 
-      allBtn.classList.add(
+      navAll.classList.add(
         "primary"
       );
+
+      renderAllTransactions();
 
     }
 
   }
 
 
-  dashboardBtn.onclick =
+  navDashboard.onclick =
     () => {
 
-      cancelEdit();
+      cancelEditMode();
 
-      showSection("dashboard");
+      showSection(
+        "dashboard"
+      );
 
     };
 
 
-  addBtn.onclick =
+  navAdd.onclick =
     () => {
 
-      startNewTransaction();
+      if(!editingId){
+        resetForm();
+      }
 
-      showSection("add");
+      showSection(
+        "add"
+      );
 
     };
 
 
-  allBtn.onclick =
+  navReports.onclick =
     () => {
 
-      cancelEdit();
+      cancelEditMode();
 
-      showSection("all");
+      showSection(
+        "reports"
+      );
 
     };
 
 
-  /* ========================================
-     EDIT MODE
-  ======================================== */
+  navAll.onclick =
+    () => {
 
-  function startNewTransaction() {
+      cancelEditMode();
 
-    editingId = null;
+      showSection(
+        "all"
+      );
+
+    };
+
+
+  quickAllBtn.onclick =
+    () => {
+
+      showSection(
+        "all"
+      );
+
+    };
+
+
+  /* =====================================================
+     FORM
+  ===================================================== */
+
+  function resetForm(){
+
+    editingId =
+      null;
 
     formTitle.textContent =
       "➕ নতুন হিসাব যোগ করুন";
@@ -973,24 +1573,54 @@ button:disabled{
       "hidden"
     );
 
-    clearMessage(txMsg);
-
     txType.value =
       "income";
 
-    txAmount.value = "";
+    txAmount.value =
+      "";
 
-    txCategory.value = "";
+    txCategory.value =
+      "";
+
+    expenseCategory.value =
+      "";
 
     txDate.value =
       todayString();
 
-    txNote.value = "";
+    txNote.value =
+      "";
+
+    clearMessage(
+      txMsg
+    );
 
   }
 
 
-  function startEdit(id) {
+  function cancelEditMode(){
+
+    editingId =
+      null;
+
+    formTitle.textContent =
+      "➕ নতুন হিসাব যোগ করুন";
+
+    saveTxBtn.textContent =
+      "☁️ Cloud-এ হিসাব সংরক্ষণ";
+
+    cancelEditBtn.classList.add(
+      "hidden"
+    );
+
+    clearMessage(
+      txMsg
+    );
+
+  }
+
+
+  function startEdit(id){
 
     const item =
       transactions.find(
@@ -1000,10 +1630,10 @@ button:disabled{
       );
 
 
-    if (!item) {
+    if(!item){
 
       alert(
-        "হিসাবটি খুঁজে পাওয়া যায়নি।"
+        "এই হিসাবটি পাওয়া যায়নি।"
       );
 
       return;
@@ -1036,16 +1666,39 @@ button:disabled{
       item.category || "";
 
     txDate.value =
-      item.date ||
-      todayString();
+      item.date || todayString();
 
     txNote.value =
       item.note || "";
 
 
-    clearMessage(txMsg);
+    const category =
+      item.type === "expense"
+        ? item.category
+        : "";
 
-    showSection("add");
+    const optionExists =
+      [...expenseCategory.options]
+        .some(
+          o =>
+            o.value ===
+            category
+        );
+
+
+    expenseCategory.value =
+      optionExists
+        ? category
+        : "";
+
+
+    clearMessage(
+      txMsg
+    );
+
+    showSection(
+      "add"
+    );
 
     window.scrollTo({
       top:0,
@@ -1055,306 +1708,276 @@ button:disabled{
   }
 
 
-  function cancelEdit() {
-
-    editingId = null;
-
-    formTitle.textContent =
-      "➕ নতুন হিসাব যোগ করুন";
-
-    saveTxBtn.textContent =
-      "☁️ Cloud-এ হিসাব সংরক্ষণ";
-
-    cancelEditBtn.classList.add(
-      "hidden"
-    );
-
-    clearMessage(txMsg);
-
-  }
-
-
   cancelEditBtn.onclick =
     () => {
 
-      startNewTransaction();
+      resetForm();
 
     };
 
 
-  /* ========================================
-     SESSION UI
-  ======================================== */
+  /* =====================================================
+     STATISTICS
+  ===================================================== */
 
-  function showDashboard(session) {
+  function calculateStats(list){
 
-    currentSession =
-      session;
-
-    loginBox.classList.add(
-      "hidden"
-    );
-
-    dashboard.classList.remove(
-      "hidden"
-    );
-
-
-    if (
-      session &&
-      session.user &&
-      session.user.email
-    ) {
-
-      userEmail.textContent =
-        "Logged in: " +
-        session.user.email;
-
-    } else {
-
-      userEmail.textContent =
-        "";
-
-    }
-
-
-    showSection(
-      "dashboard"
-    );
-
-  }
-
-
-  function showLogin() {
-
-    currentSession =
-      null;
-
-    transactions = [];
-
-    editingId = null;
-
-    dashboard.classList.add(
-      "hidden"
-    );
-
-    loginBox.classList.remove(
-      "hidden"
-    );
-
-  }
-
-
-  /* ========================================
-     CALCULATE
-  ======================================== */
-
-  function calculateStats(list) {
-
-    const stats = {
+    const s = {
 
       income:0,
+
       expense:0,
+
       deposit:0,
+
       lent:0,
+
       collect:0,
+
       borrowed:0,
+
       repay:0
 
     };
 
 
-    list.forEach(item => {
+    list.forEach(
+      item => {
 
-      const amount =
-        Number(
-          item.amount || 0
-        );
+        const value =
+          Number(
+            item.amount || 0
+          );
 
 
-      if (
-        Object.prototype.hasOwnProperty
-        .call(
-          stats,
-          item.type
-        )
-      ) {
+        if(
+          Object.prototype.hasOwnProperty
+            .call(
+              s,
+              item.type
+            )
+        ){
 
-        stats[item.type] +=
-          amount;
+          s[item.type] +=
+            value;
+
+        }
 
       }
-
-    });
-
-
-    stats.profit =
-      stats.income -
-      stats.expense;
+    );
 
 
-    stats.receivable =
+    s.profit =
+      s.income -
+      s.expense;
+
+
+    s.receivable =
       Math.max(
         0,
-        stats.lent -
-        stats.collect
+        s.lent -
+        s.collect
       );
 
 
-    stats.debt =
+    s.debt =
       Math.max(
         0,
-        stats.borrowed -
-        stats.repay
+        s.borrowed -
+        s.repay
       );
 
 
-    return stats;
+    return s;
 
   }
 
 
-  /* ========================================
+  /* =====================================================
      DASHBOARD
-  ======================================== */
+  ===================================================== */
 
-  function renderDashboard() {
+  function renderDashboard(){
 
-    const stats =
+    const s =
       calculateStats(
         transactions
       );
 
 
-    incomeAmount.textContent =
-      money(stats.income);
+    dashIncome.textContent =
+      money(
+        s.income
+      );
 
-    expenseAmount.textContent =
-      money(stats.expense);
+    dashExpense.textContent =
+      money(
+        s.expense
+      );
 
-    profitAmount.textContent =
-      money(stats.profit);
+    dashProfit.textContent =
+      money(
+        s.profit
+      );
 
-    depositAmount.textContent =
-      money(stats.deposit);
+    dashDeposit.textContent =
+      money(
+        s.deposit
+      );
 
-    receivableAmount.textContent =
-      money(stats.receivable);
+    dashReceivable.textContent =
+      money(
+        s.receivable
+      );
 
-    debtAmount.textContent =
-      money(stats.debt);
+    dashDebt.textContent =
+      money(
+        s.debt
+      );
 
 
     const profitPct =
-      stats.income > 0
+      s.income > 0
         ? (
-            stats.profit /
-            stats.income
+            s.profit /
+            s.income
           ) * 100
         : 0;
 
 
     const expensePct =
-      stats.income > 0
+      s.income > 0
         ? (
-            stats.expense /
-            stats.income
+            s.expense /
+            s.income
           ) * 100
         : 0;
 
 
-    profitPercent.textContent =
+    dashProfitPct.textContent =
       profitPct.toFixed(1) +
       "%";
 
 
-    expensePercent.textContent =
+    dashExpensePct.textContent =
       expensePct.toFixed(1) +
       "%";
 
 
-    transactionCount.textContent =
+    dashCount.textContent =
       transactions.length;
 
 
-    renderAdvice(stats);
+    dashExpenseBar.style.width =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          expensePct
+        )
+      ) +
+      "%";
+
+
+    renderAdvice(
+      s
+    );
 
     renderRecent();
-
-    renderAllTransactions();
 
   }
 
 
-  /* ========================================
-     ADVICE
-  ======================================== */
+  function renderAdvice(s){
 
-  function renderAdvice(stats) {
-
-    const messages = [];
+    const advice = [];
 
 
-    if (
-      stats.income > 0 &&
-      stats.expense >
-      stats.income * 0.70
-    ) {
+    if(
+      s.income === 0 &&
+      transactions.length === 0
+    ){
 
-      messages.push(
-        "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে।"
+      advice.push(
+        "📝 প্রথমে আপনার আয়/ব্যয়ের হিসাব যোগ করুন।"
       );
 
     }
 
 
-    if (
-      stats.income > 0 &&
-      stats.profit > 0
-    ) {
+    if(
+      s.income > 0 &&
+      s.expense > s.income
+    ){
 
-      messages.push(
+      advice.push(
+        "⚠️ বর্তমানে আপনার ব্যয় আয়ের চেয়ে বেশি।"
+      );
+
+    }
+
+
+    if(
+      s.income > 0 &&
+      s.expense <=
+      s.income * 0.50
+    ){
+
+      advice.push(
+        "✅ আপনার ব্যয় আয়ের ৫০%-এর মধ্যে আছে।"
+      );
+
+    }
+
+
+    if(
+      s.income > 0 &&
+      s.expense >
+      s.income * 0.70
+    ){
+
+      advice.push(
+        "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে। খরচের Category দেখে প্রয়োজনহীন ব্যয় কমানোর চেষ্টা করুন।"
+      );
+
+    }
+
+
+    if(
+      s.profit > 0 &&
+      s.income > 0
+    ){
+
+      advice.push(
         "✅ বর্তমানে আপনার আয় ব্যয়ের চেয়ে বেশি।"
       );
 
     }
 
 
-    if (
-      stats.income > 0 &&
-      stats.profit < 0
-    ) {
+    if(
+      s.receivable > 0
+    ){
 
-      messages.push(
-        "⚠️ বর্তমানে আপনার ব্যয় আয় থেকে বেশি।"
-      );
-
-    }
-
-
-    if (
-      stats.receivable > 0
-    ) {
-
-      messages.push(
-        "🤝 আপনার পাওনা " +
+      advice.push(
+        "🤝 আপনার কাছে মোট " +
         money(
-          stats.receivable
+          s.receivable
         ) +
-        "।"
+        " পাওনা আছে।"
       );
 
     }
 
 
-    if (
-      stats.debt > 0
-    ) {
+    if(
+      s.debt > 0
+    ){
 
-      messages.push(
+      advice.push(
         "📥 আপনার নেওয়া ধার বাকি " +
         money(
-          stats.debt
+          s.debt
         ) +
         "।"
       );
@@ -1362,20 +1985,35 @@ button:disabled{
     }
 
 
-    if (!messages.length) {
+    if(
+      s.deposit > 0
+    ){
 
-      messages.push(
-        "হিসাব যোগ করলে এখানে আপনার আর্থিক অবস্থার বিশ্লেষণ দেখা যাবে।"
+      advice.push(
+        "🏦 মোট Deposit " +
+        money(
+          s.deposit
+        ) +
+        "।"
+      );
+
+    }
+
+
+    if(!advice.length){
+
+      advice.push(
+        "📊 হিসাব বাড়ার সঙ্গে সঙ্গে এখানে স্বয়ংক্রিয় বিশ্লেষণ দেখা যাবে।"
       );
 
     }
 
 
     adviceBox.innerHTML =
-      messages
+      advice
         .map(
           text =>
-            `<div style="padding:8px 0;border-bottom:1px solid #eee">
+            `<div class="advice">
               ${escapeHtml(text)}
             </div>`
         )
@@ -1384,22 +2022,22 @@ button:disabled{
   }
 
 
-  /* ========================================
-     RECENT
-  ======================================== */
-
-  function renderRecent() {
+  function renderRecent(){
 
     const list =
-      transactions
-        .slice(0,5);
+      sortTransactions(
+        transactions
+      ).slice(
+        0,
+        5
+      );
 
 
-    if (!list.length) {
+    if(!list.length){
 
-      recentTransactions.innerHTML =
+      recentList.innerHTML =
         `<div class="empty">
-          এখনও কোনো Cloud হিসাব নেই।
+          এখনও কোনো হিসাব নেই।
         </div>`;
 
       return;
@@ -1407,18 +2045,22 @@ button:disabled{
     }
 
 
-    recentTransactions.innerHTML =
+    recentList.innerHTML =
       list
         .map(
-          item => `
+          item =>
+            `
 
-            <div class="tx-item">
+            <div class="txItem">
 
-              <div class="tx-top">
+              <div class="txTop">
 
                 <div>
 
-                  <div class="tx-title">
+                  <div class="txTitle">
+                    ${typeIcon(
+                      item.type
+                    )}
                     ${escapeHtml(
                       typeName(
                         item.type
@@ -1435,13 +2077,15 @@ button:disabled{
 
                   <div class="small muted">
                     ${escapeHtml(
-                      item.date || ""
+                      formatDate(
+                        item.date
+                      )
                     )}
                   </div>
 
                 </div>
 
-                <div class="tx-amount">
+                <div class="txAmount">
                   ${money(
                     item.amount
                   )}
@@ -1451,29 +2095,672 @@ button:disabled{
 
             </div>
 
-          `
+            `
         )
         .join("");
 
   }
 
 
-  /* ========================================
-     ALL
-  ======================================== */
+  /* =====================================================
+     REPORT RANGE
+  ===================================================== */
 
-  function renderAllTransactions() {
+  function getReportRange(period){
+
+    const today =
+      new Date(
+        todayString() +
+        "T12:00:00"
+      );
+
+
+    let start =
+      null;
+
+
+    let end =
+      today;
+
+
+    if(period === "today"){
+
+      start =
+        new Date(
+          todayString() +
+          "T00:00:00"
+        );
+
+    }
+
+
+    if(period === "week"){
+
+      start =
+        new Date(
+          today
+        );
+
+      start.setDate(
+        start.getDate() -
+        6
+      );
+
+      start.setHours(
+        0,0,0,0
+      );
+
+    }
+
+
+    if(period === "month"){
+
+      start =
+        new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          1,
+          0,0,0
+        );
+
+    }
+
+
+    if(period === "year"){
+
+      start =
+        new Date(
+          today.getFullYear(),
+          0,
+          1,
+          0,0,0
+        );
+
+    }
+
+
+    return {
+      start,
+      end
+    };
+
+  }
+
+
+  function filterByPeriod(
+    list,
+    period
+  ){
+
+    if(period === "all"){
+
+      return [...list];
+
+    }
+
+
+    const {
+      start,
+      end
+    } =
+      getReportRange(
+        period
+      );
+
+
+    return list.filter(
+      item => {
+
+        const d =
+          new Date(
+            String(
+              item.date
+            ) +
+            "T12:00:00"
+          );
+
+        return (
+          d >= start &&
+          d <= end
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =====================================================
+     REPORTS
+  ===================================================== */
+
+  function renderReports(){
+
+    const period =
+      reportPeriod.value;
+
+
+    const list =
+      filterByPeriod(
+        transactions,
+        period
+      );
+
+
+    const s =
+      calculateStats(
+        list
+      );
+
+
+    const profitPct =
+      s.income > 0
+        ? (
+            s.profit /
+            s.income
+          ) * 100
+        : 0;
+
+
+    const expensePct =
+      s.income > 0
+        ? (
+            s.expense /
+            s.income
+          ) * 100
+        : 0;
+
+
+    const depositPct =
+      s.income > 0
+        ? (
+            s.deposit /
+            s.income
+          ) * 100
+        : 0;
+
+
+    reportContent.innerHTML =
+      `
+
+      <div class="grid4">
+
+        <div class="card">
+          <div class="muted">আয়</div>
+          <div class="money">
+            ${money(s.income)}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="muted">ব্যয়</div>
+          <div class="money">
+            ${money(s.expense)}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="muted">লাভ / লস</div>
+          <div class="money">
+            ${money(s.profit)}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="muted">Deposit</div>
+          <div class="money">
+            ${money(s.deposit)}
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="row">
+          <span>লাভের হার</span>
+          <strong>
+            ${profitPct.toFixed(1)}%
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>খরচের হার</span>
+          <strong>
+            ${expensePct.toFixed(1)}%
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>Deposit %</span>
+          <strong>
+            ${depositPct.toFixed(1)}%
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>পাওনা</span>
+          <strong>
+            ${money(s.receivable)}
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>ধার বাকি</span>
+          <strong>
+            ${money(s.debt)}
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>এই সময়ের হিসাব</span>
+          <strong>
+            ${list.length}
+          </strong>
+        </div>
+
+      </div>
+
+      `;
+
+
+    renderCategoryReport(
+      list
+    );
+
+    renderMonthlyReport();
+
+  }
+
+
+  function renderCategoryReport(
+    list
+  ){
+
+    const expenses =
+      list.filter(
+        x =>
+          x.type ===
+          "expense"
+      );
+
+
+    const map = {};
+
+
+    expenses.forEach(
+      item => {
+
+        const key =
+          item.category ||
+          "অন্যান্য";
+
+        map[key] =
+          (
+            map[key] ||
+            0
+          ) +
+          Number(
+            item.amount || 0
+          );
+
+      }
+    );
+
+
+    const total =
+      expenses.reduce(
+        (
+          sum,
+          item
+        ) =>
+          sum +
+          Number(
+            item.amount || 0
+          ),
+        0
+      );
+
+
+    const entries =
+      Object.entries(
+        map
+      ).sort(
+        (a,b) =>
+          b[1] -
+          a[1]
+      );
+
+
+    if(!entries.length){
+
+      categoryReport.innerHTML =
+        `<div class="empty">
+          এই সময়ে কোনো খরচ নেই।
+        </div>`;
+
+      return;
+
+    }
+
+
+    categoryReport.innerHTML =
+      entries
+        .map(
+          ([key,value]) => {
+
+            const pct =
+              total > 0
+                ? (
+                    value /
+                    total
+                  ) *
+                  100
+                : 0;
+
+
+            return `
+              <div class="row">
+
+                <span>
+                  ${escapeHtml(
+                    key
+                  )}
+                </span>
+
+                <strong>
+                  ${money(value)}
+                  ·
+                  ${pct.toFixed(1)}%
+                </strong>
+
+              </div>
+            `;
+
+          }
+        )
+        .join("");
+
+  }
+
+
+  function renderMonthlyReport(){
+
+    const map = {};
+
+
+    transactions.forEach(
+      item => {
+
+        if(!item.date){
+          return;
+        }
+
+
+        const month =
+          String(
+            item.date
+          ).slice(
+            0,
+            7
+          );
+
+
+        if(!map[month]){
+
+          map[month] = {
+            income:0,
+            expense:0,
+            profit:0
+          };
+
+        }
+
+
+        const amount =
+          Number(
+            item.amount || 0
+          );
+
+
+        if(item.type === "income"){
+
+          map[month].income +=
+            amount;
+
+        }
+
+
+        if(item.type === "expense"){
+
+          map[month].expense +=
+            amount;
+
+        }
+
+      }
+    );
+
+
+    const months =
+      Object.entries(
+        map
+      )
+      .sort(
+        (a,b) =>
+          b[0].localeCompare(
+            a[0]
+          )
+      )
+      .slice(
+        0,
+        12
+      );
+
+
+    if(!months.length){
+
+      monthlyReport.innerHTML =
+        `<div class="empty">
+          এখনো পর্যাপ্ত মাসিক হিসাব নেই।
+        </div>`;
+
+      return;
+
+    }
+
+
+    monthlyReport.innerHTML =
+      months
+        .map(
+          ([month,data]) => {
+
+            const profit =
+              data.income -
+              data.expense;
+
+
+            return `
+              <div class="row">
+
+                <span>
+                  ${escapeHtml(
+                    month
+                  )}
+                </span>
+
+                <span>
+                  আয় ${money(
+                    data.income
+                  )}
+                  ·
+                  ব্যয় ${money(
+                    data.expense
+                  )}
+                  ·
+                  লাভ ${money(
+                    profit
+                  )}
+                </span>
+
+              </div>
+            `;
+
+          }
+        )
+        .join("");
+
+  }
+
+
+  reportPeriod.onchange =
+    () => {
+
+      renderReports();
+
+    };
+
+
+  refreshReportBtn.onclick =
+    () => {
+
+      renderReports();
+
+    };
+
+
+  /* =====================================================
+     ALL TRANSACTIONS FILTER
+  ===================================================== */
+
+  function getFilteredTransactions(){
+
+    let list =
+      sortTransactions(
+        transactions
+      );
+
+
+    const query =
+      searchTx.value
+        .trim()
+        .toLowerCase();
+
+
+    const selectedType =
+      filterType.value;
+
+
+    const from =
+      filterFrom.value;
+
+
+    const to =
+      filterTo.value;
+
+
+    if(query){
+
+      list =
+        list.filter(
+          item => {
+
+            const text =
+              (
+                typeName(
+                  item.type
+                ) +
+                " " +
+                String(
+                  item.category ||
+                  ""
+                ) +
+                " " +
+                String(
+                  item.note ||
+                  ""
+                ) +
+                " " +
+                String(
+                  item.date ||
+                  ""
+                )
+              )
+              .toLowerCase();
+
+
+            return text.includes(
+              query
+            );
+
+          }
+        );
+
+    }
+
+
+    if(selectedType){
+
+      list =
+        list.filter(
+          item =>
+            item.type ===
+            selectedType
+        );
+
+    }
+
+
+    if(from){
+
+      list =
+        list.filter(
+          item =>
+            String(
+              item.date || ""
+            ) >=
+            from
+        );
+
+    }
+
+
+    if(to){
+
+      list =
+        list.filter(
+          item =>
+            String(
+              item.date || ""
+            ) <=
+            to
+        );
+
+    }
+
+
+    return list;
+
+  }
+
+
+  function renderAllTransactions(){
+
+    const list =
+      getFilteredTransactions();
+
 
     allCount.textContent =
-      transactions.length +
+      list.length +
       " হিসাব";
 
 
-    if (!transactions.length) {
+    if(!list.length){
 
       allTransactions.innerHTML =
         `<div class="empty">
-          কোনো Cloud হিসাব নেই।
+          কোনো হিসাব পাওয়া যায়নি।
         </div>`;
 
       return;
@@ -1482,17 +2769,21 @@ button:disabled{
 
 
     allTransactions.innerHTML =
-      transactions
+      list
         .map(
-          item => `
+          item =>
+            `
 
-            <div class="tx-item">
+            <div class="txItem">
 
-              <div class="tx-top">
+              <div class="txTop">
 
                 <div>
 
-                  <div class="tx-title">
+                  <div class="txTitle">
+                    ${typeIcon(
+                      item.type
+                    )}
                     ${escapeHtml(
                       typeName(
                         item.type
@@ -1500,7 +2791,7 @@ button:disabled{
                     )}
                   </div>
 
-                  <div class="small">
+                  <div>
                     ${escapeHtml(
                       item.category ||
                       "কোনো বিবরণ নেই"
@@ -1521,27 +2812,33 @@ button:disabled{
 
                   <div class="small muted">
                     ${escapeHtml(
-                      item.date || ""
+                      formatDate(
+                        item.date
+                      )
                     )}
                   </div>
 
                 </div>
 
 
-                <div style="text-align:right">
+                <div
+                  style="
+                    text-align:right;
+                    min-width:110px
+                  "
+                >
 
-                  <div class="tx-amount">
+                  <div class="txAmount">
                     ${money(
                       item.amount
                     )}
                   </div>
 
-                  <div class="tx-actions">
+                  <div class="txActions">
 
                     <button
                       type="button"
-                      class="secondary"
-                      data-edit-id="${escapeHtml(
+                      data-edit="${escapeHtml(
                         item.id
                       )}"
                     >
@@ -1551,7 +2848,7 @@ button:disabled{
                     <button
                       type="button"
                       class="danger"
-                      data-delete-id="${escapeHtml(
+                      data-delete="${escapeHtml(
                         item.id
                       )}"
                     >
@@ -1566,62 +2863,115 @@ button:disabled{
 
             </div>
 
-          `
+            `
         )
         .join("");
 
 
     allTransactions
       .querySelectorAll(
-        "[data-edit-id]"
+        "[data-edit]"
       )
-      .forEach(button => {
+      .forEach(
+        button => {
 
-        button.onclick =
-          () => {
+          button.onclick =
+            () => {
 
-            startEdit(
-              button.getAttribute(
-                "data-edit-id"
-              )
-            );
+              startEdit(
+                button.dataset.edit
+              );
 
-          };
+            };
 
-      });
+        }
+      );
 
 
     allTransactions
       .querySelectorAll(
-        "[data-delete-id]"
+        "[data-delete]"
       )
-      .forEach(button => {
+      .forEach(
+        button => {
 
-        button.onclick =
-          () => {
+          button.onclick =
+            () => {
 
-            deleteTransaction(
-              button.getAttribute(
-                "data-delete-id"
-              )
-            );
+              deleteTransaction(
+                button.dataset.delete
+              );
 
-          };
+            };
 
-      });
+        }
+      );
 
   }
 
 
-  /* ========================================
+  searchTx.oninput =
+    () => {
+
+      renderAllTransactions();
+
+    };
+
+
+  filterType.onchange =
+    () => {
+
+      renderAllTransactions();
+
+    };
+
+
+  filterFrom.onchange =
+    () => {
+
+      renderAllTransactions();
+
+    };
+
+
+  filterTo.onchange =
+    () => {
+
+      renderAllTransactions();
+
+    };
+
+
+  clearFiltersBtn.onclick =
+    () => {
+
+      searchTx.value =
+        "";
+
+      filterType.value =
+        "";
+
+      filterFrom.value =
+        "";
+
+      filterTo.value =
+        "";
+
+      renderAllTransactions();
+
+    };
+
+
+  /* =====================================================
      LOAD CLOUD DATA
-  ======================================== */
+  ===================================================== */
 
-  async function loadTransactions() {
+  async function loadTransactions(){
 
-    if (!currentSession) {
+    if(!currentSession){
 
-      transactions = [];
+      transactions =
+        [];
 
       renderDashboard();
 
@@ -1630,16 +2980,18 @@ button:disabled{
     }
 
 
-    try {
+    try{
 
       const {
         data,
         error
       } =
       await supabaseClient
-        .from("transactions")
+        .from(
+          "transactions"
+        )
         .select(
-          "id,user_id,type,amount,category,date,note,created_at"
+          "id,user_id,type,amount,category,date,note,created_at,updated_at"
         )
         .order(
           "date",
@@ -1655,7 +3007,7 @@ button:disabled{
         );
 
 
-      if (error) {
+      if(error){
 
         console.error(
           "Load error:",
@@ -1680,7 +3032,12 @@ button:disabled{
 
       renderDashboard();
 
-    } catch(error) {
+      renderAllTransactions();
+
+      renderReports();
+
+
+    }catch(error){
 
       console.error(
         "Load failed:",
@@ -1696,17 +3053,19 @@ button:disabled{
   }
 
 
-  /* ========================================
+  /* =====================================================
      SAVE / UPDATE
-  ======================================== */
+  ===================================================== */
 
   saveTxBtn.onclick =
     async () => {
 
-      clearMessage(txMsg);
+      clearMessage(
+        txMsg
+      );
 
 
-      if (!currentSession) {
+      if(!currentSession){
 
         showMessage(
           txMsg,
@@ -1729,8 +3088,19 @@ button:disabled{
         );
 
 
-      const category =
+      let category =
         txCategory.value.trim();
+
+
+      if(
+        type === "expense" &&
+        expenseCategory.value
+      ){
+
+        category =
+          expenseCategory.value;
+
+      }
 
 
       const date =
@@ -1742,10 +3112,10 @@ button:disabled{
         txNote.value.trim();
 
 
-      if (
+      if(
         !amount ||
         amount <= 0
-      ) {
+      ){
 
         showMessage(
           txMsg,
@@ -1762,17 +3132,17 @@ button:disabled{
         true;
 
 
-      try {
+      try{
 
-        /* =========================
-           EDIT EXISTING
-        ========================== */
+        /* ===========================
+           UPDATE
+        =========================== */
 
-        if (editingId !== null) {
+        if(editingId !== null){
 
           showMessage(
             txMsg,
-            "পরিবর্তন Cloud Database-এ সংরক্ষণ হচ্ছে...",
+            "পরিবর্তন Cloud-এ সংরক্ষণ হচ্ছে...",
             "info"
           );
 
@@ -1782,7 +3152,9 @@ button:disabled{
             error
           } =
           await supabaseClient
-            .from("transactions")
+            .from(
+              "transactions"
+            )
             .update({
 
               type:
@@ -1814,12 +3186,12 @@ button:disabled{
               currentSession.user.id
             )
             .select(
-              "id,user_id,type,amount,category,date,note,created_at"
+              "id,user_id,type,amount,category,date,note,created_at,updated_at"
             )
             .single();
 
 
-          if (error) {
+          if(error){
 
             console.error(
               "Update error:",
@@ -1841,15 +3213,19 @@ button:disabled{
           const index =
             transactions.findIndex(
               item =>
-                String(item.id) ===
-                String(editingId)
+                String(
+                  item.id
+                ) ===
+                String(
+                  editingId
+                )
             );
 
 
-          if (
+          if(
             index !== -1 &&
             data
-          ) {
+          ){
 
             transactions[index] =
               data;
@@ -1859,16 +3235,23 @@ button:disabled{
 
           renderDashboard();
 
+          renderAllTransactions();
+
+          renderReports();
+
+
           showMessage(
             txMsg,
-            "✅ হিসাব সফলভাবে Edit করে Cloud-এ সংরক্ষিত হয়েছে।",
+            "✅ হিসাব সফলভাবে Edit হয়েছে।",
             "success"
           );
 
 
-          startNewTransaction();
+          resetForm();
 
-          showSection("all");
+          showSection(
+            "all"
+          );
 
 
           return;
@@ -1876,13 +3259,13 @@ button:disabled{
         }
 
 
-        /* =========================
-           NEW TRANSACTION
-        ========================== */
+        /* ===========================
+           INSERT
+        =========================== */
 
         showMessage(
           txMsg,
-          "Cloud Database-এ হিসাব সংরক্ষণ হচ্ছে...",
+          "Cloud Database-এ সংরক্ষণ হচ্ছে...",
           "info"
         );
 
@@ -1892,7 +3275,9 @@ button:disabled{
           error
         } =
         await supabaseClient
-          .from("transactions")
+          .from(
+            "transactions"
+          )
           .insert({
 
             user_id:
@@ -1915,12 +3300,12 @@ button:disabled{
 
           })
           .select(
-            "id,user_id,type,amount,category,date,note,created_at"
+            "id,user_id,type,amount,category,date,note,created_at,updated_at"
           )
           .single();
 
 
-        if (error) {
+        if(error){
 
           console.error(
             "Insert error:",
@@ -1939,7 +3324,7 @@ button:disabled{
         }
 
 
-        if (data) {
+        if(data){
 
           transactions.unshift(
             data
@@ -1950,6 +3335,10 @@ button:disabled{
 
         renderDashboard();
 
+        renderAllTransactions();
+
+        renderReports();
+
 
         showMessage(
           txMsg,
@@ -1958,17 +3347,23 @@ button:disabled{
         );
 
 
-        txAmount.value = "";
+        txAmount.value =
+          "";
 
-        txCategory.value = "";
+        txCategory.value =
+          "";
 
-        txNote.value = "";
+        expenseCategory.value =
+          "";
 
         txDate.value =
           todayString();
 
+        txNote.value =
+          "";
 
-      } catch(error) {
+
+      }catch(error){
 
         console.error(
           "Save/update failed:",
@@ -1982,7 +3377,7 @@ button:disabled{
           "error"
         );
 
-      } finally {
+      }finally{
 
         saveTxBtn.disabled =
           false;
@@ -1992,13 +3387,13 @@ button:disabled{
     };
 
 
-  /* ========================================
+  /* =====================================================
      DELETE
-  ======================================== */
+  ===================================================== */
 
-  async function deleteTransaction(id) {
+  async function deleteTransaction(id){
 
-    if (!currentSession) {
+    if(!currentSession){
 
       return;
 
@@ -2008,37 +3403,52 @@ button:disabled{
     const item =
       transactions.find(
         x =>
-          String(x.id) ===
-          String(id)
+          String(
+            x.id
+          ) ===
+          String(
+            id
+          )
       );
 
 
-    const label =
+    const title =
       item
-        ? `${typeName(item.type)} ${money(item.amount)}`
+        ? (
+            typeName(
+              item.type
+            ) +
+            " - " +
+            money(
+              item.amount
+            )
+          )
         : "এই হিসাব";
 
 
     const ok =
       confirm(
-        `${label}\n\nএই হিসাবটি Cloud Database থেকে মুছে ফেলবেন?`
+        title +
+        "\n\nএই হিসাবটি Cloud Database থেকে মুছে ফেলবেন?"
       );
 
 
-    if (!ok) {
+    if(!ok){
 
       return;
 
     }
 
 
-    try {
+    try{
 
       const {
         error
       } =
       await supabaseClient
-        .from("transactions")
+        .from(
+          "transactions"
+        )
         .delete()
         .eq(
           "id",
@@ -2050,7 +3460,7 @@ button:disabled{
         );
 
 
-      if (error) {
+      if(error){
 
         console.error(
           "Delete error:",
@@ -2070,28 +3480,38 @@ button:disabled{
       transactions =
         transactions.filter(
           item =>
-            String(item.id) !==
-            String(id)
+            String(
+              item.id
+            ) !==
+            String(
+              id
+            )
         );
 
 
-      if (
+      if(
         editingId !== null &&
-        String(editingId) ===
-        String(id)
-      ) {
+        String(
+          editingId
+        ) ===
+        String(
+          id
+        )
+      ){
 
-        startNewTransaction();
+        resetForm();
 
       }
 
 
       renderDashboard();
 
-      showSection("all");
+      renderAllTransactions();
+
+      renderReports();
 
 
-    } catch(error) {
+    }catch(error){
 
       console.error(
         "Delete failed:",
@@ -2107,14 +3527,16 @@ button:disabled{
   }
 
 
-  /* ========================================
+  /* =====================================================
      SIGN UP
-  ======================================== */
+  ===================================================== */
 
   signupBtn.onclick =
     async () => {
 
-      clearMessage(loginMsg);
+      clearMessage(
+        loginMsg
+      );
 
 
       const email =
@@ -2125,7 +3547,7 @@ button:disabled{
         passwordInput.value;
 
 
-      if (!email) {
+      if(!email){
 
         showMessage(
           loginMsg,
@@ -2138,7 +3560,7 @@ button:disabled{
       }
 
 
-      if (!password) {
+      if(!password){
 
         showMessage(
           loginMsg,
@@ -2151,7 +3573,9 @@ button:disabled{
       }
 
 
-      if (password.length < 6) {
+      if(
+        password.length < 6
+      ){
 
         showMessage(
           loginMsg,
@@ -2178,7 +3602,7 @@ button:disabled{
       );
 
 
-      try {
+      try{
 
         const {
           data,
@@ -2202,7 +3626,7 @@ button:disabled{
           });
 
 
-        if (error) {
+        if(error){
 
           showMessage(
             loginMsg,
@@ -2215,10 +3639,13 @@ button:disabled{
         }
 
 
-        if (
+        if(
           data &&
           data.session
-        ) {
+        ){
+
+          currentSession =
+            data.session;
 
           showDashboard(
             data.session
@@ -2233,12 +3660,12 @@ button:disabled{
 
         showMessage(
           loginMsg,
-          "✅ Account তৈরি হয়েছে। এখন Login করুন।",
+          "✅ Account তৈরি হয়েছে। Email verification প্রয়োজন হলে আপনার Email চেক করুন।",
           "success"
         );
 
 
-      } catch(error) {
+      }catch(error){
 
         console.error(
           "Signup error:",
@@ -2252,7 +3679,7 @@ button:disabled{
           "error"
         );
 
-      } finally {
+      }finally{
 
         signupBtn.disabled =
           false;
@@ -2265,14 +3692,16 @@ button:disabled{
     };
 
 
-  /* ========================================
+  /* =====================================================
      LOGIN
-  ======================================== */
+  ===================================================== */
 
   loginBtn.onclick =
     async () => {
 
-      clearMessage(loginMsg);
+      clearMessage(
+        loginMsg
+      );
 
 
       const email =
@@ -2283,7 +3712,7 @@ button:disabled{
         passwordInput.value;
 
 
-      if (!email) {
+      if(!email){
 
         showMessage(
           loginMsg,
@@ -2296,7 +3725,7 @@ button:disabled{
       }
 
 
-      if (!password) {
+      if(!password){
 
         showMessage(
           loginMsg,
@@ -2323,7 +3752,7 @@ button:disabled{
       );
 
 
-      try {
+      try{
 
         const {
           data,
@@ -2342,7 +3771,7 @@ button:disabled{
           });
 
 
-        if (error) {
+        if(error){
 
           showMessage(
             loginMsg,
@@ -2355,10 +3784,13 @@ button:disabled{
         }
 
 
-        if (
+        if(
           data &&
           data.session
-        ) {
+        ){
+
+          currentSession =
+            data.session;
 
           showDashboard(
             data.session
@@ -2370,7 +3802,7 @@ button:disabled{
             loginMsg
           );
 
-        } else {
+        }else{
 
           showMessage(
             loginMsg,
@@ -2381,7 +3813,7 @@ button:disabled{
         }
 
 
-      } catch(error) {
+      }catch(error){
 
         console.error(
           "Login error:",
@@ -2395,7 +3827,7 @@ button:disabled{
           "error"
         );
 
-      } finally {
+      }finally{
 
         loginBtn.disabled =
           false;
@@ -2408,9 +3840,67 @@ button:disabled{
     };
 
 
-  /* ========================================
+  /* =====================================================
+     AUTH UI
+  ===================================================== */
+
+  function showDashboard(
+    session
+  ){
+
+    currentSession =
+      session;
+
+
+    loginBox.classList.add(
+      "hidden"
+    );
+
+    dashboard.classList.remove(
+      "hidden"
+    );
+
+
+    userEmail.textContent =
+      session?.user?.email
+        ? "Logged in: " +
+          session.user.email
+        : "";
+
+
+    showSection(
+      "dashboard"
+    );
+
+  }
+
+
+  function showLogin(){
+
+    currentSession =
+      null;
+
+    transactions =
+      [];
+
+    editingId =
+      null;
+
+
+    dashboard.classList.add(
+      "hidden"
+    );
+
+    loginBox.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  /* =====================================================
      LOGOUT
-  ======================================== */
+  ===================================================== */
 
   logoutBtn.onclick =
     async () => {
@@ -2419,7 +3909,7 @@ button:disabled{
         true;
 
 
-      try {
+      try{
 
         const {
           error
@@ -2429,7 +3919,7 @@ button:disabled{
           .signOut();
 
 
-        if (error) {
+        if(error){
 
           alert(
             "Logout করতে সমস্যা:\n" +
@@ -2441,20 +3931,22 @@ button:disabled{
         }
 
 
-        startNewTransaction();
+        resetForm();
 
         showLogin();
 
-        emailInput.value = "";
+        emailInput.value =
+          "";
 
-        passwordInput.value = "";
+        passwordInput.value =
+          "";
 
         clearMessage(
           loginMsg
         );
 
 
-      } catch(error) {
+      }catch(error){
 
         console.error(
           "Logout error:",
@@ -2465,7 +3957,7 @@ button:disabled{
           "Logout করতে সমস্যা হয়েছে।"
         );
 
-      } finally {
+      }finally{
 
         logoutBtn.disabled =
           false;
@@ -2475,9 +3967,9 @@ button:disabled{
     };
 
 
-  /* ========================================
-     AUTH STATE CHANGE
-  ======================================== */
+  /* =====================================================
+     AUTH STATE
+  ===================================================== */
 
   supabaseClient.auth
     .onAuthStateChange(
@@ -2492,7 +3984,7 @@ button:disabled{
         );
 
 
-        if (session) {
+        if(session){
 
           currentSession =
             session;
@@ -2503,7 +3995,7 @@ button:disabled{
 
           await loadTransactions();
 
-        } else {
+        }else{
 
           showLogin();
 
@@ -2513,13 +4005,108 @@ button:disabled{
     );
 
 
-  /* ========================================
-     INITIALIZE
-  ======================================== */
+  /* =====================================================
+     RELOAD
+  ===================================================== */
 
-  async function init() {
+  reloadBtn.onclick =
+    async () => {
 
-    try {
+      reloadBtn.disabled =
+        true;
+
+      try{
+
+        await loadTransactions();
+
+      }finally{
+
+        reloadBtn.disabled =
+          false;
+
+      }
+
+    };
+
+
+  /* =====================================================
+     BACKUP
+  ===================================================== */
+
+  exportBtn.onclick =
+    () => {
+
+      const backup =
+        {
+
+          exported_at:
+            new Date()
+              .toISOString(),
+
+          user:
+            currentSession?.user?.email ||
+            "",
+
+          transactions:
+            transactions
+
+        };
+
+
+      const blob =
+        new Blob(
+          [
+            JSON.stringify(
+              backup,
+              null,
+              2
+            )
+          ],
+          {
+            type:
+              "application/json"
+          }
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const a =
+        document.createElement(
+          "a"
+        );
+
+      a.href =
+        url;
+
+      a.download =
+        "amar-hisab-cloud-backup.json";
+
+      a.click();
+
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    };
+
+
+  /* =====================================================
+     INITIALIZATION
+  ===================================================== */
+
+  async function init(){
+
+    txDate.value =
+      todayString();
+
+
+    try{
 
       const {
         data,
@@ -2530,10 +4117,10 @@ button:disabled{
         .getSession();
 
 
-      if (error) {
+      if(error){
 
         console.error(
-          "Initial session error:",
+          "Session error:",
           error
         );
 
@@ -2544,10 +4131,10 @@ button:disabled{
       }
 
 
-      if (
+      if(
         data &&
         data.session
-      ) {
+      ){
 
         currentSession =
           data.session;
@@ -2558,16 +4145,16 @@ button:disabled{
 
         await loadTransactions();
 
-      } else {
+      }else{
 
         showLogin();
 
       }
 
-    } catch(error) {
+    }catch(error){
 
       console.error(
-        "Initialization error:",
+        "Init error:",
         error
       );
 
