@@ -72,11 +72,6 @@ button:disabled{
   border-color:#111827;
 }
 
-.secondary{
-  background:#fff;
-  color:#111827;
-}
-
 .danger{
   background:#fff;
   color:#b91c1c;
@@ -117,6 +112,18 @@ button:disabled{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:10px;
+}
+
+.formGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.filterGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
 }
 
 .money{
@@ -183,53 +190,6 @@ button:disabled{
   border:1px solid #bfdbfe;
 }
 
-.formGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.filterGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px;
-}
-
-.txItem{
-  border-bottom:1px solid #eee;
-  padding:12px 0;
-}
-
-.txTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-}
-
-.txTitle{
-  font-weight:800;
-}
-
-.txAmount{
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.txActions{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
-
-.txActions button{
-  width:auto;
-  margin-top:0;
-  padding:7px 10px;
-  font-size:13px;
-}
-
 .kpi{
   min-height:105px;
 }
@@ -291,7 +251,99 @@ label{
   margin-bottom:6px;
 }
 
+.txItem{
+  border-bottom:1px solid #eee;
+  padding:12px 0;
+}
+
+.txTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.txTitle{
+  font-weight:800;
+}
+
+.txAmount{
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.txActions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+
+.txActions button{
+  width:auto;
+  margin-top:0;
+  padding:7px 10px;
+  font-size:13px;
+}
+
+.reminderItem{
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:11px;
+  margin-top:9px;
+  background:#fff;
+}
+
+.reminderItem.done{
+  opacity:.6;
+  background:#f9fafb;
+}
+
+.reminderTop{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.reminderTitle{
+  font-weight:800;
+  font-size:17px;
+}
+
+.reminderActions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:9px;
+}
+
+.reminderActions button{
+  width:auto;
+  margin-top:0;
+  padding:7px 10px;
+  font-size:13px;
+}
+
+.reminderDate{
+  font-weight:700;
+  margin-top:4px;
+}
+
+.overdue{
+  color:#b91c1c;
+}
+
+.today{
+  color:#92400e;
+}
+
+.future{
+  color:#047857;
+}
+
 @media(max-width:760px){
+
   .grid4{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
@@ -299,24 +351,29 @@ label{
   .filterGrid{
     grid-template-columns:1fr;
   }
+
 }
 
 @media(max-width:520px){
+
   main{
     padding:10px;
   }
 
-  .formGrid{
+  .formGrid,
+  .grid{
     grid-template-columns:1fr;
   }
 
-  .txTop{
+  .txTop,
+  .reminderTop{
     gap:8px;
   }
 
   .money{
     font-size:21px;
   }
+
 }
 </style>
 </head>
@@ -406,6 +463,13 @@ label{
       type="button"
     >
       🧾 সব হিসাব
+    </button>
+
+    <button
+      id="navReminders"
+      type="button"
+    >
+      ⏰ Reminder
     </button>
 
     <button
@@ -519,9 +583,7 @@ label{
         👥 ব্যক্তিভিত্তিক পাওনা/ধার
       </h3>
 
-      <div
-        id="personSummary"
-      ></div>
+      <div id="personSummary"></div>
 
     </div>
 
@@ -533,6 +595,38 @@ label{
       </h3>
 
       <div id="adviceBox"></div>
+
+    </div>
+
+
+    <!-- Upcoming reminders -->
+
+    <div class="card">
+
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:8px
+        "
+      >
+
+        <h3>
+          ⏰ আসন্ন Reminder
+        </h3>
+
+        <button
+          id="dashboardReminderBtn"
+          type="button"
+          style="width:auto;padding:7px 10px"
+        >
+          সব দেখুন
+        </button>
+
+      </div>
+
+      <div id="dashboardReminders"></div>
 
     </div>
 
@@ -570,7 +664,7 @@ label{
 
 
   <!-- ===================================================
-       ADD / EDIT
+       ADD / EDIT TRANSACTION
   ==================================================== -->
 
   <section
@@ -779,7 +873,7 @@ label{
 
 
   <!-- ===================================================
-       REPORT
+       REPORTS
   ==================================================== -->
 
   <section
@@ -883,7 +977,7 @@ label{
 
 
   <!-- ===================================================
-       ALL
+       ALL TRANSACTIONS
   ==================================================== -->
 
   <section
@@ -1044,6 +1138,181 @@ label{
 
   </section>
 
+
+  <!-- ===================================================
+       REMINDERS
+  ==================================================== -->
+
+  <section
+    id="remindersSection"
+    class="hidden"
+  >
+
+    <div class="card">
+
+      <h3 id="reminderFormTitle">
+        ⏰ নতুন Reminder যোগ করুন
+      </h3>
+
+      <div class="sectionNote">
+        গুরুত্বপূর্ণ কাজ, পাওনা আদায়, ধার পরিশোধ বা অন্য কোনো বিষয় মনে রাখার জন্য Reminder তৈরি করুন।
+      </div>
+
+
+      <label>
+        Reminder-এর নাম
+      </label>
+
+      <input
+        id="reminderTitle"
+        type="text"
+        placeholder="যেমন রহিমের কাছ থেকে টাকা নিতে হবে"
+      >
+
+
+      <div class="formGrid">
+
+        <div>
+
+          <label>
+            ব্যক্তির নাম
+          </label>
+
+          <input
+            id="reminderPerson"
+            type="text"
+            placeholder="যেমন রহিম"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label>
+            টাকার পরিমাণ
+          </label>
+
+          <input
+            id="reminderAmount"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="যেমন 4800"
+          >
+
+        </div>
+
+      </div>
+
+
+      <label>
+        Reminder-এর তারিখ
+      </label>
+
+      <input
+        id="reminderDate"
+        type="date"
+      >
+
+
+      <label>
+        নোট
+      </label>
+
+      <textarea
+        id="reminderNote"
+        placeholder="যেমন সকালে ফোন দিতে হবে"
+      ></textarea>
+
+
+      <button
+        id="saveReminderBtn"
+        class="primary"
+        type="button"
+      >
+        ☁️ Reminder সংরক্ষণ
+      </button>
+
+
+      <button
+        id="cancelReminderEditBtn"
+        class="hidden"
+        type="button"
+      >
+        Edit বাতিল
+      </button>
+
+
+      <div
+        id="reminderMsg"
+        class="message"
+      ></div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:8px
+        "
+      >
+
+        <h3>
+          📋 আমার Reminder
+        </h3>
+
+        <span
+          id="reminderCount"
+          class="badge"
+        >
+          0 Reminder
+        </span>
+
+      </div>
+
+
+      <div
+        class="filterGrid"
+        style="margin-top:8px"
+      >
+
+        <button
+          id="showAllRemindersBtn"
+          type="button"
+        >
+          সব
+        </button>
+
+        <button
+          id="showPendingRemindersBtn"
+          type="button"
+          class="primary"
+        >
+          বাকি
+        </button>
+
+        <button
+          id="showDoneRemindersBtn"
+          type="button"
+        >
+          সম্পন্ন
+        </button>
+
+      </div>
+
+
+      <div id="reminderList"></div>
+
+    </div>
+
+  </section>
+
 </section>
 
 </main>
@@ -1052,1264 +1321,2485 @@ label{
 <script>
 (() => {
 
-  "use strict";
+"use strict";
 
 
-  /* =====================================================
-     DOM
-  ===================================================== */
+/* =====================================================
+   DOM
+===================================================== */
 
-  const loginBox =
-    document.getElementById("loginBox");
+const loginBox =
+  document.getElementById("loginBox");
 
-  const dashboard =
-    document.getElementById("dashboard");
+const dashboard =
+  document.getElementById("dashboard");
 
-  const emailInput =
-    document.getElementById("email");
+const emailInput =
+  document.getElementById("email");
 
-  const passwordInput =
-    document.getElementById("password");
+const passwordInput =
+  document.getElementById("password");
 
-  const loginBtn =
-    document.getElementById("loginBtn");
+const loginBtn =
+  document.getElementById("loginBtn");
 
-  const signupBtn =
-    document.getElementById("signupBtn");
+const signupBtn =
+  document.getElementById("signupBtn");
 
-  const logoutBtn =
-    document.getElementById("logoutBtn");
+const logoutBtn =
+  document.getElementById("logoutBtn");
 
-  const loginMsg =
-    document.getElementById("loginMsg");
+const loginMsg =
+  document.getElementById("loginMsg");
 
-  const userEmail =
-    document.getElementById("userEmail");
+const userEmail =
+  document.getElementById("userEmail");
 
 
-  const navDashboard =
-    document.getElementById("navDashboard");
+const navDashboard =
+  document.getElementById("navDashboard");
 
-  const navAdd =
-    document.getElementById("navAdd");
+const navAdd =
+  document.getElementById("navAdd");
 
-  const navReports =
-    document.getElementById("navReports");
+const navReports =
+  document.getElementById("navReports");
 
-  const navAll =
-    document.getElementById("navAll");
+const navAll =
+  document.getElementById("navAll");
 
+const navReminders =
+  document.getElementById("navReminders");
 
-  const dashboardSection =
-    document.getElementById("dashboardSection");
 
-  const addSection =
-    document.getElementById("addSection");
+const dashboardSection =
+  document.getElementById("dashboardSection");
 
-  const reportsSection =
-    document.getElementById("reportsSection");
+const addSection =
+  document.getElementById("addSection");
 
-  const allSection =
-    document.getElementById("allSection");
+const reportsSection =
+  document.getElementById("reportsSection");
 
+const allSection =
+  document.getElementById("allSection");
 
-  const dashIncome =
-    document.getElementById("dashIncome");
+const remindersSection =
+  document.getElementById("remindersSection");
 
-  const dashExpense =
-    document.getElementById("dashExpense");
 
-  const dashProfit =
-    document.getElementById("dashProfit");
+/* =====================================================
+   DASHBOARD DOM
+===================================================== */
 
-  const dashDeposit =
-    document.getElementById("dashDeposit");
+const dashIncome =
+  document.getElementById("dashIncome");
 
-  const dashReceivable =
-    document.getElementById("dashReceivable");
+const dashExpense =
+  document.getElementById("dashExpense");
 
-  const dashDebt =
-    document.getElementById("dashDebt");
+const dashProfit =
+  document.getElementById("dashProfit");
 
-  const dashProfitPct =
-    document.getElementById("dashProfitPct");
+const dashDeposit =
+  document.getElementById("dashDeposit");
 
-  const dashExpensePct =
-    document.getElementById("dashExpensePct");
+const dashReceivable =
+  document.getElementById("dashReceivable");
 
-  const dashCount =
-    document.getElementById("dashCount");
+const dashDebt =
+  document.getElementById("dashDebt");
 
-  const dashExpenseBar =
-    document.getElementById("dashExpenseBar");
+const dashProfitPct =
+  document.getElementById("dashProfitPct");
 
-  const adviceBox =
-    document.getElementById("adviceBox");
+const dashExpensePct =
+  document.getElementById("dashExpensePct");
 
-  const personSummary =
-    document.getElementById("personSummary");
+const dashCount =
+  document.getElementById("dashCount");
 
-  const recentList =
-    document.getElementById("recentList");
+const dashExpenseBar =
+  document.getElementById("dashExpenseBar");
 
-  const quickAllBtn =
-    document.getElementById("quickAllBtn");
+const adviceBox =
+  document.getElementById("adviceBox");
 
+const personSummary =
+  document.getElementById("personSummary");
 
-  const formTitle =
-    document.getElementById("formTitle");
+const recentList =
+  document.getElementById("recentList");
 
-  const txType =
-    document.getElementById("txType");
+const quickAllBtn =
+  document.getElementById("quickAllBtn");
 
-  const txAmount =
-    document.getElementById("txAmount");
+const dashboardReminderBtn =
+  document.getElementById(
+    "dashboardReminderBtn"
+  );
 
-  const personName =
-    document.getElementById("personName");
+const dashboardReminders =
+  document.getElementById(
+    "dashboardReminders"
+  );
 
-  const txCategory =
-    document.getElementById("txCategory");
 
-  const expenseCategory =
-    document.getElementById("expenseCategory");
+/* =====================================================
+   TRANSACTION FORM DOM
+===================================================== */
 
-  const txDate =
-    document.getElementById("txDate");
+const formTitle =
+  document.getElementById("formTitle");
 
-  const txNote =
-    document.getElementById("txNote");
+const txType =
+  document.getElementById("txType");
 
-  const saveTxBtn =
-    document.getElementById("saveTxBtn");
+const txAmount =
+  document.getElementById("txAmount");
 
-  const cancelEditBtn =
-    document.getElementById("cancelEditBtn");
+const personName =
+  document.getElementById("personName");
 
-  const txMsg =
-    document.getElementById("txMsg");
+const txCategory =
+  document.getElementById("txCategory");
 
+const expenseCategory =
+  document.getElementById(
+    "expenseCategory"
+  );
 
-  const reportPeriod =
-    document.getElementById("reportPeriod");
+const txDate =
+  document.getElementById("txDate");
 
-  const refreshReportBtn =
-    document.getElementById("refreshReportBtn");
+const txNote =
+  document.getElementById("txNote");
 
-  const reportContent =
-    document.getElementById("reportContent");
+const saveTxBtn =
+  document.getElementById("saveTxBtn");
 
-  const categoryReport =
-    document.getElementById("categoryReport");
+const cancelEditBtn =
+  document.getElementById(
+    "cancelEditBtn"
+  );
 
-  const reportPersonSummary =
-    document.getElementById("reportPersonSummary");
+const txMsg =
+  document.getElementById("txMsg");
 
-  const monthlyReport =
-    document.getElementById("monthlyReport");
 
+/* =====================================================
+   REPORT DOM
+===================================================== */
 
-  const searchTx =
-    document.getElementById("searchTx");
+const reportPeriod =
+  document.getElementById(
+    "reportPeriod"
+  );
 
-  const filterType =
-    document.getElementById("filterType");
+const refreshReportBtn =
+  document.getElementById(
+    "refreshReportBtn"
+  );
 
-  const filterFrom =
-    document.getElementById("filterFrom");
+const reportContent =
+  document.getElementById(
+    "reportContent"
+  );
 
-  const filterTo =
-    document.getElementById("filterTo");
+const categoryReport =
+  document.getElementById(
+    "categoryReport"
+  );
+
+const reportPersonSummary =
+  document.getElementById(
+    "reportPersonSummary"
+  );
+
+const monthlyReport =
+  document.getElementById(
+    "monthlyReport"
+  );
+
 
-  const clearFiltersBtn =
-    document.getElementById("clearFiltersBtn");
+/* =====================================================
+   ALL TRANSACTION DOM
+===================================================== */
+
+const searchTx =
+  document.getElementById(
+    "searchTx"
+  );
+
+const filterType =
+  document.getElementById(
+    "filterType"
+  );
+
+const filterFrom =
+  document.getElementById(
+    "filterFrom"
+  );
+
+const filterTo =
+  document.getElementById(
+    "filterTo"
+  );
+
+const clearFiltersBtn =
+  document.getElementById(
+    "clearFiltersBtn"
+  );
+
+const reloadBtn =
+  document.getElementById(
+    "reloadBtn"
+  );
 
-  const reloadBtn =
-    document.getElementById("reloadBtn");
+const exportBtn =
+  document.getElementById(
+    "exportBtn"
+  );
 
-  const exportBtn =
-    document.getElementById("exportBtn");
+const allTransactions =
+  document.getElementById(
+    "allTransactions"
+  );
 
-  const allTransactions =
-    document.getElementById("allTransactions");
+const allCount =
+  document.getElementById(
+    "allCount"
+  );
 
-  const allCount =
-    document.getElementById("allCount");
 
+/* =====================================================
+   REMINDER DOM
+===================================================== */
 
-  /* =====================================================
-     STATE
-  ===================================================== */
+const reminderFormTitle =
+  document.getElementById(
+    "reminderFormTitle"
+  );
 
-  let transactions = [];
+const reminderTitle =
+  document.getElementById(
+    "reminderTitle"
+  );
 
-  let currentSession = null;
+const reminderPerson =
+  document.getElementById(
+    "reminderPerson"
+  );
 
-  let editingId = null;
+const reminderAmount =
+  document.getElementById(
+    "reminderAmount"
+  );
 
+const reminderDate =
+  document.getElementById(
+    "reminderDate"
+  );
 
-  /* =====================================================
-     HELPERS
-  ===================================================== */
+const reminderNote =
+  document.getElementById(
+    "reminderNote"
+  );
 
-  function todayString(){
+const saveReminderBtn =
+  document.getElementById(
+    "saveReminderBtn"
+  );
 
-    const d = new Date();
+const cancelReminderEditBtn =
+  document.getElementById(
+    "cancelReminderEditBtn"
+  );
 
-    const year =
-      d.getFullYear();
+const reminderMsg =
+  document.getElementById(
+    "reminderMsg"
+  );
 
-    const month =
-      String(
-        d.getMonth() + 1
-      ).padStart(2,"0");
+const reminderCount =
+  document.getElementById(
+    "reminderCount"
+  );
 
-    const day =
-      String(
-        d.getDate()
-      ).padStart(2,"0");
+const reminderList =
+  document.getElementById(
+    "reminderList"
+  );
 
-    return `${year}-${month}-${day}`;
+const showAllRemindersBtn =
+  document.getElementById(
+    "showAllRemindersBtn"
+  );
 
-  }
+const showPendingRemindersBtn =
+  document.getElementById(
+    "showPendingRemindersBtn"
+  );
 
+const showDoneRemindersBtn =
+  document.getElementById(
+    "showDoneRemindersBtn"
+  );
 
-  function money(value){
 
-    return "৳" +
-      Number(value || 0)
-        .toLocaleString(
-          "en-BD",
-          {
-            maximumFractionDigits:2
-          }
+/* =====================================================
+   STATE
+===================================================== */
+
+let transactions = [];
+
+let reminders = [];
+
+let currentSession = null;
+
+let editingId = null;
+
+let editingReminderId = null;
+
+let reminderView =
+  "pending";
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function todayString(){
+
+  const d =
+    new Date();
+
+  const year =
+    d.getFullYear();
+
+  const month =
+    String(
+      d.getMonth() + 1
+    ).padStart(2,"0");
+
+  const day =
+    String(
+      d.getDate()
+    ).padStart(2,"0");
+
+  return (
+    year +
+    "-" +
+    month +
+    "-" +
+    day
+  );
+
+}
+
+
+function money(value){
+
+  return "৳" +
+    Number(value || 0)
+      .toLocaleString(
+        "en-BD",
+        {
+          maximumFractionDigits:2
+        }
+      );
+
+}
+
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    char => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[char])
+  );
+
+}
+
+
+function typeName(type){
+
+  return {
+
+    income:"আয়",
+
+    expense:"ব্যয়",
+
+    deposit:"Deposit",
+
+    lent:"পাওনা",
+
+    collect:"পাওনা আদায়",
+
+    borrowed:"ধার নেওয়া",
+
+    repay:"ধার পরিশোধ"
+
+  }[type] || type;
+
+}
+
+
+function typeIcon(type){
+
+  return {
+
+    income:"💰",
+
+    expense:"💸",
+
+    deposit:"🏦",
+
+    lent:"🤝",
+
+    collect:"💵",
+
+    borrowed:"📥",
+
+    repay:"📤"
+
+  }[type] || "🧾";
+
+}
+
+
+function showMessage(
+  element,
+  text,
+  type="info"
+){
+
+  element.textContent =
+    text;
+
+  element.className =
+    "message show " +
+    type;
+
+}
+
+
+function clearMessage(element){
+
+  element.textContent =
+    "";
+
+  element.className =
+    "message";
+
+}
+
+
+function sortTransactions(list){
+
+  return [...list].sort(
+    (a,b) => {
+
+      const dateA =
+        String(
+          a.date || ""
         );
 
-  }
+      const dateB =
+        String(
+          b.date || ""
+        );
+
+      if(
+        dateA !== dateB
+      ){
+
+        return dateB.localeCompare(
+          dateA
+        );
+
+      }
+
+      return String(
+        b.created_at || ""
+      ).localeCompare(
+        String(
+          a.created_at || ""
+        )
+      );
+
+    }
+  );
+
+}
 
 
-  function escapeHtml(value){
+function formatDate(dateString){
 
-    return String(
-      value ?? ""
-    ).replace(
-      /[&<>"']/g,
-      char => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-      }[char])
-    );
+  if(!dateString){
 
-  }
-
-
-  function typeName(type){
-
-    return {
-
-      income:"আয়",
-
-      expense:"ব্যয়",
-
-      deposit:"Deposit",
-
-      lent:"পাওনা",
-
-      collect:"পাওনা আদায়",
-
-      borrowed:"ধার নেওয়া",
-
-      repay:"ধার পরিশোধ"
-
-    }[type] || type;
+    return "";
 
   }
 
 
-  function typeIcon(type){
-
-    return {
-
-      income:"💰",
-
-      expense:"💸",
-
-      deposit:"🏦",
-
-      lent:"🤝",
-
-      collect:"💵",
-
-      borrowed:"📥",
-
-      repay:"📤"
-
-    }[type] || "🧾";
-
-  }
+  const parts =
+    String(
+      dateString
+    ).split("-");
 
 
-  function showMessage(
-    element,
-    text,
-    type="info"
+  if(
+    parts.length !== 3
   ){
 
-    element.textContent =
-      text;
-
-    element.className =
-      "message show " +
-      type;
+    return dateString;
 
   }
 
 
-  function clearMessage(element){
+  return (
+    parts[2] +
+    "/" +
+    parts[1] +
+    "/" +
+    parts[0]
+  );
 
-    element.textContent = "";
+}
 
-    element.className =
-      "message";
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showSection(name){
+
+  dashboardSection.classList.add(
+    "hidden"
+  );
+
+  addSection.classList.add(
+    "hidden"
+  );
+
+  reportsSection.classList.add(
+    "hidden"
+  );
+
+  allSection.classList.add(
+    "hidden"
+  );
+
+  remindersSection.classList.add(
+    "hidden"
+  );
+
+
+  navDashboard.classList.remove(
+    "primary"
+  );
+
+  navAdd.classList.remove(
+    "primary"
+  );
+
+  navReports.classList.remove(
+    "primary"
+  );
+
+  navAll.classList.remove(
+    "primary"
+  );
+
+  navReminders.classList.remove(
+    "primary"
+  );
+
+
+  if(
+    name === "dashboard"
+  ){
+
+    dashboardSection.classList.remove(
+      "hidden"
+    );
+
+    navDashboard.classList.add(
+      "primary"
+    );
 
   }
 
 
-  function sortTransactions(list){
+  if(
+    name === "add"
+  ){
 
-    return [...list].sort(
-      (a,b) => {
+    addSection.classList.remove(
+      "hidden"
+    );
 
-        const dateA =
-          String(
-            a.date || ""
-          );
+    navAdd.classList.add(
+      "primary"
+    );
 
-        const dateB =
-          String(
-            b.date || ""
-          );
+  }
 
-        if(dateA !== dateB){
 
-          return dateB.localeCompare(
-            dateA
-          );
+  if(
+    name === "reports"
+  ){
 
-        }
+    reportsSection.classList.remove(
+      "hidden"
+    );
 
-        return String(
-          b.created_at || ""
-        ).localeCompare(
-          String(
-            a.created_at || ""
-          )
+    navReports.classList.add(
+      "primary"
+    );
+
+    renderReports();
+
+  }
+
+
+  if(
+    name === "all"
+  ){
+
+    allSection.classList.remove(
+      "hidden"
+    );
+
+    navAll.classList.add(
+      "primary"
+    );
+
+    renderAllTransactions();
+
+  }
+
+
+  if(
+    name === "reminders"
+  ){
+
+    remindersSection.classList.remove(
+      "hidden"
+    );
+
+    navReminders.classList.add(
+      "primary"
+    );
+
+    renderReminders();
+
+  }
+
+}
+
+
+navDashboard.onclick =
+  () => {
+
+    cancelEditMode();
+
+    cancelReminderEdit();
+
+    showSection(
+      "dashboard"
+    );
+
+  };
+
+
+navAdd.onclick =
+  () => {
+
+    if(
+      editingId === null
+    ){
+
+      resetForm();
+
+    }
+
+    cancelReminderEdit();
+
+    showSection(
+      "add"
+    );
+
+  };
+
+
+navReports.onclick =
+  () => {
+
+    cancelEditMode();
+
+    cancelReminderEdit();
+
+    showSection(
+      "reports"
+    );
+
+  };
+
+
+navAll.onclick =
+  () => {
+
+    cancelEditMode();
+
+    cancelReminderEdit();
+
+    showSection(
+      "all"
+    );
+
+  };
+
+
+navReminders.onclick =
+  () => {
+
+    cancelEditMode();
+
+    showSection(
+      "reminders"
+    );
+
+  };
+
+
+quickAllBtn.onclick =
+  () => {
+
+    showSection(
+      "all"
+    );
+
+  };
+
+
+dashboardReminderBtn.onclick =
+  () => {
+
+    showSection(
+      "reminders"
+    );
+
+  };
+
+
+/* =====================================================
+   TRANSACTION FORM
+===================================================== */
+
+function resetForm(){
+
+  editingId =
+    null;
+
+  formTitle.textContent =
+    "➕ নতুন হিসাব যোগ করুন";
+
+  saveTxBtn.textContent =
+    "☁️ Cloud-এ হিসাব সংরক্ষণ";
+
+  cancelEditBtn.classList.add(
+    "hidden"
+  );
+
+  txType.value =
+    "income";
+
+  txAmount.value =
+    "";
+
+  personName.value =
+    "";
+
+  txCategory.value =
+    "";
+
+  expenseCategory.value =
+    "";
+
+  txDate.value =
+    todayString();
+
+  txNote.value =
+    "";
+
+  clearMessage(
+    txMsg
+  );
+
+}
+
+
+function cancelEditMode(){
+
+  editingId =
+    null;
+
+  formTitle.textContent =
+    "➕ নতুন হিসাব যোগ করুন";
+
+  saveTxBtn.textContent =
+    "☁️ Cloud-এ হিসাব সংরক্ষণ";
+
+  cancelEditBtn.classList.add(
+    "hidden"
+  );
+
+  clearMessage(
+    txMsg
+  );
+
+}
+
+
+cancelEditBtn.onclick =
+  () => {
+
+    resetForm();
+
+  };
+
+
+function startEdit(id){
+
+  const item =
+    transactions.find(
+      x =>
+        String(x.id) ===
+        String(id)
+    );
+
+
+  if(!item){
+
+    alert(
+      "এই হিসাবটি পাওয়া যায়নি।"
+    );
+
+    return;
+
+  }
+
+
+  editingId =
+    item.id;
+
+
+  formTitle.textContent =
+    "✏️ হিসাব Edit করুন";
+
+  saveTxBtn.textContent =
+    "☁️ পরিবর্তন Cloud-এ সংরক্ষণ";
+
+  cancelEditBtn.classList.remove(
+    "hidden"
+  );
+
+
+  txType.value =
+    item.type || "income";
+
+  txAmount.value =
+    item.amount ?? "";
+
+  personName.value =
+    item.person_name || "";
+
+  txCategory.value =
+    item.category || "";
+
+  txDate.value =
+    item.date || todayString();
+
+  txNote.value =
+    item.note || "";
+
+
+  if(
+    item.type === "expense"
+  ){
+
+    const exists =
+      [...expenseCategory.options]
+        .some(
+          option =>
+            option.value ===
+            item.category
         );
 
-      }
-    );
 
-  }
+    expenseCategory.value =
+      exists
+        ? item.category
+        : "";
 
-
-  function formatDate(dateString){
-
-    if(!dateString){
-      return "";
-    }
-
-    const parts =
-      String(dateString)
-        .split("-");
-
-    if(parts.length !== 3){
-      return dateString;
-    }
-
-    return (
-      parts[2] +
-      "/" +
-      parts[1] +
-      "/" +
-      parts[0]
-    );
-
-  }
-
-
-  /* =====================================================
-     NAVIGATION
-  ===================================================== */
-
-  function showSection(name){
-
-    dashboardSection.classList.add("hidden");
-    addSection.classList.add("hidden");
-    reportsSection.classList.add("hidden");
-    allSection.classList.add("hidden");
-
-    navDashboard.classList.remove("primary");
-    navAdd.classList.remove("primary");
-    navReports.classList.remove("primary");
-    navAll.classList.remove("primary");
-
-
-    if(name === "dashboard"){
-
-      dashboardSection.classList.remove("hidden");
-
-      navDashboard.classList.add("primary");
-
-    }
-
-
-    if(name === "add"){
-
-      addSection.classList.remove("hidden");
-
-      navAdd.classList.add("primary");
-
-    }
-
-
-    if(name === "reports"){
-
-      reportsSection.classList.remove("hidden");
-
-      navReports.classList.add("primary");
-
-      renderReports();
-
-    }
-
-
-    if(name === "all"){
-
-      allSection.classList.remove("hidden");
-
-      navAll.classList.add("primary");
-
-      renderAllTransactions();
-
-    }
-
-  }
-
-
-  navDashboard.onclick =
-    () => {
-
-      cancelEditMode();
-
-      showSection("dashboard");
-
-    };
-
-
-  navAdd.onclick =
-    () => {
-
-      if(editingId === null){
-
-        resetForm();
-
-      }
-
-      showSection("add");
-
-    };
-
-
-  navReports.onclick =
-    () => {
-
-      cancelEditMode();
-
-      showSection("reports");
-
-    };
-
-
-  navAll.onclick =
-    () => {
-
-      cancelEditMode();
-
-      showSection("all");
-
-    };
-
-
-  quickAllBtn.onclick =
-    () => {
-
-      showSection("all");
-
-    };
-
-
-  /* =====================================================
-     FORM
-  ===================================================== */
-
-  function resetForm(){
-
-    editingId = null;
-
-    formTitle.textContent =
-      "➕ নতুন হিসাব যোগ করুন";
-
-    saveTxBtn.textContent =
-      "☁️ Cloud-এ হিসাব সংরক্ষণ";
-
-    cancelEditBtn.classList.add("hidden");
-
-    txType.value =
-      "income";
-
-    txAmount.value =
-      "";
-
-    personName.value =
-      "";
-
-    txCategory.value =
-      "";
+  }else{
 
     expenseCategory.value =
       "";
 
-    txDate.value =
-      todayString();
-
-    txNote.value =
-      "";
-
-    clearMessage(
-      txMsg
-    );
-
   }
 
 
-  function cancelEditMode(){
+  clearMessage(
+    txMsg
+  );
 
-    editingId = null;
+  showSection(
+    "add"
+  );
 
-    formTitle.textContent =
-      "➕ নতুন হিসাব যোগ করুন";
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-    saveTxBtn.textContent =
-      "☁️ Cloud-এ হিসাব সংরক্ষণ";
+}
 
-    cancelEditBtn.classList.add("hidden");
 
-    clearMessage(
-      txMsg
-    );
+/* =====================================================
+   TRANSACTION STATS
+===================================================== */
 
-  }
+function calculateStats(list){
 
+  const s = {
 
-  function startEdit(id){
+    income:0,
 
-    const item =
-      transactions.find(
-        x =>
-          String(x.id) ===
-          String(id)
-      );
+    expense:0,
 
+    deposit:0,
 
-    if(!item){
+    lent:0,
 
-      alert(
-        "এই হিসাবটি পাওয়া যায়নি।"
-      );
+    collect:0,
 
-      return;
+    borrowed:0,
 
-    }
+    repay:0
 
+  };
 
-    editingId =
-      item.id;
 
+  list.forEach(
+    item => {
 
-    formTitle.textContent =
-      "✏️ হিসাব Edit করুন";
+      const value =
+        Number(
+          item.amount || 0
+        );
 
-    saveTxBtn.textContent =
-      "☁️ পরিবর্তন Cloud-এ সংরক্ষণ";
 
-    cancelEditBtn.classList.remove(
-      "hidden"
-    );
-
-
-    txType.value =
-      item.type || "income";
-
-    txAmount.value =
-      item.amount ?? "";
-
-    personName.value =
-      item.person_name || "";
-
-    txCategory.value =
-      item.category || "";
-
-    txDate.value =
-      item.date || todayString();
-
-    txNote.value =
-      item.note || "";
-
-
-    if(item.type === "expense"){
-
-      const optionExists =
-        [...expenseCategory.options]
-          .some(
-            option =>
-              option.value ===
-              item.category
-          );
-
-      expenseCategory.value =
-        optionExists
-          ? item.category
-          : "";
-
-    }else{
-
-      expenseCategory.value =
-        "";
-
-    }
-
-
-    clearMessage(
-      txMsg
-    );
-
-    showSection("add");
-
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
-
-  }
-
-
-  cancelEditBtn.onclick =
-    () => {
-
-      resetForm();
-
-    };
-
-
-  /* =====================================================
-     STATISTICS
-  ===================================================== */
-
-  function calculateStats(list){
-
-    const s = {
-
-      income:0,
-
-      expense:0,
-
-      deposit:0,
-
-      lent:0,
-
-      collect:0,
-
-      borrowed:0,
-
-      repay:0
-
-    };
-
-
-    list.forEach(
-      item => {
-
-        const value =
-          Number(
-            item.amount || 0
-          );
-
-
-        if(
-          Object.prototype.hasOwnProperty
-            .call(
-              s,
-              item.type
-            )
-        ){
-
-          s[item.type] +=
-            value;
-
-        }
-
-      }
-    );
-
-
-    s.profit =
-      s.income -
-      s.expense;
-
-
-    s.receivable =
-      Math.max(
-        0,
-        s.lent -
-        s.collect
-      );
-
-
-    s.debt =
-      Math.max(
-        0,
-        s.borrowed -
-        s.repay
-      );
-
-
-    return s;
-
-  }
-
-
-  /* =====================================================
-     PERSON SUMMARY
-  ===================================================== */
-
-  function calculatePersonSummary(list){
-
-    const people = {};
-
-
-    list.forEach(
-      item => {
-
-        if(
-          ![
-            "lent",
-            "collect",
-            "borrowed",
-            "repay"
-          ].includes(
+      if(
+        Object.prototype.hasOwnProperty
+          .call(
+            s,
             item.type
           )
-        ){
+      ){
 
-          return;
-
-        }
-
-
-        const name =
-          String(
-            item.person_name || ""
-          ).trim();
-
-
-        if(!name){
-
-          return;
-
-        }
-
-
-        if(!people[name]){
-
-          people[name] = {
-            lent:0,
-            collect:0,
-            borrowed:0,
-            repay:0
-          };
-
-        }
-
-
-        const amount =
-          Number(
-            item.amount || 0
-          );
-
-
-        if(item.type === "lent"){
-
-          people[name].lent +=
-            amount;
-
-        }
-
-
-        if(item.type === "collect"){
-
-          people[name].collect +=
-            amount;
-
-        }
-
-
-        if(item.type === "borrowed"){
-
-          people[name].borrowed +=
-            amount;
-
-        }
-
-
-        if(item.type === "repay"){
-
-          people[name].repay +=
-            amount;
-
-        }
+        s[item.type] +=
+          value;
 
       }
+
+    }
+  );
+
+
+  s.profit =
+    s.income -
+    s.expense;
+
+
+  s.receivable =
+    Math.max(
+      0,
+      s.lent -
+      s.collect
     );
 
 
-    return people;
+  s.debt =
+    Math.max(
+      0,
+      s.borrowed -
+      s.repay
+    );
+
+
+  return s;
+
+}
+
+
+/* =====================================================
+   PERSON SUMMARY
+===================================================== */
+
+function calculatePersonSummary(list){
+
+  const people = {};
+
+
+  list.forEach(
+    item => {
+
+      if(
+        ![
+          "lent",
+          "collect",
+          "borrowed",
+          "repay"
+        ].includes(
+          item.type
+        )
+      ){
+
+        return;
+
+      }
+
+
+      const name =
+        String(
+          item.person_name || ""
+        ).trim();
+
+
+      if(!name){
+
+        return;
+
+      }
+
+
+      if(!people[name]){
+
+        people[name] = {
+          lent:0,
+          collect:0,
+          borrowed:0,
+          repay:0
+        };
+
+      }
+
+
+      const amount =
+        Number(
+          item.amount || 0
+        );
+
+
+      if(
+        item.type === "lent"
+      ){
+
+        people[name].lent +=
+          amount;
+
+      }
+
+
+      if(
+        item.type === "collect"
+      ){
+
+        people[name].collect +=
+          amount;
+
+      }
+
+
+      if(
+        item.type === "borrowed"
+      ){
+
+        people[name].borrowed +=
+          amount;
+
+      }
+
+
+      if(
+        item.type === "repay"
+      ){
+
+        people[name].repay +=
+          amount;
+
+      }
+
+    }
+  );
+
+
+  return people;
+
+}
+
+
+function renderPersonSummary(){
+
+  const people =
+    calculatePersonSummary(
+      transactions
+    );
+
+
+  const entries =
+    Object.entries(
+      people
+    );
+
+
+  if(!entries.length){
+
+    personSummary.innerHTML =
+      `
+      <div class="empty">
+        এখনো কোনো ব্যক্তিভিত্তিক পাওনা বা ধার নেই।
+      </div>
+      `;
+
+    return;
 
   }
 
 
-  function renderPersonSummary(){
+  personSummary.innerHTML =
+    entries
+      .map(
+        ([name,data]) => {
 
-    const people =
-      calculatePersonSummary(
-        transactions
-      );
-
-
-    const entries =
-      Object.entries(
-        people
-      );
-
-
-    if(!entries.length){
-
-      personSummary.innerHTML =
-        `<div class="empty">
-          এখনো কোনো ব্যক্তিভিত্তিক পাওনা বা ধার নেই।
-        </div>`;
-
-      return;
-
-    }
+          const receivable =
+            Math.max(
+              0,
+              data.lent -
+              data.collect
+            );
 
 
-    personSummary.innerHTML =
-      entries
-        .map(
-          ([name,data]) => {
-
-            const receivable =
-              Math.max(
-                0,
-                data.lent -
-                data.collect
-              );
+          const debt =
+            Math.max(
+              0,
+              data.borrowed -
+              data.repay
+            );
 
 
-            const debt =
-              Math.max(
-                0,
-                data.borrowed -
-                data.repay
-              );
+          return `
+
+          <div class="personBox">
+
+            <div class="personTitle">
+              👤 ${escapeHtml(
+                name
+              )}
+            </div>
+
+            <div class="row">
+
+              <span>
+                আমার পাওনা
+              </span>
+
+              <strong>
+                ${money(
+                  receivable
+                )}
+              </strong>
+
+            </div>
+
+            <div class="row">
+
+              <span>
+                আমার ধার
+              </span>
+
+              <strong>
+                ${money(
+                  debt
+                )}
+              </strong>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
 
 
-            return `
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
-              <div class="personBox">
+function renderDashboard(){
 
-                <div class="personTitle">
-                  👤 ${escapeHtml(name)}
+  const s =
+    calculateStats(
+      transactions
+    );
+
+
+  dashIncome.textContent =
+    money(
+      s.income
+    );
+
+  dashExpense.textContent =
+    money(
+      s.expense
+    );
+
+  dashProfit.textContent =
+    money(
+      s.profit
+    );
+
+  dashDeposit.textContent =
+    money(
+      s.deposit
+    );
+
+  dashReceivable.textContent =
+    money(
+      s.receivable
+    );
+
+  dashDebt.textContent =
+    money(
+      s.debt
+    );
+
+
+  const profitPct =
+    s.income > 0
+      ? (
+          s.profit /
+          s.income
+        ) * 100
+      : 0;
+
+
+  const expensePct =
+    s.income > 0
+      ? (
+          s.expense /
+          s.income
+        ) * 100
+      : 0;
+
+
+  dashProfitPct.textContent =
+    profitPct.toFixed(1) +
+    "%";
+
+
+  dashExpensePct.textContent =
+    expensePct.toFixed(1) +
+    "%";
+
+
+  dashCount.textContent =
+    transactions.length;
+
+
+  dashExpenseBar.style.width =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        expensePct
+      )
+    ) +
+    "%";
+
+
+  renderPersonSummary();
+
+  renderAdvice(
+    s
+  );
+
+  renderRecent();
+
+  renderDashboardReminders();
+
+}
+
+
+/* =====================================================
+   ADVICE
+===================================================== */
+
+function renderAdvice(s){
+
+  const list = [];
+
+
+  if(
+    transactions.length === 0
+  ){
+
+    list.push(
+      "📝 প্রথমে আপনার আয়/ব্যয়ের হিসাব যোগ করুন।"
+    );
+
+  }
+
+
+  if(
+    s.income > 0 &&
+    s.expense > s.income
+  ){
+
+    list.push(
+      "⚠️ বর্তমানে আপনার ব্যয় আয়ের চেয়ে বেশি।"
+    );
+
+  }
+
+
+  if(
+    s.income > 0 &&
+    s.expense <=
+    s.income * 0.50
+  ){
+
+    list.push(
+      "✅ আপনার ব্যয় আয়ের ৫০%-এর মধ্যে আছে।"
+    );
+
+  }
+
+
+  if(
+    s.income > 0 &&
+    s.expense >
+    s.income * 0.70
+  ){
+
+    list.push(
+      "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে।"
+    );
+
+  }
+
+
+  if(
+    s.profit > 0
+  ){
+
+    list.push(
+      "✅ বর্তমানে আপনার আয় ব্যয়ের চেয়ে বেশি।"
+    );
+
+  }
+
+
+  if(
+    s.profit < 0
+  ){
+
+    list.push(
+      "⚠️ বর্তমানে আপনার লস হচ্ছে।"
+    );
+
+  }
+
+
+  if(
+    s.receivable > 0
+  ){
+
+    list.push(
+      "🤝 আপনার মোট পাওনা " +
+      money(
+        s.receivable
+      ) +
+      "।"
+    );
+
+  }
+
+
+  if(
+    s.debt > 0
+  ){
+
+    list.push(
+      "📥 আপনার মোট ধার বাকি " +
+      money(
+        s.debt
+      ) +
+      "।"
+    );
+
+  }
+
+
+  if(
+    s.deposit > 0
+  ){
+
+    list.push(
+      "🏦 মোট Deposit " +
+      money(
+        s.deposit
+      ) +
+      "।"
+    );
+
+  }
+
+
+  if(!list.length){
+
+    list.push(
+      "📊 হিসাব যোগ হলে স্বয়ংক্রিয় বিশ্লেষণ এখানে দেখা যাবে।"
+    );
+
+  }
+
+
+  adviceBox.innerHTML =
+    list
+      .map(
+        text =>
+          `
+          <div class="advice">
+            ${escapeHtml(
+              text
+            )}
+          </div>
+          `
+      )
+      .join("");
+
+}
+
+
+/* =====================================================
+   RECENT TRANSACTIONS
+===================================================== */
+
+function renderRecent(){
+
+  const list =
+    sortTransactions(
+      transactions
+    ).slice(
+      0,
+      5
+    );
+
+
+  if(!list.length){
+
+    recentList.innerHTML =
+      `
+      <div class="empty">
+        এখনও কোনো হিসাব নেই।
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  recentList.innerHTML =
+    list
+      .map(
+        item =>
+          `
+
+          <div class="txItem">
+
+            <div class="txTop">
+
+              <div>
+
+                <div class="txTitle">
+                  ${typeIcon(
+                    item.type
+                  )}
+                  ${escapeHtml(
+                    typeName(
+                      item.type
+                    )
+                  )}
                 </div>
 
-                <div class="row">
+                ${
+                  item.person_name
+                    ? `
+                      <div class="small">
+                        👤 ${escapeHtml(
+                          item.person_name
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
 
-                  <span>
-                    আমার পাওনা
-                  </span>
-
-                  <strong>
-                    ${money(
-                      receivable
-                    )}
-                  </strong>
-
+                <div class="small muted">
+                  ${escapeHtml(
+                    item.category ||
+                    "কোনো বিবরণ নেই"
+                  )}
                 </div>
 
-                <div class="row">
-
-                  <span>
-                    আমার ধার
-                  </span>
-
-                  <strong>
-                    ${money(
-                      debt
-                    )}
-                  </strong>
-
+                <div class="small muted">
+                  ${escapeHtml(
+                    formatDate(
+                      item.date
+                    )
+                  )}
                 </div>
 
               </div>
 
-            `;
 
-          }
-        )
-        .join("");
+              <div class="txAmount">
+                ${money(
+                  item.amount
+                )}
+              </div>
 
-  }
+            </div>
 
+          </div>
 
-  /* =====================================================
-     DASHBOARD
-  ===================================================== */
+          `
+      )
+      .join("");
 
-  function renderDashboard(){
-
-    const s =
-      calculateStats(
-        transactions
-      );
+}
 
 
-    dashIncome.textContent =
-      money(
-        s.income
-      );
+/* =====================================================
+   REPORTS
+===================================================== */
 
-    dashExpense.textContent =
-      money(
-        s.expense
-      );
+function getReportRange(period){
 
-    dashProfit.textContent =
-      money(
-        s.profit
-      );
-
-    dashDeposit.textContent =
-      money(
-        s.deposit
-      );
-
-    dashReceivable.textContent =
-      money(
-        s.receivable
-      );
-
-    dashDebt.textContent =
-      money(
-        s.debt
-      );
-
-
-    const profitPct =
-      s.income > 0
-        ? (
-            s.profit /
-            s.income
-          ) * 100
-        : 0;
-
-
-    const expensePct =
-      s.income > 0
-        ? (
-            s.expense /
-            s.income
-          ) * 100
-        : 0;
-
-
-    dashProfitPct.textContent =
-      profitPct.toFixed(1) +
-      "%";
-
-
-    dashExpensePct.textContent =
-      expensePct.toFixed(1) +
-      "%";
-
-
-    dashCount.textContent =
-      transactions.length;
-
-
-    dashExpenseBar.style.width =
-      Math.max(
-        0,
-        Math.min(
-          100,
-          expensePct
-        )
-      ) +
-      "%";
-
-
-    renderPersonSummary();
-
-    renderAdvice(
-      s
+  const now =
+    new Date(
+      todayString() +
+      "T12:00:00"
     );
 
-    renderRecent();
+
+  if(
+    period === "today"
+  ){
+
+    return {
+
+      start:
+        new Date(
+          todayString() +
+          "T00:00:00"
+        ),
+
+      end:
+        now
+
+    };
 
   }
 
 
-  /* =====================================================
-     ADVICE
-  ===================================================== */
+  if(
+    period === "week"
+  ){
 
-  function renderAdvice(s){
+    const start =
+      new Date(
+        now
+      );
 
-    const list = [];
+    start.setDate(
+      start.getDate() -
+      6
+    );
+
+    start.setHours(
+      0,
+      0,
+      0,
+      0
+    );
 
 
-    if(
-      transactions.length === 0
-    ){
+    return {
 
-      list.push(
-        "📝 প্রথমে আপনার আয়/ব্যয়ের হিসাব যোগ করুন।"
+      start,
+      end:now
+
+    };
+
+  }
+
+
+  if(
+    period === "month"
+  ){
+
+    return {
+
+      start:
+        new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          1,
+          0,
+          0,
+          0
+        ),
+
+      end:
+        now
+
+    };
+
+  }
+
+
+  if(
+    period === "year"
+  ){
+
+    return {
+
+      start:
+        new Date(
+          now.getFullYear(),
+          0,
+          1,
+          0,
+          0,
+          0
+        ),
+
+      end:
+        now
+
+    };
+
+  }
+
+
+  return {
+
+    start:null,
+    end:null
+
+  };
+
+}
+
+
+function filterByPeriod(
+  list,
+  period
+){
+
+  if(
+    period === "all"
+  ){
+
+    return [...list];
+
+  }
+
+
+  const {
+    start,
+    end
+  } =
+  getReportRange(
+    period
+  );
+
+
+  return list.filter(
+    item => {
+
+      const date =
+        new Date(
+          String(
+            item.date
+          ) +
+          "T12:00:00"
+        );
+
+
+      return (
+        date >= start &&
+        date <= end
       );
 
     }
+  );
+
+}
 
 
-    if(
-      s.income > 0 &&
-      s.expense > s.income
-    ){
+function renderReports(){
 
-      list.push(
-        "⚠️ বর্তমানে আপনার ব্যয় আয়ের চেয়ে বেশি।"
-      );
-
-    }
+  const list =
+    filterByPeriod(
+      transactions,
+      reportPeriod.value
+    );
 
 
-    if(
-      s.income > 0 &&
-      s.expense <=
-      s.income * 0.50
-    ){
-
-      list.push(
-        "✅ আপনার ব্যয় আয়ের ৫০%-এর মধ্যে আছে।"
-      );
-
-    }
-
-
-    if(
-      s.income > 0 &&
-      s.expense >
-      s.income * 0.70
-    ){
-
-      list.push(
-        "⚠️ আয়ের ৭০%-এর বেশি খরচ হচ্ছে।"
-      );
-
-    }
-
-
-    if(
-      s.profit > 0
-    ){
-
-      list.push(
-        "✅ বর্তমানে আপনার আয় ব্যয়ের চেয়ে বেশি।"
-      );
-
-    }
-
-
-    if(
-      s.profit < 0
-    ){
-
-      list.push(
-        "⚠️ বর্তমানে আপনার লস হচ্ছে।"
-      );
-
-    }
-
-
-    if(
-      s.receivable > 0
-    ){
-
-      list.push(
-        "🤝 আপনার মোট পাওনা " +
-        money(
-          s.receivable
-        ) +
-        "।"
-      );
-
-    }
-
-
-    if(
-      s.debt > 0
-    ){
-
-      list.push(
-        "📥 আপনার মোট ধার বাকি " +
-        money(
-          s.debt
-        ) +
-        "।"
-      );
-
-    }
-
-
-    if(
-      s.deposit > 0
-    ){
-
-      list.push(
-        "🏦 মোট Deposit " +
-        money(
-          s.deposit
-        ) +
-        "।"
-      );
-
-    }
-
-
-    if(!list.length){
-
-      list.push(
-        "📊 হিসাব যোগ হলে স্বয়ংক্রিয় বিশ্লেষণ এখানে দেখা যাবে।"
-      );
-
-    }
-
-
-    adviceBox.innerHTML =
+  const s =
+    calculateStats(
       list
-        .map(
-          text =>
-            `
-            <div class="advice">
-              ${escapeHtml(text)}
-            </div>
-            `
-        )
-        .join("");
-
-  }
+    );
 
 
-  /* =====================================================
-     RECENT
-  ===================================================== */
-
-  function renderRecent(){
-
-    const list =
-      sortTransactions(
-        transactions
-      ).slice(
-        0,
-        5
-      );
+  const profitPct =
+    s.income > 0
+      ? (
+          s.profit /
+          s.income
+        ) * 100
+      : 0;
 
 
-    if(!list.length){
+  const expensePct =
+    s.income > 0
+      ? (
+          s.expense /
+          s.income
+        ) * 100
+      : 0;
 
-      recentList.innerHTML =
-        `
-        <div class="empty">
-          এখনও কোনো হিসাব নেই।
+
+  const depositPct =
+    s.income > 0
+      ? (
+          s.deposit /
+          s.income
+        ) * 100
+      : 0;
+
+
+  reportContent.innerHTML =
+    `
+
+    <div class="grid4">
+
+      <div class="card">
+        <div class="muted">আয়</div>
+        <div class="money">
+          ${money(
+            s.income
+          )}
         </div>
-        `;
+      </div>
 
-      return;
+      <div class="card">
+        <div class="muted">ব্যয়</div>
+        <div class="money">
+          ${money(
+            s.expense
+          )}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="muted">লাভ / লস</div>
+        <div class="money">
+          ${money(
+            s.profit
+          )}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="muted">Deposit</div>
+        <div class="money">
+          ${money(
+            s.deposit
+          )}
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="row">
+        <span>লাভের হার</span>
+        <strong>
+          ${profitPct.toFixed(1)}%
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>খরচের হার</span>
+        <strong>
+          ${expensePct.toFixed(1)}%
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>Deposit %</span>
+        <strong>
+          ${depositPct.toFixed(1)}%
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>পাওনা</span>
+        <strong>
+          ${money(
+            s.receivable
+          )}
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>ধার বাকি</span>
+        <strong>
+          ${money(
+            s.debt
+          )}
+        </strong>
+      </div>
+
+      <div class="row">
+        <span>এই সময়ের হিসাব</span>
+        <strong>
+          ${list.length}
+        </strong>
+      </div>
+
+    </div>
+
+    `;
+
+
+  renderCategoryReport(
+    list
+  );
+
+  renderReportPersonSummary(
+    list
+  );
+
+  renderMonthlyReport();
+
+}
+
+
+function renderCategoryReport(
+  list
+){
+
+  const expenses =
+    list.filter(
+      item =>
+        item.type ===
+        "expense"
+    );
+
+
+  const map = {};
+
+
+  expenses.forEach(
+    item => {
+
+      const name =
+        item.category ||
+        "অন্যান্য";
+
+
+      map[name] =
+        (
+          map[name] ||
+          0
+        ) +
+        Number(
+          item.amount || 0
+        );
 
     }
+  );
 
 
-    recentList.innerHTML =
+  const total =
+    expenses.reduce(
+      (
+        total,
+        item
+      ) =>
+        total +
+        Number(
+          item.amount || 0
+        ),
+      0
+    );
+
+
+  const entries =
+    Object.entries(
+      map
+    )
+    .sort(
+      (a,b) =>
+        b[1] -
+        a[1]
+    );
+
+
+  if(!entries.length){
+
+    categoryReport.innerHTML =
+      `
+      <div class="empty">
+        এই সময়ে কোনো খরচ নেই।
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  categoryReport.innerHTML =
+    entries
+      .map(
+        ([name,value]) => {
+
+          const pct =
+            total > 0
+              ? (
+                  value /
+                  total
+                ) * 100
+              : 0;
+
+
+          return `
+
+            <div class="row">
+
+              <span>
+                ${escapeHtml(
+                  name
+                )}
+              </span>
+
+              <strong>
+                ${money(
+                  value
+                )}
+                ·
+                ${pct.toFixed(1)}%
+              </strong>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+function renderReportPersonSummary(
+  list
+){
+
+  const people =
+    calculatePersonSummary(
       list
-        .map(
-          item =>
-            `
+    );
 
-            <div class="txItem">
 
-              <div class="txTop">
+  const entries =
+    Object.entries(
+      people
+    );
 
-                <div>
 
-                  <div class="txTitle">
-                    ${typeIcon(
+  if(!entries.length){
+
+    reportPersonSummary.innerHTML =
+      `
+      <div class="empty">
+        এই সময়ে কোনো ব্যক্তিভিত্তিক পাওনা বা ধার নেই।
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  reportPersonSummary.innerHTML =
+    entries
+      .map(
+        ([name,data]) => {
+
+          const receivable =
+            Math.max(
+              0,
+              data.lent -
+              data.collect
+            );
+
+
+          const debt =
+            Math.max(
+              0,
+              data.borrowed -
+              data.repay
+            );
+
+
+          return `
+
+            <div class="personBox">
+
+              <div class="personTitle">
+                👤 ${escapeHtml(
+                  name
+                )}
+              </div>
+
+              <div class="row">
+                <span>
+                  পাওনা
+                </span>
+                <strong>
+                  ${money(
+                    receivable
+                  )}
+                </strong>
+              </div>
+
+              <div class="row">
+                <span>
+                  ধার বাকি
+                </span>
+                <strong>
+                  ${money(
+                    debt
+                  )}
+                </strong>
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+function renderMonthlyReport(){
+
+  const map = {};
+
+
+  transactions.forEach(
+    item => {
+
+      if(!item.date){
+
+        return;
+
+      }
+
+
+      const month =
+        String(
+          item.date
+        ).slice(
+          0,
+          7
+        );
+
+
+      if(!map[month]){
+
+        map[month] = {
+
+          income:0,
+
+          expense:0
+
+        };
+
+      }
+
+
+      const amount =
+        Number(
+          item.amount || 0
+        );
+
+
+      if(
+        item.type ===
+        "income"
+      ){
+
+        map[month].income +=
+          amount;
+
+      }
+
+
+      if(
+        item.type ===
+        "expense"
+      ){
+
+        map[month].expense +=
+          amount;
+
+      }
+
+    }
+  );
+
+
+  const months =
+    Object.entries(
+      map
+    )
+    .sort(
+      (a,b) =>
+        b[0].localeCompare(
+          a[0]
+        )
+    )
+    .slice(
+      0,
+      12
+    );
+
+
+  if(!months.length){
+
+    monthlyReport.innerHTML =
+      `
+      <div class="empty">
+        এখনো মাসিক হিসাব নেই।
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  monthlyReport.innerHTML =
+    months
+      .map(
+        ([month,data]) => {
+
+          const profit =
+            data.income -
+            data.expense;
+
+
+          return `
+
+            <div class="row">
+
+              <span>
+                ${escapeHtml(
+                  month
+                )}
+              </span>
+
+              <span>
+                আয় ${money(
+                  data.income
+                )}
+                ·
+                ব্যয় ${money(
+                  data.expense
+                )}
+                ·
+                লাভ ${money(
+                  profit
+                )}
+              </span>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+reportPeriod.onchange =
+  () => {
+
+    renderReports();
+
+  };
+
+
+refreshReportBtn.onclick =
+  () => {
+
+    renderReports();
+
+  };
+
+
+/* =====================================================
+   ALL TRANSACTIONS
+===================================================== */
+
+function getFilteredTransactions(){
+
+  let list =
+    sortTransactions(
+      transactions
+    );
+
+
+  const query =
+    searchTx.value
+      .trim()
+      .toLowerCase();
+
+
+  const selectedType =
+    filterType.value;
+
+
+  const from =
+    filterFrom.value;
+
+
+  const to =
+    filterTo.value;
+
+
+  if(query){
+
+    list =
+      list.filter(
+        item => {
+
+          const text =
+            [
+              typeName(
+                item.type
+              ),
+              item.person_name || "",
+              item.category || "",
+              item.note || "",
+              item.date || ""
+            ]
+            .join(" ")
+            .toLowerCase();
+
+
+          return text.includes(
+            query
+          );
+
+        }
+      );
+
+  }
+
+
+  if(selectedType){
+
+    list =
+      list.filter(
+        item =>
+          item.type ===
+          selectedType
+      );
+
+  }
+
+
+  if(from){
+
+    list =
+      list.filter(
+        item =>
+          String(
+            item.date || ""
+          ) >=
+          from
+      );
+
+  }
+
+
+  if(to){
+
+    list =
+      list.filter(
+        item =>
+          String(
+            item.date || ""
+          ) <=
+          to
+      );
+
+  }
+
+
+  return list;
+
+}
+
+
+function renderAllTransactions(){
+
+  const list =
+    getFilteredTransactions();
+
+
+  allCount.textContent =
+    list.length +
+    " হিসাব";
+
+
+  if(!list.length){
+
+    allTransactions.innerHTML =
+      `
+      <div class="empty">
+        কোনো হিসাব পাওয়া যায়নি।
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  allTransactions.innerHTML =
+    list
+      .map(
+        item =>
+          `
+
+          <div class="txItem">
+
+            <div class="txTop">
+
+              <div>
+
+                <div class="txTitle">
+                  ${typeIcon(
+                    item.type
+                  )}
+                  ${escapeHtml(
+                    typeName(
                       item.type
-                    )}
-                    ${escapeHtml(
-                      typeName(
-                        item.type
-                      )
-                    )}
-                  </div>
-
-                  ${
-                    item.person_name
-                      ? `
-                        <div class="small">
-                          👤 ${escapeHtml(
-                            item.person_name
-                          )}
-                        </div>
-                      `
-                      : ""
-                  }
-
-                  <div class="small muted">
-                    ${escapeHtml(
-                      item.category ||
-                      "কোনো বিবরণ নেই"
-                    )}
-                  </div>
-
-                  <div class="small muted">
-                    ${escapeHtml(
-                      formatDate(
-                        item.date
-                      )
-                    )}
-                  </div>
-
+                    )
+                  )}
                 </div>
+
+                ${
+                  item.person_name
+                    ? `
+                      <div>
+                        👤 ${escapeHtml(
+                          item.person_name
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+                <div class="small muted">
+                  ${escapeHtml(
+                    item.category ||
+                    "কোনো বিবরণ নেই"
+                  )}
+                </div>
+
+                ${
+                  item.note
+                    ? `
+                      <div class="small muted">
+                        📝 ${escapeHtml(
+                          item.note
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+                <div class="small muted">
+                  ${escapeHtml(
+                    formatDate(
+                      item.date
+                    )
+                  )}
+                </div>
+
+              </div>
+
+
+              <div
+                style="
+                  text-align:right;
+                  min-width:115px
+                "
+              >
 
                 <div class="txAmount">
                   ${money(
@@ -2317,1342 +3807,339 @@ label{
                   )}
                 </div>
 
+                <div class="txActions">
+
+                  <button
+                    type="button"
+                    data-edit="${escapeHtml(
+                      item.id
+                    )}"
+                  >
+                    ✏️ Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    class="danger"
+                    data-delete="${escapeHtml(
+                      item.id
+                    )}"
+                  >
+                    🗑️ Delete
+                  </button>
+
+                </div>
+
               </div>
 
             </div>
 
-            `
-        )
-        .join("");
-
-  }
-
-
-  /* =====================================================
-     REPORT
-  ===================================================== */
-
-  function getReportRange(period){
-
-    const now =
-      new Date(
-        todayString() +
-        "T12:00:00"
-      );
-
-
-    if(period === "today"){
-
-      return {
-        start:
-          new Date(
-            todayString() +
-            "T00:00:00"
-          ),
-        end:
-          now
-      };
-
-    }
-
-
-    if(period === "week"){
-
-      const start =
-        new Date(now);
-
-      start.setDate(
-        start.getDate() -
-        6
-      );
-
-      start.setHours(
-        0,0,0,0
-      );
-
-      return {
-        start,
-        end:now
-      };
-
-    }
-
-
-    if(period === "month"){
-
-      return {
-
-        start:
-          new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            1,
-            0,0,0
-          ),
-
-        end:
-          now
-
-      };
-
-    }
-
-
-    if(period === "year"){
-
-      return {
-
-        start:
-          new Date(
-            now.getFullYear(),
-            0,
-            1,
-            0,0,0
-          ),
-
-        end:
-          now
-
-      };
-
-    }
-
-
-    return {
-      start:null,
-      end:null
-    };
-
-  }
-
-
-  function filterByPeriod(
-    list,
-    period
-  ){
-
-    if(
-      period === "all"
-    ){
-
-      return [...list];
-
-    }
-
-
-    const {
-      start,
-      end
-    } =
-      getReportRange(
-        period
-      );
-
-
-    return list.filter(
-      item => {
-
-        const date =
-          new Date(
-            String(
-              item.date
-            ) +
-            "T12:00:00"
-          );
-
-        return (
-          date >= start &&
-          date <= end
-        );
-
-      }
-    );
-
-  }
-
-
-  function renderReports(){
-
-    const list =
-      filterByPeriod(
-        transactions,
-        reportPeriod.value
-      );
-
-
-    const s =
-      calculateStats(
-        list
-      );
-
-
-    const profitPct =
-      s.income > 0
-        ? (
-            s.profit /
-            s.income
-          ) * 100
-        : 0;
-
-
-    const expensePct =
-      s.income > 0
-        ? (
-            s.expense /
-            s.income
-          ) * 100
-        : 0;
-
-
-    const depositPct =
-      s.income > 0
-        ? (
-            s.deposit /
-            s.income
-          ) * 100
-        : 0;
-
-
-    reportContent.innerHTML =
-      `
-
-      <div class="grid4">
-
-        <div class="card">
-          <div class="muted">আয়</div>
-          <div class="money">
-            ${money(
-              s.income
-            )}
           </div>
-        </div>
 
-        <div class="card">
-          <div class="muted">ব্যয়</div>
-          <div class="money">
-            ${money(
-              s.expense
-            )}
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="muted">লাভ / লস</div>
-          <div class="money">
-            ${money(
-              s.profit
-            )}
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="muted">Deposit</div>
-          <div class="money">
-            ${money(
-              s.deposit
-            )}
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="row">
-          <span>লাভের হার</span>
-          <strong>
-            ${profitPct.toFixed(1)}%
-          </strong>
-        </div>
-
-        <div class="row">
-          <span>খরচের হার</span>
-          <strong>
-            ${expensePct.toFixed(1)}%
-          </strong>
-        </div>
-
-        <div class="row">
-          <span>Deposit %</span>
-          <strong>
-            ${depositPct.toFixed(1)}%
-          </strong>
-        </div>
-
-        <div class="row">
-          <span>পাওনা</span>
-          <strong>
-            ${money(
-              s.receivable
-            )}
-          </strong>
-        </div>
-
-        <div class="row">
-          <span>ধার বাকি</span>
-          <strong>
-            ${money(
-              s.debt
-            )}
-          </strong>
-        </div>
-
-        <div class="row">
-          <span>এই সময়ের হিসাব</span>
-          <strong>
-            ${list.length}
-          </strong>
-        </div>
-
-      </div>
-
-      `;
-
-
-    renderCategoryReport(
-      list
-    );
-
-    renderReportPersonSummary(
-      list
-    );
-
-    renderMonthlyReport();
-
-  }
-
-
-  function renderCategoryReport(
-    list
-  ){
-
-    const expenses =
-      list.filter(
-        item =>
-          item.type ===
-          "expense"
-      );
-
-
-    const map = {};
-
-
-    expenses.forEach(
-      item => {
-
-        const name =
-          item.category ||
-          "অন্যান্য";
-
-        map[name] =
-          (
-            map[name] ||
-            0
-          ) +
-          Number(
-            item.amount || 0
-          );
-
-      }
-    );
-
-
-    const total =
-      expenses.reduce(
-        (
-          total,
-          item
-        ) =>
-          total +
-          Number(
-            item.amount || 0
-          ),
-        0
-      );
-
-
-    const entries =
-      Object.entries(
-        map
+          `
       )
-      .sort(
-        (a,b) =>
-          b[1] -
-          a[1]
-      );
+      .join("");
 
 
-    if(!entries.length){
+  allTransactions
+    .querySelectorAll(
+      "[data-edit]"
+    )
+    .forEach(
+      button => {
 
-      categoryReport.innerHTML =
-        `
-        <div class="empty">
-          এই সময়ে কোনো খরচ নেই।
-        </div>
-        `;
+        button.onclick =
+          () => {
 
-      return;
-
-    }
-
-
-    categoryReport.innerHTML =
-      entries
-        .map(
-          ([name,value]) => {
-
-            const pct =
-              total > 0
-                ? (
-                    value /
-                    total
-                  ) * 100
-                : 0;
-
-
-            return `
-
-              <div class="row">
-
-                <span>
-                  ${escapeHtml(
-                    name
-                  )}
-                </span>
-
-                <strong>
-                  ${money(
-                    value
-                  )}
-                  ·
-                  ${pct.toFixed(1)}%
-                </strong>
-
-              </div>
-
-            `;
-
-          }
-        )
-        .join("");
-
-  }
-
-
-  function renderReportPersonSummary(
-    list
-  ){
-
-    const people =
-      calculatePersonSummary(
-        list
-      );
-
-
-    const entries =
-      Object.entries(
-        people
-      );
-
-
-    if(!entries.length){
-
-      reportPersonSummary.innerHTML =
-        `
-        <div class="empty">
-          এই সময়ে কোনো ব্যক্তিভিত্তিক পাওনা বা ধার নেই।
-        </div>
-        `;
-
-      return;
-
-    }
-
-
-    reportPersonSummary.innerHTML =
-      entries
-        .map(
-          ([name,data]) => {
-
-            const receivable =
-              Math.max(
-                0,
-                data.lent -
-                data.collect
-              );
-
-
-            const debt =
-              Math.max(
-                0,
-                data.borrowed -
-                data.repay
-              );
-
-
-            return `
-
-              <div class="personBox">
-
-                <div class="personTitle">
-                  👤 ${escapeHtml(
-                    name
-                  )}
-                </div>
-
-                <div class="row">
-                  <span>
-                    পাওনা
-                  </span>
-                  <strong>
-                    ${money(
-                      receivable
-                    )}
-                  </strong>
-                </div>
-
-                <div class="row">
-                  <span>
-                    ধার বাকি
-                  </span>
-                  <strong>
-                    ${money(
-                      debt
-                    )}
-                  </strong>
-                </div>
-
-              </div>
-
-            `;
-
-          }
-        )
-        .join("");
-
-  }
-
-
-  function renderMonthlyReport(){
-
-    const map = {};
-
-
-    transactions.forEach(
-      item => {
-
-        if(!item.date){
-          return;
-        }
-
-
-        const month =
-          String(
-            item.date
-          ).slice(
-            0,
-            7
-          );
-
-
-        if(!map[month]){
-
-          map[month] = {
-            income:0,
-            expense:0
-          };
-
-        }
-
-
-        const amount =
-          Number(
-            item.amount || 0
-          );
-
-
-        if(
-          item.type ===
-          "income"
-        ){
-
-          map[month].income +=
-            amount;
-
-        }
-
-
-        if(
-          item.type ===
-          "expense"
-        ){
-
-          map[month].expense +=
-            amount;
-
-        }
-
-      }
-    );
-
-
-    const months =
-      Object.entries(
-        map
-      )
-      .sort(
-        (a,b) =>
-          b[0].localeCompare(
-            a[0]
-          )
-      )
-      .slice(
-        0,
-        12
-      );
-
-
-    if(!months.length){
-
-      monthlyReport.innerHTML =
-        `
-        <div class="empty">
-          এখনো মাসিক হিসাব নেই।
-        </div>
-        `;
-
-      return;
-
-    }
-
-
-    monthlyReport.innerHTML =
-      months
-        .map(
-          ([month,data]) => {
-
-            const profit =
-              data.income -
-              data.expense;
-
-
-            return `
-
-              <div class="row">
-
-                <span>
-                  ${escapeHtml(
-                    month
-                  )}
-                </span>
-
-                <span>
-                  আয় ${money(
-                    data.income
-                  )}
-                  ·
-                  ব্যয় ${money(
-                    data.expense
-                  )}
-                  ·
-                  লাভ ${money(
-                    profit
-                  )}
-                </span>
-
-              </div>
-
-            `;
-
-          }
-        )
-        .join("");
-
-  }
-
-
-  reportPeriod.onchange =
-    () => {
-
-      renderReports();
-
-    };
-
-
-  refreshReportBtn.onclick =
-    () => {
-
-      renderReports();
-
-    };
-
-
-  /* =====================================================
-     ALL TRANSACTIONS
-  ===================================================== */
-
-  function getFilteredTransactions(){
-
-    let list =
-      sortTransactions(
-        transactions
-      );
-
-
-    const query =
-      searchTx.value
-        .trim()
-        .toLowerCase();
-
-
-    const selectedType =
-      filterType.value;
-
-
-    const from =
-      filterFrom.value;
-
-
-    const to =
-      filterTo.value;
-
-
-    if(query){
-
-      list =
-        list.filter(
-          item => {
-
-            const text =
-              [
-                typeName(
-                  item.type
-                ),
-                item.person_name || "",
-                item.category || "",
-                item.note || "",
-                item.date || ""
-              ]
-              .join(" ")
-              .toLowerCase();
-
-
-            return text.includes(
-              query
+            startEdit(
+              button.dataset.edit
             );
 
-          }
-        );
-
-    }
-
-
-    if(selectedType){
-
-      list =
-        list.filter(
-          item =>
-            item.type ===
-            selectedType
-        );
-
-    }
-
-
-    if(from){
-
-      list =
-        list.filter(
-          item =>
-            String(
-              item.date || ""
-            ) >=
-            from
-        );
-
-    }
-
-
-    if(to){
-
-      list =
-        list.filter(
-          item =>
-            String(
-              item.date || ""
-            ) <=
-            to
-        );
-
-    }
-
-
-    return list;
-
-  }
-
-
-  function renderAllTransactions(){
-
-    const list =
-      getFilteredTransactions();
-
-
-    allCount.textContent =
-      list.length +
-      " হিসাব";
-
-
-    if(!list.length){
-
-      allTransactions.innerHTML =
-        `
-        <div class="empty">
-          কোনো হিসাব পাওয়া যায়নি।
-        </div>
-        `;
-
-      return;
-
-    }
-
-
-    allTransactions.innerHTML =
-      list
-        .map(
-          item =>
-            `
-
-            <div class="txItem">
-
-              <div class="txTop">
-
-                <div>
-
-                  <div class="txTitle">
-                    ${typeIcon(
-                      item.type
-                    )}
-                    ${escapeHtml(
-                      typeName(
-                        item.type
-                      )
-                    )}
-                  </div>
-
-                  ${
-                    item.person_name
-                      ? `
-                        <div>
-                          👤 ${escapeHtml(
-                            item.person_name
-                          )}
-                        </div>
-                      `
-                      : ""
-                  }
-
-                  <div class="small muted">
-                    ${escapeHtml(
-                      item.category ||
-                      "কোনো বিবরণ নেই"
-                    )}
-                  </div>
-
-                  ${
-                    item.note
-                      ? `
-                        <div class="small muted">
-                          📝 ${escapeHtml(
-                            item.note
-                          )}
-                        </div>
-                      `
-                      : ""
-                  }
-
-                  <div class="small muted">
-                    ${escapeHtml(
-                      formatDate(
-                        item.date
-                      )
-                    )}
-                  </div>
-
-                </div>
-
-
-                <div
-                  style="
-                    text-align:right;
-                    min-width:115px
-                  "
-                >
-
-                  <div class="txAmount">
-                    ${money(
-                      item.amount
-                    )}
-                  </div>
-
-                  <div class="txActions">
-
-                    <button
-                      type="button"
-                      data-edit="${escapeHtml(
-                        item.id
-                      )}"
-                    >
-                      ✏️ Edit
-                    </button>
-
-                    <button
-                      type="button"
-                      class="danger"
-                      data-delete="${escapeHtml(
-                        item.id
-                      )}"
-                    >
-                      🗑️ Delete
-                    </button>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-            `
-        )
-        .join("");
-
-
-    allTransactions
-      .querySelectorAll(
-        "[data-edit]"
-      )
-      .forEach(
-        button => {
-
-          button.onclick =
-            () => {
-
-              startEdit(
-                button.dataset.edit
-              );
-
-            };
-
-        }
-      );
-
-
-    allTransactions
-      .querySelectorAll(
-        "[data-delete]"
-      )
-      .forEach(
-        button => {
-
-          button.onclick =
-            () => {
-
-              deleteTransaction(
-                button.dataset.delete
-              );
-
-            };
-
-        }
-      );
-
-  }
-
-
-  searchTx.oninput =
-    () => {
-
-      renderAllTransactions();
-
-    };
-
-
-  filterType.onchange =
-    () => {
-
-      renderAllTransactions();
-
-    };
-
-
-  filterFrom.onchange =
-    () => {
-
-      renderAllTransactions();
-
-    };
-
-
-  filterTo.onchange =
-    () => {
-
-      renderAllTransactions();
-
-    };
-
-
-  clearFiltersBtn.onclick =
-    () => {
-
-      searchTx.value =
-        "";
-
-      filterType.value =
-        "";
-
-      filterFrom.value =
-        "";
-
-      filterTo.value =
-        "";
-
-      renderAllTransactions();
-
-    };
-
-
-  /* =====================================================
-     LOAD CLOUD
-  ===================================================== */
-
-  async function loadTransactions(){
-
-    if(!currentSession){
-
-      transactions =
-        [];
-
-      renderDashboard();
-
-      return;
-
-    }
-
-
-    try{
-
-      const {
-        data,
-        error
-      } =
-      await supabaseClient
-        .from(
-          "transactions"
-        )
-        .select(
-          "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
-        )
-        .order(
-          "date",
-          {
-            ascending:false
-          }
-        )
-        .order(
-          "created_at",
-          {
-            ascending:false
-          }
-        );
-
-
-      if(error){
-
-        console.error(
-          "Load error:",
-          error
-        );
-
-        alert(
-          "Cloud হিসাব Load করতে সমস্যা:\n" +
-          error.message
-        );
-
-        return;
+          };
 
       }
+    );
 
 
-      transactions =
-        Array.isArray(data)
-          ? data
-          : [];
+  allTransactions
+    .querySelectorAll(
+      "[data-delete]"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () => {
+
+            deleteTransaction(
+              button.dataset.delete
+            );
+
+          };
+
+      }
+    );
+
+}
 
 
-      renderDashboard();
+searchTx.oninput =
+  () => {
 
-      renderAllTransactions();
+    renderAllTransactions();
 
-      renderReports();
+  };
 
 
-    }catch(error){
+filterType.onchange =
+  () => {
+
+    renderAllTransactions();
+
+  };
+
+
+filterFrom.onchange =
+  () => {
+
+    renderAllTransactions();
+
+  };
+
+
+filterTo.onchange =
+  () => {
+
+    renderAllTransactions();
+
+  };
+
+
+clearFiltersBtn.onclick =
+  () => {
+
+    searchTx.value =
+      "";
+
+    filterType.value =
+      "";
+
+    filterFrom.value =
+      "";
+
+    filterTo.value =
+      "";
+
+    renderAllTransactions();
+
+  };
+
+
+/* =====================================================
+   LOAD TRANSACTIONS
+===================================================== */
+
+async function loadTransactions(){
+
+  if(!currentSession){
+
+    transactions =
+      [];
+
+    renderDashboard();
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from(
+        "transactions"
+      )
+      .select(
+        "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
+      )
+      .order(
+        "date",
+        {
+          ascending:false
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+    if(error){
 
       console.error(
-        "Load failed:",
+        "Transaction load error:",
         error
       );
 
       alert(
-        "Cloud হিসাব Load করতে সমস্যা হয়েছে।"
+        "Cloud হিসাব Load করতে সমস্যা:\n" +
+        error.message
       );
+
+      return;
 
     }
 
+
+    transactions =
+      Array.isArray(data)
+        ? data
+        : [];
+
+
+    renderDashboard();
+
+    renderAllTransactions();
+
+    renderReports();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    alert(
+      "Cloud হিসাব Load করতে সমস্যা হয়েছে।"
+    );
+
   }
 
+}
 
-  /* =====================================================
-     SAVE / UPDATE
-  ===================================================== */
 
-  saveTxBtn.onclick =
-    async () => {
+/* =====================================================
+   SAVE / UPDATE TRANSACTION
+===================================================== */
 
-      clearMessage(
-        txMsg
+saveTxBtn.onclick =
+  async () => {
+
+    clearMessage(
+      txMsg
+    );
+
+
+    if(!currentSession){
+
+      showMessage(
+        txMsg,
+        "আগে Login করুন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const type =
+      txType.value;
+
+
+    const amount =
+      Number(
+        txAmount.value
       );
 
 
-      if(!currentSession){
-
-        showMessage(
-          txMsg,
-          "আগে Login করুন।",
-          "error"
-        );
-
-        return;
-
-      }
+    const person =
+      personName.value.trim();
 
 
-      const type =
-        txType.value;
+    let category =
+      txCategory.value.trim();
 
 
-      const amount =
-        Number(
-          txAmount.value
-        );
+    if(
+      type === "expense" &&
+      expenseCategory.value
+    ){
+
+      category =
+        expenseCategory.value;
+
+    }
 
 
-      const person =
-        personName.value.trim();
+    const date =
+      txDate.value ||
+      todayString();
 
 
-      let category =
-        txCategory.value.trim();
+    const note =
+      txNote.value.trim();
 
+
+    if(
+      !amount ||
+      amount <= 0
+    ){
+
+      showMessage(
+        txMsg,
+        "সঠিক টাকার পরিমাণ দিন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      [
+        "lent",
+        "collect",
+        "borrowed",
+        "repay"
+      ].includes(
+        type
+      ) &&
+      !person
+    ){
+
+      showMessage(
+        txMsg,
+        "ধার/পাওনার ক্ষেত্রে ব্যক্তির নাম দিন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    saveTxBtn.disabled =
+      true;
+
+
+    try{
 
       if(
-        type === "expense" &&
-        expenseCategory.value
-      ){
-
-        category =
-          expenseCategory.value;
-
-      }
-
-
-      const date =
-        txDate.value ||
-        todayString();
-
-
-      const note =
-        txNote.value.trim();
-
-
-      if(
-        !amount ||
-        amount <= 0
+        editingId !== null
       ){
 
         showMessage(
           txMsg,
-          "সঠিক টাকার পরিমাণ দিন।",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        [
-          "lent",
-          "collect",
-          "borrowed",
-          "repay"
-        ].includes(
-          type
-        ) &&
-        !person
-      ){
-
-        showMessage(
-          txMsg,
-          "ধার/পাওনার ক্ষেত্রে ব্যক্তির নাম দিন।",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      saveTxBtn.disabled =
-        true;
-
-
-      try{
-
-        /* =================================
-           UPDATE
-        ================================= */
-
-        if(
-          editingId !== null
-        ){
-
-          showMessage(
-            txMsg,
-            "পরিবর্তন Cloud-এ সংরক্ষণ হচ্ছে...",
-            "info"
-          );
-
-
-          const {
-            data,
-            error
-          } =
-          await supabaseClient
-            .from(
-              "transactions"
-            )
-            .update({
-
-              type:
-                type,
-
-              amount:
-                amount,
-
-              person_name:
-                person,
-
-              category:
-                category,
-
-              date:
-                date,
-
-              note:
-                note,
-
-              updated_at:
-                new Date()
-                  .toISOString()
-
-            })
-            .eq(
-              "id",
-              editingId
-            )
-            .eq(
-              "user_id",
-              currentSession.user.id
-            )
-            .select(
-              "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
-            )
-            .single();
-
-
-          if(error){
-
-            console.error(
-              "Update error:",
-              error
-            );
-
-            showMessage(
-              txMsg,
-              "পরিবর্তন Save হয়নি: " +
-              error.message,
-              "error"
-            );
-
-            return;
-
-          }
-
-
-          const index =
-            transactions.findIndex(
-              item =>
-                String(
-                  item.id
-                ) ===
-                String(
-                  editingId
-                )
-            );
-
-
-          if(
-            index !== -1 &&
-            data
-          ){
-
-            transactions[index] =
-              data;
-
-          }
-
-
-          renderDashboard();
-
-          renderAllTransactions();
-
-          renderReports();
-
-
-          resetForm();
-
-          showSection(
-            "all"
-          );
-
-
-          return;
-
-        }
-
-
-        /* =================================
-           INSERT
-        ================================= */
-
-        showMessage(
-          txMsg,
-          "Cloud Database-এ সংরক্ষণ হচ্ছে...",
+          "পরিবর্তন Cloud-এ সংরক্ষণ হচ্ছে...",
           "info"
         );
 
@@ -3665,10 +4152,7 @@ label{
           .from(
             "transactions"
           )
-          .insert({
-
-            user_id:
-              currentSession.user.id,
+          .update({
 
             type:
               type,
@@ -3686,9 +4170,21 @@ label{
               date,
 
             note:
-              note
+              note,
+
+            updated_at:
+              new Date()
+                .toISOString()
 
           })
+          .eq(
+            "id",
+            editingId
+          )
+          .eq(
+            "user_id",
+            currentSession.user.id
+          )
           .select(
             "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
           )
@@ -3697,14 +4193,9 @@ label{
 
         if(error){
 
-          console.error(
-            "Insert error:",
-            error
-          );
-
           showMessage(
             txMsg,
-            "Cloud-এ Save হয়নি: " +
+            "পরিবর্তন Save হয়নি: " +
             error.message,
             "error"
           );
@@ -3714,11 +4205,25 @@ label{
         }
 
 
-        if(data){
-
-          transactions.unshift(
-            data
+        const index =
+          transactions.findIndex(
+            item =>
+              String(
+                item.id
+              ) ===
+              String(
+                editingId
+              )
           );
+
+
+        if(
+          index !== -1 &&
+          data
+        ){
+
+          transactions[index] =
+            data;
 
         }
 
@@ -3730,73 +4235,1089 @@ label{
         renderReports();
 
 
-        showMessage(
-          txMsg,
-          "✅ হিসাব Cloud Database-এ সংরক্ষিত হয়েছে।",
-          "success"
+        resetForm();
+
+        showSection(
+          "all"
         );
 
 
-        txAmount.value =
-          "";
-
-        personName.value =
-          "";
-
-        txCategory.value =
-          "";
-
-        expenseCategory.value =
-          "";
-
-        txDate.value =
-          todayString();
-
-        txNote.value =
-          "";
-
-
-      }catch(error){
-
-        console.error(
-          "Save/update failed:",
-          error
-        );
-
-        showMessage(
-          txMsg,
-          error?.message ||
-          "Cloud-এ সংরক্ষণ করতে সমস্যা হয়েছে।",
-          "error"
-        );
-
-      }finally{
-
-        saveTxBtn.disabled =
-          false;
+        return;
 
       }
 
-    };
+
+      showMessage(
+        txMsg,
+        "Cloud Database-এ সংরক্ষণ হচ্ছে...",
+        "info"
+      );
 
 
-  /* =====================================================
-     DELETE
-  ===================================================== */
+      const {
+        data,
+        error
+      } =
+      await supabaseClient
+        .from(
+          "transactions"
+        )
+        .insert({
 
-  async function deleteTransaction(
-    id
-  ){
+          user_id:
+            currentSession.user.id,
 
-    if(!currentSession){
+          type:
+            type,
+
+          amount:
+            amount,
+
+          person_name:
+            person,
+
+          category:
+            category,
+
+          date:
+            date,
+
+          note:
+            note
+
+        })
+        .select(
+          "id,user_id,type,amount,category,date,note,person_name,created_at,updated_at"
+        )
+        .single();
+
+
+      if(error){
+
+        showMessage(
+          txMsg,
+          "Cloud-এ Save হয়নি: " +
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if(data){
+
+        transactions.unshift(
+          data
+        );
+
+      }
+
+
+      renderDashboard();
+
+      renderAllTransactions();
+
+      renderReports();
+
+
+      showMessage(
+        txMsg,
+        "✅ হিসাব Cloud Database-এ সংরক্ষিত হয়েছে।",
+        "success"
+      );
+
+
+      txAmount.value =
+        "";
+
+      personName.value =
+        "";
+
+      txCategory.value =
+        "";
+
+      expenseCategory.value =
+        "";
+
+      txDate.value =
+        todayString();
+
+      txNote.value =
+        "";
+
+
+    }catch(error){
+
+      console.error(
+        error
+      );
+
+      showMessage(
+        txMsg,
+        error?.message ||
+        "Cloud-এ সংরক্ষণ করতে সমস্যা হয়েছে।",
+        "error"
+      );
+
+    }finally{
+
+      saveTxBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   DELETE TRANSACTION
+===================================================== */
+
+async function deleteTransaction(
+  id
+){
+
+  if(!currentSession){
+
+    return;
+
+  }
+
+
+  const item =
+    transactions.find(
+      x =>
+        String(
+          x.id
+        ) ===
+        String(
+          id
+        )
+    );
+
+
+  const ok =
+    confirm(
+      (
+        item
+          ? typeName(
+              item.type
+            ) +
+            " - " +
+            money(
+              item.amount
+            )
+          : "এই হিসাব"
+      ) +
+      "\n\nএই হিসাবটি Cloud Database থেকে মুছে ফেলবেন?"
+    );
+
+
+  if(!ok){
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+    await supabaseClient
+      .from(
+        "transactions"
+      )
+      .delete()
+      .eq(
+        "id",
+        id
+      )
+      .eq(
+        "user_id",
+        currentSession.user.id
+      );
+
+
+    if(error){
+
+      alert(
+        "হিসাব মুছতে সমস্যা:\n" +
+        error.message
+      );
 
       return;
 
     }
 
 
-    const item =
-      transactions.find(
+    transactions =
+      transactions.filter(
+        item =>
+          String(
+            item.id
+          ) !==
+          String(
+            id
+          )
+      );
+
+
+    renderDashboard();
+
+    renderAllTransactions();
+
+    renderReports();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    alert(
+      "হিসাব মুছতে সমস্যা হয়েছে।"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   REMINDER HELPERS
+===================================================== */
+
+function reminderStatus(
+  date
+){
+
+  const today =
+    todayString();
+
+
+  if(
+    date < today
+  ){
+
+    return {
+      className:"overdue",
+      text:"⚠️ সময় পেরিয়ে গেছে"
+    };
+
+  }
+
+
+  if(
+    date === today
+  ){
+
+    return {
+      className:"today",
+      text:"📌 আজ"
+    };
+
+  }
+
+
+  return {
+    className:"future",
+    text:"🗓️ আসন্ন"
+  };
+
+}
+
+
+function sortReminders(list){
+
+  return [...list].sort(
+    (a,b) => {
+
+      if(
+        Boolean(
+          a.completed
+        ) !==
+        Boolean(
+          b.completed
+        )
+      ){
+
+        return a.completed
+          ? 1
+          : -1;
+
+      }
+
+
+      const dateA =
+        String(
+          a.reminder_date ||
+          ""
+        );
+
+      const dateB =
+        String(
+          b.reminder_date ||
+          ""
+        );
+
+
+      if(
+        dateA !== dateB
+      ){
+
+        return dateA.localeCompare(
+          dateB
+        );
+
+      }
+
+
+      return String(
+        b.created_at ||
+        ""
+      ).localeCompare(
+        String(
+          a.created_at ||
+          ""
+        )
+      );
+
+    }
+  );
+
+}
+
+
+function resetReminderForm(){
+
+  editingReminderId =
+    null;
+
+  reminderFormTitle.textContent =
+    "⏰ নতুন Reminder যোগ করুন";
+
+  saveReminderBtn.textContent =
+    "☁️ Reminder সংরক্ষণ";
+
+  cancelReminderEditBtn.classList.add(
+    "hidden"
+  );
+
+  reminderTitle.value =
+    "";
+
+  reminderPerson.value =
+    "";
+
+  reminderAmount.value =
+    "";
+
+  reminderDate.value =
+    todayString();
+
+  reminderNote.value =
+    "";
+
+  clearMessage(
+    reminderMsg
+  );
+
+}
+
+
+function cancelReminderEdit(){
+
+  editingReminderId =
+    null;
+
+  reminderFormTitle.textContent =
+    "⏰ নতুন Reminder যোগ করুন";
+
+  saveReminderBtn.textContent =
+    "☁️ Reminder সংরক্ষণ";
+
+  cancelReminderEditBtn.classList.add(
+    "hidden"
+  );
+
+}
+
+
+cancelReminderEditBtn.onclick =
+  () => {
+
+    resetReminderForm();
+
+  };
+
+
+function startReminderEdit(
+  id
+){
+
+  const item =
+    reminders.find(
+      x =>
+        String(
+          x.id
+        ) ===
+        String(
+          id
+        )
+    );
+
+
+  if(!item){
+
+    alert(
+      "Reminder পাওয়া যায়নি।"
+    );
+
+    return;
+
+  }
+
+
+  editingReminderId =
+    item.id;
+
+
+  reminderFormTitle.textContent =
+    "✏️ Reminder Edit করুন";
+
+  saveReminderBtn.textContent =
+    "☁️ পরিবর্তন সংরক্ষণ";
+
+  cancelReminderEditBtn.classList.remove(
+    "hidden"
+  );
+
+
+  reminderTitle.value =
+    item.title || "";
+
+  reminderPerson.value =
+    item.person_name || "";
+
+  reminderAmount.value =
+    item.amount ?? "";
+
+  reminderDate.value =
+    item.reminder_date ||
+    todayString();
+
+  reminderNote.value =
+    item.note || "";
+
+
+  clearMessage(
+    reminderMsg
+  );
+
+
+  showSection(
+    "reminders"
+  );
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   LOAD REMINDERS
+===================================================== */
+
+async function loadReminders(){
+
+  if(!currentSession){
+
+    reminders =
+      [];
+
+    renderReminders();
+
+    renderDashboardReminders();
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from(
+        "reminders"
+      )
+      .select(
+        "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
+      )
+      .order(
+        "reminder_date",
+        {
+          ascending:true
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+    if(error){
+
+      console.error(
+        "Reminder load error:",
+        error
+      );
+
+      alert(
+        "Reminder Load করতে সমস্যা:\n" +
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    reminders =
+      Array.isArray(data)
+        ? data
+        : [];
+
+
+    renderReminders();
+
+    renderDashboardReminders();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SAVE / UPDATE REMINDER
+===================================================== */
+
+saveReminderBtn.onclick =
+  async () => {
+
+    clearMessage(
+      reminderMsg
+    );
+
+
+    if(!currentSession){
+
+      showMessage(
+        reminderMsg,
+        "আগে Login করুন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const title =
+      reminderTitle.value.trim();
+
+
+    const person =
+      reminderPerson.value.trim();
+
+
+    const amount =
+      Number(
+        reminderAmount.value || 0
+      );
+
+
+    const date =
+      reminderDate.value ||
+      todayString();
+
+
+    const note =
+      reminderNote.value.trim();
+
+
+    if(!title){
+
+      showMessage(
+        reminderMsg,
+        "Reminder-এর নাম লিখুন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      amount < 0
+    ){
+
+      showMessage(
+        reminderMsg,
+        "টাকার পরিমাণ সঠিক দিন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    saveReminderBtn.disabled =
+      true;
+
+
+    try{
+
+      /* UPDATE */
+
+      if(
+        editingReminderId !== null
+      ){
+
+        showMessage(
+          reminderMsg,
+          "Reminder পরিবর্তন সংরক্ষণ হচ্ছে...",
+          "info"
+        );
+
+
+        const {
+          data,
+          error
+        } =
+        await supabaseClient
+          .from(
+            "reminders"
+          )
+          .update({
+
+            title:
+              title,
+
+            person_name:
+              person,
+
+            amount:
+              amount,
+
+            reminder_date:
+              date,
+
+            note:
+              note,
+
+            updated_at:
+              new Date()
+                .toISOString()
+
+          })
+          .eq(
+            "id",
+            editingReminderId
+          )
+          .eq(
+            "user_id",
+            currentSession.user.id
+          )
+          .select(
+            "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
+          )
+          .single();
+
+
+        if(error){
+
+          showMessage(
+            reminderMsg,
+            "Reminder পরিবর্তন হয়নি: " +
+            error.message,
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const index =
+          reminders.findIndex(
+            item =>
+              String(
+                item.id
+              ) ===
+              String(
+                editingReminderId
+              )
+          );
+
+
+        if(
+          index !== -1 &&
+          data
+        ){
+
+          reminders[index] =
+            data;
+
+        }
+
+
+        renderReminders();
+
+        renderDashboardReminders();
+
+
+        showMessage(
+          reminderMsg,
+          "✅ Reminder পরিবর্তন করা হয়েছে।",
+          "success"
+        );
+
+
+        resetReminderForm();
+
+        return;
+
+      }
+
+
+      /* INSERT */
+
+      showMessage(
+        reminderMsg,
+        "Reminder Cloud-এ সংরক্ষণ হচ্ছে...",
+        "info"
+      );
+
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient
+        .from(
+          "reminders"
+        )
+        .insert({
+
+          user_id:
+            currentSession.user.id,
+
+          title:
+            title,
+
+          person_name:
+            person,
+
+          amount:
+            amount,
+
+          reminder_date:
+            date,
+
+          note:
+            note,
+
+          completed:
+            false
+
+        })
+        .select(
+          "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
+        )
+        .single();
+
+
+      if(error){
+
+        showMessage(
+          reminderMsg,
+          "Reminder Save হয়নি: " +
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if(data){
+
+        reminders.push(
+          data
+        );
+
+      }
+
+
+      renderReminders();
+
+      renderDashboardReminders();
+
+
+      showMessage(
+        reminderMsg,
+        "✅ Reminder Cloud Database-এ সংরক্ষিত হয়েছে।",
+        "success"
+      );
+
+
+      resetReminderForm();
+
+
+    }catch(error){
+
+      console.error(
+        error
+      );
+
+      showMessage(
+        reminderMsg,
+        error?.message ||
+        "Reminder Save করতে সমস্যা হয়েছে।",
+        "error"
+      );
+
+    }finally{
+
+      saveReminderBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   DELETE REMINDER
+===================================================== */
+
+async function deleteReminder(
+  id
+){
+
+  if(!currentSession){
+
+    return;
+
+  }
+
+
+  const item =
+    reminders.find(
+      x =>
+        String(
+          x.id
+        ) ===
+        String(
+          id
+        )
+    );
+
+
+  const ok =
+    confirm(
+      (
+        item?.title ||
+        "এই Reminder"
+      ) +
+      "\n\nReminder-টি মুছে ফেলবেন?"
+    );
+
+
+  if(!ok){
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+    await supabaseClient
+      .from(
+        "reminders"
+      )
+      .delete()
+      .eq(
+        "id",
+        id
+      )
+      .eq(
+        "user_id",
+        currentSession.user.id
+      );
+
+
+    if(error){
+
+      alert(
+        "Reminder মুছতে সমস্যা:\n" +
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    reminders =
+      reminders.filter(
+        item =>
+          String(
+            item.id
+          ) !==
+          String(
+            id
+          )
+      );
+
+
+    renderReminders();
+
+    renderDashboardReminders();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    alert(
+      "Reminder মুছতে সমস্যা হয়েছে।"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   COMPLETE / UNCOMPLETE REMINDER
+===================================================== */
+
+async function toggleReminder(
+  id
+){
+
+  if(!currentSession){
+
+    return;
+
+  }
+
+
+  const item =
+    reminders.find(
+      x =>
+        String(
+          x.id
+        ) ===
+        String(
+          id
+        )
+    );
+
+
+  if(!item){
+
+    return;
+
+  }
+
+
+  const newValue =
+    !Boolean(
+      item.completed
+    );
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .from(
+        "reminders"
+      )
+      .update({
+
+        completed:
+          newValue,
+
+        updated_at:
+          new Date()
+            .toISOString()
+
+      })
+      .eq(
+        "id",
+        id
+      )
+      .eq(
+        "user_id",
+        currentSession.user.id
+      )
+      .select(
+        "id,user_id,title,person_name,amount,reminder_date,note,completed,created_at,updated_at"
+      )
+      .single();
+
+
+    if(error){
+
+      alert(
+        "Reminder পরিবর্তন করতে সমস্যা:\n" +
+        error.message
+      );
+
+      return;
+
+    }
+
+
+    const index =
+      reminders.findIndex(
         x =>
           String(
             x.id
@@ -3807,683 +5328,558 @@ label{
       );
 
 
-    const title =
-      item
-        ? (
-            typeName(
-              item.type
-            ) +
-            " - " +
-            money(
-              item.amount
-            )
-          )
-        : "এই হিসাব";
+    if(
+      index !== -1 &&
+      data
+    ){
+
+      reminders[index] =
+        data;
+
+    }
 
 
-    const ok =
-      confirm(
-        title +
-        "\n\nএই হিসাবটি Cloud Database থেকে মুছে ফেলবেন?"
+    renderReminders();
+
+    renderDashboardReminders();
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER REMINDERS
+===================================================== */
+
+function renderReminders(){
+
+  let list =
+    sortReminders(
+      reminders
+    );
+
+
+  if(
+    reminderView === "pending"
+  ){
+
+    list =
+      list.filter(
+        item =>
+          !item.completed
       );
 
+  }
 
-    if(!ok){
+
+  if(
+    reminderView === "done"
+  ){
+
+    list =
+      list.filter(
+        item =>
+          Boolean(
+            item.completed
+          )
+      );
+
+  }
+
+
+  reminderCount.textContent =
+    reminders.length +
+    " Reminder";
+
+
+  if(!list.length){
+
+    const text =
+      reminderView === "done"
+        ? "কোনো সম্পন্ন Reminder নেই।"
+        : reminderView === "all"
+          ? "এখনো কোনো Reminder নেই।"
+          : "এখন কোনো বাকি Reminder নেই।";
+
+
+    reminderList.innerHTML =
+      `
+      <div class="empty">
+        ${escapeHtml(
+          text
+        )}
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  reminderList.innerHTML =
+    list
+      .map(
+        item => {
+
+          const status =
+            reminderStatus(
+              item.reminder_date
+            );
+
+
+          return `
+
+          <div class="
+            reminderItem
+            ${item.completed ? "done" : ""}
+          ">
+
+            <div class="reminderTop">
+
+              <div>
+
+                <div class="reminderTitle">
+                  ${item.completed ? "✅" : "⏰"}
+                  ${escapeHtml(
+                    item.title
+                  )}
+                </div>
+
+                ${
+                  item.person_name
+                    ? `
+                      <div style="margin-top:4px">
+                        👤 ${escapeHtml(
+                          item.person_name
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+                ${
+                  Number(
+                    item.amount || 0
+                  ) > 0
+                    ? `
+                      <div style="margin-top:4px">
+                        💰 ${money(
+                          item.amount
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+                <div class="
+                  reminderDate
+                  ${status.className}
+                ">
+                  ${status.text}
+                  ·
+                  ${escapeHtml(
+                    formatDate(
+                      item.reminder_date
+                    )
+                  )}
+                </div>
+
+                ${
+                  item.note
+                    ? `
+                      <div class="small muted"
+                           style="margin-top:5px">
+                        📝 ${escapeHtml(
+                          item.note
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+              </div>
+
+            </div>
+
+
+            <div class="reminderActions">
+
+              <button
+                type="button"
+                class="successBtn"
+                data-reminder-toggle="${escapeHtml(
+                  item.id
+                )}"
+              >
+                ${
+                  item.completed
+                    ? "↩️ আবার বাকি"
+                    : "✅ সম্পন্ন"
+                }
+              </button>
+
+              <button
+                type="button"
+                data-reminder-edit="${escapeHtml(
+                  item.id
+                )}"
+              >
+                ✏️ Edit
+              </button>
+
+              <button
+                type="button"
+                class="danger"
+                data-reminder-delete="${escapeHtml(
+                  item.id
+                )}"
+              >
+                🗑️ Delete
+              </button>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  reminderList
+    .querySelectorAll(
+      "[data-reminder-toggle]"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () => {
+
+            toggleReminder(
+              button.dataset.reminderToggle
+            );
+
+          };
+
+      }
+    );
+
+
+  reminderList
+    .querySelectorAll(
+      "[data-reminder-edit]"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () => {
+
+            startReminderEdit(
+              button.dataset.reminderEdit
+            );
+
+          };
+
+      }
+    );
+
+
+  reminderList
+    .querySelectorAll(
+      "[data-reminder-delete]"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () => {
+
+            deleteReminder(
+              button.dataset.reminderDelete
+            );
+
+          };
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   DASHBOARD REMINDERS
+===================================================== */
+
+function renderDashboardReminders(){
+
+  const pending =
+    sortReminders(
+      reminders.filter(
+        item =>
+          !item.completed
+      )
+    );
+
+
+  const list =
+    pending.slice(
+      0,
+      5
+    );
+
+
+  if(!list.length){
+
+    dashboardReminders.innerHTML =
+      `
+      <div class="empty">
+        🎉 কোনো বাকি Reminder নেই।
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  dashboardReminders.innerHTML =
+    list
+      .map(
+        item => {
+
+          const status =
+            reminderStatus(
+              item.reminder_date
+            );
+
+
+          return `
+
+          <div class="reminderItem">
+
+            <div class="reminderTop">
+
+              <div>
+
+                <div class="reminderTitle">
+                  ⏰ ${escapeHtml(
+                    item.title
+                  )}
+                </div>
+
+                ${
+                  item.person_name
+                    ? `
+                      <div class="small">
+                        👤 ${escapeHtml(
+                          item.person_name
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+                ${
+                  Number(
+                    item.amount || 0
+                  ) > 0
+                    ? `
+                      <div class="small">
+                        💰 ${money(
+                          item.amount
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+                <div class="
+                  small
+                  reminderDate
+                  ${status.className}
+                ">
+                  ${status.text}
+                  ·
+                  ${escapeHtml(
+                    formatDate(
+                      item.reminder_date
+                    )
+                  )}
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* =====================================================
+   REMINDER FILTER BUTTONS
+===================================================== */
+
+showAllRemindersBtn.onclick =
+  () => {
+
+    reminderView =
+      "all";
+
+    showAllRemindersBtn.classList.add(
+      "primary"
+    );
+
+    showPendingRemindersBtn.classList.remove(
+      "primary"
+    );
+
+    showDoneRemindersBtn.classList.remove(
+      "primary"
+    );
+
+    renderReminders();
+
+  };
+
+
+showPendingRemindersBtn.onclick =
+  () => {
+
+    reminderView =
+      "pending";
+
+    showAllRemindersBtn.classList.remove(
+      "primary"
+    );
+
+    showPendingRemindersBtn.classList.add(
+      "primary"
+    );
+
+    showDoneRemindersBtn.classList.remove(
+      "primary"
+    );
+
+    renderReminders();
+
+  };
+
+
+showDoneRemindersBtn.onclick =
+  () => {
+
+    reminderView =
+      "done";
+
+    showAllRemindersBtn.classList.remove(
+      "primary"
+    );
+
+    showPendingRemindersBtn.classList.remove(
+      "primary"
+    );
+
+    showDoneRemindersBtn.classList.add(
+      "primary"
+    );
+
+    renderReminders();
+
+  };
+
+
+/* =====================================================
+   SIGN UP
+===================================================== */
+
+signupBtn.onclick =
+  async () => {
+
+    clearMessage(
+      loginMsg
+    );
+
+
+    const email =
+      emailInput.value.trim();
+
+
+    const password =
+      passwordInput.value;
+
+
+    if(!email){
+
+      showMessage(
+        loginMsg,
+        "Email দিন।",
+        "error"
+      );
 
       return;
 
     }
 
 
-    try{
+    if(!password){
 
-      const {
-        error
-      } =
-      await supabaseClient
-        .from(
-          "transactions"
-        )
-        .delete()
-        .eq(
-          "id",
-          id
-        )
-        .eq(
-          "user_id",
-          currentSession.user.id
-        );
-
-
-      if(error){
-
-        console.error(
-          "Delete error:",
-          error
-        );
-
-        alert(
-          "হিসাব মুছতে সমস্যা:\n" +
-          error.message
-        );
-
-        return;
-
-      }
-
-
-      transactions =
-        transactions.filter(
-          item =>
-            String(
-              item.id
-            ) !==
-            String(
-              id
-            )
-        );
-
-
-      renderDashboard();
-
-      renderAllTransactions();
-
-      renderReports();
-
-
-    }catch(error){
-
-      console.error(
-        "Delete failed:",
-        error
+      showMessage(
+        loginMsg,
+        "Password দিন।",
+        "error"
       );
 
-      alert(
-        "হিসাব মুছতে সমস্যা হয়েছে।"
-      );
+      return;
 
     }
 
-  }
 
-
-  /* =====================================================
-     SIGN UP
-  ===================================================== */
-
-  signupBtn.onclick =
-    async () => {
-
-      clearMessage(
-        loginMsg
-      );
-
-
-      const email =
-        emailInput.value.trim();
-
-
-      const password =
-        passwordInput.value;
-
-
-      if(!email){
-
-        showMessage(
-          loginMsg,
-          "Email দিন।",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(!password){
-
-        showMessage(
-          loginMsg,
-          "Password দিন।",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(
-        password.length < 6
-      ){
-
-        showMessage(
-          loginMsg,
-          "Password কমপক্ষে ৬ অক্ষরের দিন।",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      signupBtn.disabled =
-        true;
-
-      loginBtn.disabled =
-        true;
-
+    if(
+      password.length < 6
+    ){
 
       showMessage(
         loginMsg,
-        "Account তৈরি হচ্ছে...",
-        "info"
+        "Password কমপক্ষে ৬ অক্ষরের দিন।",
+        "error"
       );
 
+      return;
 
-      try{
+    }
 
-        const {
-          data,
-          error
-        } =
-        await supabaseClient
-          .auth
-          .signUp({
 
-            email:
-              email,
+    signupBtn.disabled =
+      true;
 
-            password:
-              password,
+    loginBtn.disabled =
+      true;
 
-            options:{
-              emailRedirectTo:
-                "https://khalid979.github.io/amar-hisab-all/"
-            }
 
-          });
-
-
-        if(error){
-
-          showMessage(
-            loginMsg,
-            error.message,
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        if(
-          data &&
-          data.session
-        ){
-
-          currentSession =
-            data.session;
-
-          showDashboard(
-            data.session
-          );
-
-          await loadTransactions();
-
-          return;
-
-        }
-
-
-        showMessage(
-          loginMsg,
-          "✅ Account তৈরি হয়েছে। প্রয়োজন হলে Email verification করুন।",
-          "success"
-        );
-
-
-      }catch(error){
-
-        console.error(
-          "Signup error:",
-          error
-        );
-
-        showMessage(
-          loginMsg,
-          error?.message ||
-          "Account তৈরি করতে সমস্যা হয়েছে।",
-          "error"
-        );
-
-      }finally{
-
-        signupBtn.disabled =
-          false;
-
-        loginBtn.disabled =
-          false;
-
-      }
-
-    };
-
-
-  /* =====================================================
-     LOGIN
-  ===================================================== */
-
-  loginBtn.onclick =
-    async () => {
-
-      clearMessage(
-        loginMsg
-      );
-
-
-      const email =
-        emailInput.value.trim();
-
-
-      const password =
-        passwordInput.value;
-
-
-      if(!email){
-
-        showMessage(
-          loginMsg,
-          "Email দিন।",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(!password){
-
-        showMessage(
-          loginMsg,
-          "Password দিন।",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      loginBtn.disabled =
-        true;
-
-      signupBtn.disabled =
-        true;
-
-
-      showMessage(
-        loginMsg,
-        "Login হচ্ছে...",
-        "info"
-      );
-
-
-      try{
-
-        const {
-          data,
-          error
-        } =
-        await supabaseClient
-          .auth
-          .signInWithPassword({
-
-            email:
-              email,
-
-            password:
-              password
-
-          });
-
-
-        if(error){
-
-          showMessage(
-            loginMsg,
-            error.message,
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        if(
-          data &&
-          data.session
-        ){
-
-          currentSession =
-            data.session;
-
-          showDashboard(
-            data.session
-          );
-
-          await loadTransactions();
-
-          clearMessage(
-            loginMsg
-          );
-
-        }else{
-
-          showMessage(
-            loginMsg,
-            "Login session পাওয়া যায়নি।",
-            "error"
-          );
-
-        }
-
-
-      }catch(error){
-
-        console.error(
-          "Login error:",
-          error
-        );
-
-        showMessage(
-          loginMsg,
-          error?.message ||
-          "Login করতে সমস্যা হয়েছে।",
-          "error"
-        );
-
-      }finally{
-
-        loginBtn.disabled =
-          false;
-
-        signupBtn.disabled =
-          false;
-
-      }
-
-    };
-
-
-  /* =====================================================
-     SHOW DASHBOARD
-  ===================================================== */
-
-  function showDashboard(
-    session
-  ){
-
-    currentSession =
-      session;
-
-
-    loginBox.classList.add(
-      "hidden"
+    showMessage(
+      loginMsg,
+      "Account তৈরি হচ্ছে...",
+      "info"
     );
-
-    dashboard.classList.remove(
-      "hidden"
-    );
-
-
-    userEmail.textContent =
-      session?.user?.email
-        ? "Logged in: " +
-          session.user.email
-        : "";
-
-
-    showSection(
-      "dashboard"
-    );
-
-  }
-
-
-  function showLogin(){
-
-    currentSession =
-      null;
-
-    transactions =
-      [];
-
-    editingId =
-      null;
-
-
-    dashboard.classList.add(
-      "hidden"
-    );
-
-    loginBox.classList.remove(
-      "hidden"
-    );
-
-  }
-
-
-  /* =====================================================
-     LOGOUT
-  ===================================================== */
-
-  logoutBtn.onclick =
-    async () => {
-
-      logoutBtn.disabled =
-        true;
-
-
-      try{
-
-        const {
-          error
-        } =
-        await supabaseClient
-          .auth
-          .signOut();
-
-
-        if(error){
-
-          alert(
-            "Logout করতে সমস্যা:\n" +
-            error.message
-          );
-
-          return;
-
-        }
-
-
-        resetForm();
-
-        showLogin();
-
-        emailInput.value =
-          "";
-
-        passwordInput.value =
-          "";
-
-        clearMessage(
-          loginMsg
-        );
-
-
-      }catch(error){
-
-        console.error(
-          "Logout error:",
-          error
-        );
-
-        alert(
-          "Logout করতে সমস্যা হয়েছে।"
-        );
-
-      }finally{
-
-        logoutBtn.disabled =
-          false;
-
-      }
-
-    };
-
-
-  /* =====================================================
-     AUTH STATE
-  ===================================================== */
-
-  supabaseClient.auth
-    .onAuthStateChange(
-      async (
-        event,
-        session
-      ) => {
-
-        console.log(
-          "Auth event:",
-          event
-        );
-
-
-        if(session){
-
-          currentSession =
-            session;
-
-          showDashboard(
-            session
-          );
-
-          await loadTransactions();
-
-        }else{
-
-          showLogin();
-
-        }
-
-      }
-    );
-
-
-  /* =====================================================
-     RELOAD
-  ===================================================== */
-
-  reloadBtn.onclick =
-    async () => {
-
-      reloadBtn.disabled =
-        true;
-
-      try{
-
-        await loadTransactions();
-
-      }finally{
-
-        reloadBtn.disabled =
-          false;
-
-      }
-
-    };
-
-
-  /* =====================================================
-     BACKUP
-  ===================================================== */
-
-  exportBtn.onclick =
-    () => {
-
-      const backup = {
-
-        exported_at:
-          new Date()
-            .toISOString(),
-
-        user:
-          currentSession?.user?.email ||
-          "",
-
-        transactions:
-          transactions
-
-      };
-
-
-      const blob =
-        new Blob(
-          [
-            JSON.stringify(
-              backup,
-              null,
-              2
-            )
-          ],
-          {
-            type:
-              "application/json"
-          }
-        );
-
-
-      const url =
-        URL.createObjectURL(
-          blob
-        );
-
-
-      const a =
-        document.createElement(
-          "a"
-        );
-
-
-      a.href =
-        url;
-
-      a.download =
-        "amar-hisab-cloud-backup.json";
-
-      a.click();
-
-
-      URL.revokeObjectURL(
-        url
-      );
-
-    };
-
-
-  /* =====================================================
-     INIT
-  ===================================================== */
-
-  async function init(){
-
-    txDate.value =
-      todayString();
 
 
     try{
@@ -4494,17 +5890,29 @@ label{
       } =
       await supabaseClient
         .auth
-        .getSession();
+        .signUp({
+
+          email:
+            email,
+
+          password:
+            password,
+
+          options:{
+            emailRedirectTo:
+              "https://khalid979.github.io/amar-hisab-all/"
+          }
+
+        });
 
 
       if(error){
 
-        console.error(
-          "Session error:",
-          error
+        showMessage(
+          loginMsg,
+          error.message,
+          "error"
         );
-
-        showLogin();
 
         return;
 
@@ -4525,27 +5933,543 @@ label{
 
         await loadTransactions();
 
+        await loadReminders();
+
+        return;
+
+      }
+
+
+      showMessage(
+        loginMsg,
+        "✅ Account তৈরি হয়েছে। প্রয়োজন হলে Email verification করুন।",
+        "success"
+      );
+
+
+    }catch(error){
+
+      console.error(
+        error
+      );
+
+      showMessage(
+        loginMsg,
+        error?.message ||
+        "Account তৈরি করতে সমস্যা হয়েছে।",
+        "error"
+      );
+
+    }finally{
+
+      signupBtn.disabled =
+        false;
+
+      loginBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+loginBtn.onclick =
+  async () => {
+
+    clearMessage(
+      loginMsg
+    );
+
+
+    const email =
+      emailInput.value.trim();
+
+
+    const password =
+      passwordInput.value;
+
+
+    if(!email){
+
+      showMessage(
+        loginMsg,
+        "Email দিন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(!password){
+
+      showMessage(
+        loginMsg,
+        "Password দিন।",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    loginBtn.disabled =
+      true;
+
+    signupBtn.disabled =
+      true;
+
+
+    showMessage(
+      loginMsg,
+      "Login হচ্ছে...",
+      "info"
+    );
+
+
+    try{
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient
+        .auth
+        .signInWithPassword({
+
+          email:
+            email,
+
+          password:
+            password
+
+        });
+
+
+      if(error){
+
+        showMessage(
+          loginMsg,
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if(
+        data &&
+        data.session
+      ){
+
+        currentSession =
+          data.session;
+
+        showDashboard(
+          data.session
+        );
+
+        await loadTransactions();
+
+        await loadReminders();
+
+        clearMessage(
+          loginMsg
+        );
+
+      }else{
+
+        showMessage(
+          loginMsg,
+          "Login session পাওয়া যায়নি।",
+          "error"
+        );
+
+      }
+
+
+    }catch(error){
+
+      console.error(
+        error
+      );
+
+      showMessage(
+        loginMsg,
+        error?.message ||
+        "Login করতে সমস্যা হয়েছে।",
+        "error"
+      );
+
+    }finally{
+
+      loginBtn.disabled =
+        false;
+
+      signupBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   SHOW DASHBOARD
+===================================================== */
+
+function showDashboard(
+  session
+){
+
+  currentSession =
+    session;
+
+
+  loginBox.classList.add(
+    "hidden"
+  );
+
+  dashboard.classList.remove(
+    "hidden"
+  );
+
+
+  userEmail.textContent =
+    session?.user?.email
+      ? "Logged in: " +
+        session.user.email
+      : "";
+
+
+  showSection(
+    "dashboard"
+  );
+
+}
+
+
+/* =====================================================
+   SHOW LOGIN
+===================================================== */
+
+function showLogin(){
+
+  currentSession =
+    null;
+
+  transactions =
+    [];
+
+  reminders =
+    [];
+
+  editingId =
+    null;
+
+  editingReminderId =
+    null;
+
+
+  dashboard.classList.add(
+    "hidden"
+  );
+
+  loginBox.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutBtn.onclick =
+  async () => {
+
+    logoutBtn.disabled =
+      true;
+
+
+    try{
+
+      const {
+        error
+      } =
+      await supabaseClient
+        .auth
+        .signOut();
+
+
+      if(error){
+
+        alert(
+          "Logout করতে সমস্যা:\n" +
+          error.message
+        );
+
+        return;
+
+      }
+
+
+      resetForm();
+
+      resetReminderForm();
+
+      showLogin();
+
+      emailInput.value =
+        "";
+
+      passwordInput.value =
+        "";
+
+      clearMessage(
+        loginMsg
+      );
+
+
+    }catch(error){
+
+      console.error(
+        error
+      );
+
+      alert(
+        "Logout করতে সমস্যা হয়েছে।"
+      );
+
+    }finally{
+
+      logoutBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient.auth
+  .onAuthStateChange(
+    async (
+      event,
+      session
+    ) => {
+
+      console.log(
+        "Auth event:",
+        event
+      );
+
+
+      if(session){
+
+        currentSession =
+          session;
+
+        showDashboard(
+          session
+        );
+
+        await loadTransactions();
+
+        await loadReminders();
+
       }else{
 
         showLogin();
 
       }
 
-    }catch(error){
+    }
+  );
+
+
+/* =====================================================
+   RELOAD
+===================================================== */
+
+reloadBtn.onclick =
+  async () => {
+
+    reloadBtn.disabled =
+      true;
+
+    try{
+
+      await loadTransactions();
+
+      await loadReminders();
+
+    }finally{
+
+      reloadBtn.disabled =
+        false;
+
+    }
+
+  };
+
+
+/* =====================================================
+   BACKUP
+===================================================== */
+
+exportBtn.onclick =
+  () => {
+
+    const backup = {
+
+      exported_at:
+        new Date()
+          .toISOString(),
+
+      user:
+        currentSession?.user?.email ||
+        "",
+
+      transactions:
+        transactions,
+
+      reminders:
+        reminders
+
+    };
+
+
+    const blob =
+      new Blob(
+        [
+          JSON.stringify(
+            backup,
+            null,
+            2
+          )
+        ],
+        {
+          type:
+            "application/json"
+        }
+      );
+
+
+    const url =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const a =
+      document.createElement(
+        "a"
+      );
+
+
+    a.href =
+      url;
+
+    a.download =
+      "amar-hisab-cloud-backup.json";
+
+    a.click();
+
+
+    URL.revokeObjectURL(
+      url
+    );
+
+  };
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+async function init(){
+
+  txDate.value =
+    todayString();
+
+  reminderDate.value =
+    todayString();
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient
+      .auth
+      .getSession();
+
+
+    if(error){
 
       console.error(
-        "Init error:",
         error
       );
 
       showLogin();
 
+      return;
+
     }
+
+
+    if(
+      data &&
+      data.session
+    ){
+
+      currentSession =
+        data.session;
+
+      showDashboard(
+        data.session
+      );
+
+      await loadTransactions();
+
+      await loadReminders();
+
+    }else{
+
+      showLogin();
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      error
+    );
+
+    showLogin();
 
   }
 
+}
 
-  init();
+
+init();
 
 })();
 </script>
