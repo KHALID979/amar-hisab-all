@@ -2319,7 +2319,72 @@ function showSection(name){
 
 navDashboard.onclick =
   () => showSection("dashboard");
+const aiCheckButton = document.createElement("button");
 
+aiCheckButton.type = "button";
+aiCheckButton.textContent = "🤖 AI দিয়ে হিসাব যাচাই";
+aiCheckButton.className = "primary";
+aiCheckButton.style.marginTop = "10px";
+
+aiCheckButton.onclick = async () => {
+
+  if (!currentSession) {
+    alert("আগে Login করুন।");
+    return;
+  }
+
+  aiCheckButton.disabled = true;
+  aiCheckButton.textContent = "🤖 AI যাচাই করছে...";
+
+  try {
+
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "ai-check-data",
+        {
+          body: {
+            transactions: transactions
+          }
+        }
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    console.log("AI RESULT:", data);
+
+    alert(
+      data?.summary ||
+      "AI যাচাই সম্পন্ন হয়েছে।"
+    );
+
+  } catch (error) {
+
+    console.error(
+      "AI check error:",
+      error
+    );
+
+    alert(
+      "AI যাচাই করা যায়নি:\n" +
+      (error?.message || error)
+    );
+
+  } finally {
+
+    aiCheckButton.disabled = false;
+    aiCheckButton.textContent =
+      "🤖 AI দিয়ে হিসাব যাচাই";
+
+  }
+
+};
+
+document
+  .getElementById("dashboardSection")
+  ?.querySelector(".card")
+  ?.appendChild(aiCheckButton);
 
 navAdd.onclick =
   () => {
